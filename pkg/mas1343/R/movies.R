@@ -7,7 +7,7 @@
 #' \url{http://imdb.com/help/show_leaf?about}, including 
 #' information about the data collection process,
 #' \url{http://imdb.com/help/show_leaf?infosource}.
-#'@name movie
+#' @name movies
 #' @docType data
 #' @usage data(movies)
 #' @return A data frame with 4848 rows and 24 variables.
@@ -24,6 +24,8 @@
 #' \item{action, animation, comedy, drama, documentary, romance, short.}{Binary variables representing if movie was classified as belonging to that genre.}}
 #'@references Credit: This data set was initially constructed by 
 #' Hadley Wickham at \url{http://had.co.nz/data/movies}
-#' @aliases Budget Length
+#' @aliases Budget Length movies
 #'@keywords datasets
+#' @examples
+#' data(movies)
 NULL

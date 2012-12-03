@@ -20,7 +20,7 @@ GetDataFrame = function(student_id) {
   set.seed(student_number)
   data(movies, envir=environment())
   d = movies
-  l = round(runif(1, 4000, 4500))
+  l = sample(100:200, 1)
   del_rows = sample(1:nrow(d), l)
   
   d = d[-del_rows,]

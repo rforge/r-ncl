@@ -1,7 +1,8 @@
 \docType{data}
-\name{movie}
-\alias{budget}
-\alias{movie}
+\name{movies}
+\alias{Budget}
+\alias{Length}
+\alias{movies}
 \title{Movie information and user ratings from IMDB.com.}
 \value{
   A data frame with 4848 rows and 24 variables.
@@ -31,6 +32,9 @@
   comedy, drama, documentary, romance, short.}{Binary
   variables representing if movie was classified as
   belonging to that genre.}}
+}
+\examples{
+data(movies)
 }
 \references{
   Credit: This data set was initially constructed by Hadley

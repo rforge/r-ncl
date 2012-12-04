@@ -1,8 +1,11 @@
 \name{CheckFunctionName}
+\alias{CheckFunctionLoading}
 \alias{CheckFunctionName}
 \title{Checks file name}
 \usage{
   CheckFunctionName(path)
+
+  CheckFunctionLoading(path)
 }
 \arguments{
   \item{path}{the path to where the file is located on your
@@ -18,7 +21,7 @@
 }
 \examples{
 \dontrun{
-CheckFunctionName("practical3.r")
+CheckFunctionName("/tmp/practical3.R")
 }
 }
 

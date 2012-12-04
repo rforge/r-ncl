@@ -1,3 +1,4 @@
+globalVariables("movies")
 #' Subset of the movie data set
 #' 
 #' This function creates a subset (of random rows) of the IMDB movie 
@@ -18,7 +19,7 @@
 GetDataFrame = function(student_id) {
   student_number = GetStudentID(student_id)
   set.seed(student_number)
-  data(movies, envir=environment())
+  data(movies)
   d = movies
   l = sample(100:200, 1)
   del_rows = sample(1:nrow(d), l)

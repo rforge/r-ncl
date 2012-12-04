@@ -6,7 +6,7 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' CheckFunctionName("practical3.r")
+#' CheckFunctionName("/tmp/practical3.R")
 #' }
 CheckFunctionName = function(path) {
     if(!file.exists(path))
@@ -20,6 +20,20 @@ CheckFunctionName = function(path) {
     if(fname != "practical3.R")
         stop("Correct file name is practical3.R you have ", fname)
 
-    message("File name is correct")
-    invisible()
+    message("File name is correct.")
+    invisible(TRUE)
 }
+
+#' @export
+#' @rdname CheckFunctionName
+CheckFunctionLoading = function(path) {
+    
+    CheckFunctionName(path)
+    y = try(sys.source(path, new.env() ), TRUE)
+    if(class(y) == "try-error") {
+        stop("\nError when loading your file: \n", y[1])
+    } 
+    message("File can be loaded.")
+}
+
+

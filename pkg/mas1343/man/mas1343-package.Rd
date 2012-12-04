@@ -15,7 +15,7 @@
   \email{colin.gillespie@newcastle.ac.uk}
 }
 \seealso{
-  \code{\link{http://www.mas.ncl.ac.uk/~ncsg3/teaching/mas1343/}}
+  See the Blackboard homepage for further details.
 }
 \keyword{package}
 

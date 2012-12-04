@@ -11,7 +11,7 @@
   GetCharacterVector(student_id)
 }
 \arguments{
-  \item{}{}
+  \item{student_id,}{a student id, i.e. b1234567}
 }
 \description{
   These functions create vectors of numerics, logicals or

@@ -1,3 +1,4 @@
+export(CheckFunctionName)
 export(GetCharacterVector)
 export(GetDataFrame)
 export(GetLogicalVector)

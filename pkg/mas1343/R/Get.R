@@ -3,7 +3,7 @@
 #' These functions create vectors of numerics, logicals or characters.
 #' Given a student id, the functions will always return the 
 #' same subset.
-#' @inheritParams GetDataFrame
+#' @param student_id, a student id, i.e. b1234567
 #' @export
 GetNumericVector = function(student_id){
   student_number = GetStudentID(student_id)

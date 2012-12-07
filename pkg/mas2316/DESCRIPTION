@@ -1,8 +1,8 @@
-Package: mas1343
+Package: mas2316
 Type: Package
-Title: MAS1343: Introduction to statistical computing
+Title: MAS2316: Introduction to regression and modelling
 Version: 0.1
-Date: 2012-12-01
+Date: 2012-12-07
 Author: Colin Gillespie
 Maintainer: Colin Gillespie <colin.gillespie@newcastle.ac.uk>
 Description: Great code
@@ -10,10 +10,4 @@ License: GPL-3
 Depends:
     R (>= 2.13),
 Collate:
-    'GetDataFrame.R'
-    'Get.R'
-    'GetStudentID.R'
-    'mas1343-package.R'
-    'movies.R'
-    'bb1112.R'
-    'CheckFunctions.R'
+   

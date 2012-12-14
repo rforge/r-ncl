@@ -11,4 +11,9 @@ Depends:
     R (>= 2.13),
 Collate:
     'mas2316-package.R'
-    'movies.R'
+    'ash30.R'
+    'beams.R'
+    'hipjoint.R'
+    'lathe.R'
+    'heptath.R'
+    'graves.R'

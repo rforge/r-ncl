@@ -5,6 +5,7 @@
 #' The first column is the subject index, the second is log of the brain weight 
 #' and third is the log of the body weight.
 #' @name bodyweight
+#' @aliases bodyweight1 bodyweight2 bodyweight3 bodyweight4 bodyweight5 bodyweight6
 #' @docType data
 #' @return A data frame
 #' @keywords datasets

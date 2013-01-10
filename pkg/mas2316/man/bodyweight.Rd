@@ -1,6 +1,12 @@
 \docType{data}
 \name{bodyweight}
 \alias{bodyweight}
+\alias{bodyweight1}
+\alias{bodyweight2}
+\alias{bodyweight3}
+\alias{bodyweight4}
+\alias{bodyweight5}
+\alias{bodyweight6}
 \title{The bodyweight data set}
 \value{
   A data frame

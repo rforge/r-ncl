@@ -1,6 +1,12 @@
 \docType{data}
 \name{graves}
 \alias{graves}
+\alias{graves1}
+\alias{graves2}
+\alias{graves3}
+\alias{graves4}
+\alias{graves5}
+\alias{graves6}
 \title{The Graves data set}
 \value{
   A data frame

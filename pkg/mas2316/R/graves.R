@@ -12,6 +12,7 @@
 #' these data are obtained at presentation. We are interested in how OI 
 #' changes with age. 
 #' @name graves
+#' @aliases graves1 graves2 graves3 graves4 graves5 graves6
 #' @docType data
 #' @return A data frame
 #' @keywords datasets

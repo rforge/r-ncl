@@ -22,6 +22,5 @@
 #' \item{Gender}{The gender of the majority of the team}
 #' }
 #' @return The data set is a data frame
-#' @aliases  bb1112
 #' @keywords datasets
 NULL

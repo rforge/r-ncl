@@ -1,7 +1,7 @@
 Package: mas1343
 Type: Package
 Title: MAS1343: Introduction to statistical computing
-Version: 0.1
+Version: 0.11
 Date: 2012-12-01
 Author: Colin Gillespie
 Maintainer: Colin Gillespie <colin.gillespie@newcastle.ac.uk>
@@ -17,3 +17,4 @@ Collate:
     'movies.R'
     'bb1112.R'
     'CheckFunctions.R'
+    'bb1213.R'

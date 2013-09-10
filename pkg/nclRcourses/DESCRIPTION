@@ -1,8 +1,8 @@
-Package: mas1343
+Package: nclRcourses
 Type: Package
-Title: MAS1343: Introduction to statistical computing
-Version: 0.11
-Date: 2012-12-01
+Title: Functions for R courses at Newcastle University
+Version: 0.1
+Date: 2013-09-10
 Author: Colin Gillespie
 Maintainer: Colin Gillespie <colin.gillespie@newcastle.ac.uk>
 Description: Great code
@@ -10,11 +10,8 @@ License: GPL-3
 Depends:
     R (>= 2.13),
 Collate:
-    'GetDataFrame.R'
+    'yeast_long.R'
     'Get.R'
+    'GetDataFrame.R'
     'GetStudentID.R'
-    'mas1343-package.R'
-    'movies.R'
-    'bb1112.R'
-    'CheckFunctions.R'
-    'bb1213.R'
+    'nclRcourses-package.R'

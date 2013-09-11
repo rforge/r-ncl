@@ -1,4 +1,4 @@
-#' Movie information and user ratings from IMDB.com.
+#' Yeast data set
 #' 
 #' The data set we are going to use in the next few chapters comes from Gillespie et al., 2010.
 #' This paper is a tutorial for analysing time-course data in Bioconductor. The paper and associated 

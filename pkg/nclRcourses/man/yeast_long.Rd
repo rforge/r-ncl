@@ -2,7 +2,7 @@
 \name{yeast_long}
 \alias{yeast_long}
 \alias{yeast_wide}
-\title{Movie information and user ratings from IMDB.com.}
+\title{Yeast data set}
 \value{
   A data frame
 }

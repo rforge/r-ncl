@@ -14,7 +14,7 @@ globalVariables("yeast_long")
 #' identical(d1, d2)
 GetDataFrame = function(seed=1) {
   set.seed(seed)
-  data(yeast_long)
+  data(yeast_long,envir = environment())
   d = yeast_long
   l = sample(50:100, 1)
   del_rows = sample(1:nrow(d), l)

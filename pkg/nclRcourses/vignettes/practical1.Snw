@@ -6,7 +6,7 @@
 
 <<setup, include=FALSE, cache=FALSE>>=
 library(knitr)
-options(replace.assign=TRUE,width=50)
+options(replace.assign=FALSE,width=50)
 
 opts_chunk$set(fig.path='figure/graphics-', 
                cache.path='cache/graphics-', 

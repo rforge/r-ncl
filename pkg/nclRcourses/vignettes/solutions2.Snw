@@ -1,5 +1,9 @@
 %\VignetteIndexEntry{solutions2}
 \documentclass[a4paper,justified,openany]{tufte-handout}
+<<setup, include=FALSE, cache=FALSE>>=
+library(knitr)
+options(replace.assign=FALSE,width=50)
+@
 
 %\geometry{showframe}% for debugging purposes -- displays the margins
 

@@ -2,7 +2,10 @@
 \documentclass[a4paper,justified,openany]{tufte-handout}
 
 %\geometry{showframe}% for debugging purposes -- displays the margins
-
+<<setup, include=FALSE, cache=FALSE>>=
+library(knitr)
+options(replace.assign=FALSE,width=50)
+@
 \usepackage{amsmath}
 
 % Set up the images/graphics package
@@ -145,7 +148,7 @@ lectures.
 
 The solutions to this practical have been included within the R package as a vignette:
 
-<<>>=
+<<eval=FALSE>>=
 library(nclRcourses)
 vignette("solutions2")
 @ 

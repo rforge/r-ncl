@@ -1,5 +1,7 @@
 \docType{data}
 \name{yeast_long}
+\alias{analysis_ready_data}
+\alias{raw_data}
 \alias{yeast_long}
 \alias{yeast_wide}
 \title{Yeast data set}
@@ -26,6 +28,9 @@
   hybridised to Affymetrix yeast2 arrays. The microarray
   data are available in the ArrayExpress database under
   accession numberE-MEXP-1551.
+
+  This data comes from Cockell et al., 2013.
+  \url{https://github.com/csgillespie/illumina-analysis/}
 }
 \details{
   The two data sets contain the same data, but in wide and
@@ -45,6 +50,10 @@
   Gillespie, C. S., et al, 2010. Analysing yeast time
   course microarray data using BioConductor: a case study
   using yeast2 Affymetrix arrays. BMC Research Notes, 3:81.
+
+  Cockell, S, Bashton, M, Gillespie, CS. Bioconductor tools
+  for microarray data analysis. In: Microarray Image and
+  Data Analysis: Theory and Practice. CRC Press.
 }
 \keyword{datasets}
 

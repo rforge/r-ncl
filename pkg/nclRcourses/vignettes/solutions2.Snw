@@ -1,0 +1,236 @@
+%\VignetteIndexEntry{solutions2}
+\documentclass[a4paper,justified,openany]{tufte-handout}
+
+%\geometry{showframe}% for debugging purposes -- displays the margins
+
+\usepackage{amsmath}
+
+% Set up the images/graphics package
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{graphics/}}
+
+\title{Introduction to R: practical 2} 
+\author[Dr Colin Gillespie]{Dr Colin S.
+  Gillespie}
+\date{}  % if the \date{} command is left out, the current date will be used
+
+% The following package makes prettier tables.  We're all about the bling!
+\usepackage{booktabs}
+
+% The units package provides nice, non-stacked fractions and better spacing
+% for units.
+\usepackage{units}
+
+% The fancyvrb package lets us customize the formatting of verbatim
+% environments.  We use a slightly smaller font.
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+\newcommand{\cc}{\texttt}
+\graphicspath{{../graphics/}}
+\setcounter{secnumdepth}{2}
+
+% \renewcommand{\hlcomment}[1]{\textcolor[rgb]{0.5,0.5,0.5}{#1}}%
+% \renewenvironment{Hchunk}%
+% {%
+%   \vspace{0.5em}\noindent\begin{lrbox}{\highlightbox}%
+%    \begin{minipage}[b]{\textwidth}%
+%     }%
+%     {%
+%     \end{minipage}%
+%   \end{lrbox}%
+%   \fcolorbox{highlightBorder}{highlightBg}{\usebox{\highlightbox}}%
+%   \vspace{0.5em}}%
+\usepackage{microtype}
+\begin{document}
+
+\maketitle% this prints the handout title, author, and date
+
+\begin{abstract}
+  \noindent Often when we commence an analysis we want to partition the data in
+  different ways. For example, selecting data points greater than a particular
+  value. In this practical we will investigate how this is done using R's
+  logical operators.
+
+\end{abstract}
+
+\section*{Question difficulty}
+
+Some of the questions below are straight forward, others are bit more tricky.
+\begin{itemize}
+\item The last sub-questions of Q1 and Q2  are hard.
+\end{itemize}
+Before starting the practical, run the following commands:
+
+<<>>=
+library(nclRcourses)
+@ 
+
+\subsection*{Question 1}
+
+Run the following R code
+
+<<>>=
+x1 = GetNumericVector()
+@ 
+  
+\begin{enumerate}
+\item What is length of \cc{x1}?
+
+<<>>=
+length(x1)
+@ 
+\item What is the 55$^{{\tiny \text{th}}}$ element of \cc{x1}?
+
+<<>>=
+x1[55]
+@ 
+
+\item What is the final element of \cc{x1}?
+  
+<<>>=
+x1[length(x1)]
+tail(x1, 1)
+@ 
+
+\item What is the mean value of \cc{x1}?
+  
+<<>>=
+mean(x1)
+@ 
+
+\item What is the smallest value of \cc{x1}?
+  
+<<>>=
+min(x1)
+@
+
+\item How many values are greater than the first quartile but less than the median?
+
+<<>>=
+q1 = quantile(x1)[2]
+med = median(x1)
+length(x1[x1 > q1 & x1 < med])
+
+##Or
+sum(x1 > q1 & x1 < med)
+@ 
+
+\item How many values are greater than $\bar x_1 + 2 sd(x_1)$, where $sd$ is
+  the sample standard deviation?\marginnote{$\bar x_1$ is the mean value and
+    $sd(x_1)$ is the standard deviation of $x_1$.}
+
+<<>>=
+m = mean(x1)
+s = sd(x1)
+sum(x1 > (m + 2*s))
+@ 
+  
+\item \textbf{Tricky:} What is the 50$^{{\tiny \text{th}}}$ smallest value in
+  \cc{x1}?
+
+<<>>=
+sort(x1)[50]
+@ 
+\end{enumerate}
+
+% \subsection*{Question 2}
+
+% Run the following R code
+
+
+% \begin{enumerate}
+% \item How many times does \cc{TRUE} appear in \cc{x2}?
+% \item What is the position in the vector of the last occurrence of
+%   \cc{TRUE}? \sidenote{Look at the help file: \cc{?which}}
+% \item What is the value of the 500$^{\text{{\tiny th}}}$ element of \cc{x2}?
+% \item \textbf{Tricky:} What position in the vector is the 246$^{\text{{\tiny
+%         th}}}$ occurrence of \cc{TRUE}.
+% \end{enumerate}
+
+\subsection*{Question 2}
+
+Run the following R code
+
+<<>>=
+x2 = GetCharacterVector()
+@ 
+
+\noindent In the following questions, the function \cc{table} is quite useful,
+especially when combined with \cc{sum}, \cc{sort}, etc.
+\begin{enumerate}
+\item How many times does ``A'' appear in \cc{x2}?
+<<>>=
+length(x2[x2=="A"])
+##Or
+sum(x2=="A")
+@ 
+
+\item Which letter appears the most? If more than one letter appears, just give
+  the first letter (if the letters were sorted in alphabetical order).
+
+<<>>=
+sort(table(x2), decreasing=TRUE)[1]
+@   
+
+\item \textbf{Very tricky:} How many pairs of letters are there in
+  \cc{x2}.\sidenote{For example, in \cc{AABCCC} we would have 3 pairs: \cc{AA},
+    \cc{CC} and \cc{CC}.}
+  
+<<>>=
+l = length(x2)
+x2_a = x2[1:(l-1)]; x2_b = x2[2:l];
+sum(x2_a == x2_b)  
+@   
+
+\end{enumerate}
+
+\subsection*{Question 3}
+
+Run the following R code
+
+<<>>=
+y = GetDataFrame()
+@ 
+
+\noindent The data frame \cc{y} is a subset of the yeast data we use in the
+lectures.
+\begin{enumerate}
+\item How many rows does \cc{y} have?
+<<>>=
+dim(y)[1]
+@   
+
+\item How many columns does \cc{y} have?
+<<>>=
+dim(y)[2]
+@ 
+\item What are the different cell types in this data set?
+<<>>=
+unique(y$type)
+@ 
+\item How many measurements have been made on \cc{mutant} cells?
+
+<<>>=
+sum(y$type == "mutant")
+@ 
+\item How many of probes have expression levels less than 5?
+
+<<>>=
+sum(y$value < 5)
+@ 
+  
+\item How many measurements have been made at time point 0?
+
+<<>>=
+sum(y$tps == 0)
+@ 
+\item How many mutant probes were measured at time point 0?
+<<>>=
+sum(y$tps == 0 & y$type == "mutant")
+@ 
+\end{enumerate}
+
+
+
+\end{document}

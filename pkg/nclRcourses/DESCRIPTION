@@ -1,8 +1,8 @@
 Package: nclRcourses
 Type: Package
 Title: Functions for R courses at Newcastle University
-Version: 0.1
-Date: 2013-09-10
+Version: 0.11
+Date: 2013-09-17
 Author: Colin Gillespie
 Maintainer: Colin Gillespie <colin.gillespie@newcastle.ac.uk>
 Description: Great code

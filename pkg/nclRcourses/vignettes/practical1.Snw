@@ -1,0 +1,366 @@
+%\VignetteIndexEntry{practical1}
+\documentclass[a4paper,justified,openany]{tufte-handout}
+
+%\geometry{showframe}% for debugging purposes -- displays the margins
+\usepackage{amsmath}
+
+<<setup, include=FALSE, cache=FALSE>>=
+library(knitr)
+options(replace.assign=TRUE,width=50)
+
+opts_chunk$set(fig.path='figure/graphics-', 
+               cache.path='cache/graphics-', 
+               fig.align='center', 
+               dev='pdf', fig.width=5, fig.height=5, 
+               fig.show='hold', cache=FALSE, par=TRUE)
+knit_hooks$set(crop=hook_pdfcrop)
+
+knit_hooks$set(par=function(before, options, envir){
+    if (before && options$fig.show!='none') {
+        par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
+            mgp=c(2,.7,0),tcl=-.01, las=1)
+}}, crop=hook_pdfcrop)
+@
+
+
+% Set up the images/graphics package
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{graphics/}}
+
+\title{Introduction to R: practical 1} 
+\author[Dr Colin Gillespie]{Dr Colin S.
+Gillespie}
+%\date{}  % if the \date{} command is left out, the current date will be used
+
+% The following package makes prettier tables.  We're all about the bling!
+\usepackage{booktabs}
+
+% The units package provides nice, non-stacked fractions and better spacing
+% for units.
+\usepackage{units}
+
+% The fancyvrb package lets us customize the formatting of verbatim
+% environments.  We use a slightly smaller font.
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+\newcommand{\cc}{\texttt}
+\graphicspath{{../graphics/}}
+\setcounter{secnumdepth}{2}
+
+% \renewcommand{\hlcomment}[1]{\textcolor[rgb]{0.5,0.5,0.5}{#1}}%
+% \renewenvironment{Hchunk}%
+% {%
+%   \vspace{0.5em}\noindent\begin{lrbox}{\highlightbox}%
+%    \begin{minipage}[b]{\textwidth}%
+%     }%
+%     {%
+%     \end{minipage}%
+%   \end{lrbox}%
+%   \fcolorbox{highlightBorder}{highlightBg}{\usebox{\highlightbox}}%
+%   \vspace{0.5em}}%
+\usepackage{microtype}
+\begin{document}
+
+<<include=FALSE>>=
+opts_chunk$set(concordance=TRUE)
+@
+
+
+\maketitle% this prints the handout title, author, and date
+
+\begin{abstract}
+\noindent This practical aims at introducing you to the R interface. By the
+end of this practical you should be able to load in data, calculate some
+summary statistics and construct some basic plots.
+\end{abstract}
+
+\section{Getting started}
+
+\begin{enumerate}
+\item Open \cc{Rstudio}
+\item In \cc{Rstudio}, type a basic R command, say
+
+<<>>=
+x = 5
+@
+
+\item Press \mbox{\cc{Ctrl + Enter}} anywhere on the line with \cc{x = 5}. This should
+send the command \cc{x = 5} to the R console in the bottom left hand
+window.
+\item In \cc{Rstudio}, save the file you are currently working on. Rstudio will
+(correctly) add the file extension \cc{.R}
+\end{enumerate}
+Other \cc{Rstudio} commands are:\marginnote{In Rstudio, click on \cc{Help} and
+\cc{Keyboard shortcuts} to see other shortcuts.}
+\begin{itemize}
+\item Pressing \mbox{\cc{Ctrl + Enter}} will send the current line to the R
+console.
+\item If you highlight a few lines of R code, pressing \mbox{\cc{Ctrl + Enter}}
+will send that code to the R console.
+\item Pressing \mbox{\cc{Ctrl + Shift + R}} sends the entire file to R console.
+\end{itemize}
+It's probably worth creating a directory to store any R files that you create.
+
+\section{Course R package}
+
+This practical uses the course R package. Installing this package is
+straightforward:\sidenote{r-forge, CRAN and Bioconductor are package
+repositories, i.e. web-sites that host R packages. It is straightforward to
+set-up and maintain our own package repository.}
+
+<<eval=FALSE, tidy=FALSE>>=
+install.packages("nclRcourses", 
+                 repos="http://R-Forge.R-project.org")
+@ 
+
+\noindent To load the package, use
+
+<<>>=
+library(nclRcourses)
+@ 
+
+
+\pagebreak
+
+\section{The data}
+
+We are going to investigate the yeast data set described in chapter 1 of the notes.
+
+
+\subsection{Retrieving the data}
+
+To the data is available in the \cc{nclRcourses} package. To load the data into
+R, use:\sidenote{You access the help page on this data set using the command
+\mbox{\cc{?yeast\_long}}}
+
+<<>>=
+data(yeast_long)
+@ 
+
+\noindent We can inspect the column names using:
+
+<<>>=
+## yeast_long is a data frame
+colnames(yeast_long)
+@ 
+
+\noindent We easily change the column names, for example,
+
+<<>>=
+colnames(yeast_long)[1]
+colnames(yeast_long)[1] = "id"
+@ 
+
+\noindent We can select individual columns, using either their column name:
+
+<<results='hide'>>=
+yeast_long$value
+@ 
+
+\noindent or their column number:
+
+<<results='hide'>>=
+yeast_long[,2]
+@ 
+
+\noindent When vectors or data frames are too large to manage, we use the function
+\cc{head} to take a peek at the data:
+
+<<>>=
+head(yeast_long$value, 5)
+@ 
+
+\begin{itemize}
+\item In the above function call, what does \cc{5} specify? What happens if you
+omit it?
+\item Another useful function is \cc{tail}. What does this function do?
+\end{itemize}
+Using the \cc{dim} function, how many columns and rows does \cc{d} have?
+
+\section{Scatter plots}
+
+Let's start with some simple scatter plots. However, before we begin we'll set
+the variable \cc{d} to be our data frame\sidenote{We do this because we are too
+lazy to type \cc{yeast\_long}.}
+
+<<fig.keep='none'>>=
+## Select all measurements on the first probe
+d = yeast_long[1:15,]
+plot(d$tps, d$value) 
+@ 
+
+\noindent Now,
+\begin{itemize}
+\item When you call \cc{plot}, R guesses at suitable axis labels. Use the
+\cc{xlab} and \cc{ylab} arguments to specify better axis labels.
+
+<<test-plot, fig.keep='none'>>=
+plot(d$tps, d$value, xlab="A nice label")
+@
+
+\begin{marginfigure}
+<<pdf-dev, ref.label='test-plot', dev='pdf', out.width='\\textwidth', echo=FALSE, crop=TRUE>>=
+@
+\caption{Adding an $x$-axis label using \cc{xlab}.}\label{F1}
+\end{marginfigure}
+
+\item Use the \cc{ylim} argument to specify a y-axis range from 1 to 10.
+\item Use the \cc{col} argument to change the colour of the points.
+<<fig.keep='none'>>=
+plot(d$tps, d$value, col=d$rep)
+@ 
+\item Use the \cc{pch} argument to change the shape of the points.
+\item Use the \cc{main} argument to give the plot a title.
+\item I tend to alter the default plot command using:
+
+<<eval=FALSE, tidy=FALSE>>=
+par(mar=c(3,3,2,1), mgp=c(2,.7,0), tck=-.01, 
+    las=1)
+@ 
+
+\noindent What do you think? Can you determine what \cc{mar}, \cc{mgp}, \cc{tck}
+and \cc{las} mean?
+\end{itemize}
+
+
+\section{Summary Statistics}
+
+Use the commands \cc{mean}, \cc{median}, \cc{sd} and range to calculate the summary
+statistics for the yeast expression levels.
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+Statistics & Value \\
+\midrule
+Mean & \hspace*{6cm} \\
+Median & \\
+Std. dev & \\
+Range & \\
+\bottomrule
+\end{tabular}
+\caption{Summary statistics for the yeast data set.}
+\end{table}
+
+\section{Histograms}
+
+We will now investigate the distribution of yeast expression levels using histograms. Use the
+\cc{hist} function to plot a histogram of the yeast expression
+
+<<F2, fig.keep="none">>=
+hist(yeast_long$value)
+@ 
+
+\begin{marginfigure}
+<<ref.label='F2', dev='pdf', out.width='\\textwidth', echo=FALSE>>=
+@
+\caption{Histogram of all expression values.}\label{F2}
+\end{marginfigure}
+\noindent The default method for determining the number of bins used in your
+histogram isn't that great. So you can use different rules
+
+<<fig.keep="none">>=
+hist(yeast_long$value, breaks="FD")
+@ 
+
+\noindent The arguments that we encountered when looking at scatter plots can be
+used with histograms.\marginnote{Setting
+\cc{breaks=FD} constructs the histogram using the Freedman-Diaconis rule for
+calculating binwidths. The other rules are: \cc{Sturge} (default) and
+\cc{Scott}. See \cc{?hist} for further details.}
+
+
+\section{Box plots}
+
+Let's generate a boxplot for the expression levels:
+
+<<F3, fig.keep="none">>=
+boxplot(yeast_long$value)
+@ 
+
+\begin{marginfigure}
+<<ref.label='F3', out.width='\\textwidth', echo=FALSE>>=
+@
+\caption{Boxplot of all expression values.}\label{F3}
+\end{marginfigure}
+
+
+\noindent All the usual arguments, such as \cc{xlab}, can be used here. Now
+lets, separate the yeast data by whether its type
+
+<<fig.keep="none">>=
+boxplot(yeast_long$value ~ yeast_long$type)
+@ 
+
+\noindent Try generating a similar boxplot, but for other variables. What
+happens when you condition on more than one variable?
+
+\section{Spicing up your graph (bonus material)}
+
+We want have time to cover this section in the computer lab, but I want to show
+you that with a bit of thought, it is possible to generate some very nice graphs
+in R.\sidenote{Try and figure out what each individual R command does. Try
+varying the arguments. Use help.} However, we need to move away from the
+defaults. Figure \ref{F1} shows the three replicates over time for probe
+\cc{1769308\_at}. It also shows the mean value of the three probes. First we
+specify the colours we want to use:
+
+<<tidy=FALSE>>=
+cols = c(rgb(85, 130, 169, alpha=40, maxColorValue=255), 
+         rgb(200, 79, 178, alpha=200, maxColorValue=255))
+@ 
+
+\noindent Next we alter the size of the graphic window:
+
+<<tidy=FALSE>>=
+par(mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01,
+    cex.axis=0.9, las=1, xaxs='i', yaxs='i')
+@ 
+
+\noindent Then we plot the three replicates
+
+<<f4,tidy=FALSE, fig.keep='none', echo=1:3>>=
+plot(d[1:5,]$tps, d[1:5, ]$value, type="l", frame=FALSE, 
+     axes=FALSE,
+     panel.first=abline(h=seq(8.75, 9.5, 0.25),  
+                        lwd=3, col="lightgray", lty="dotted"), 
+     xlab="Time", ylab="Expression level", 
+     xlim=c(0, 250), ylim=c(8.5, 9.5), 
+     col=cols[1], lwd=2, cex.lab=0.9)
+lines(d[6:10,]$tps, d[6:10, ]$value, col=cols[1], lwd=2)
+lines(d[11:15,]$tps, d[11:15, ]$value, col=cols[1], lwd=2)
+
+axis(2, c(8.5, 9, 9.5), c("8.5", "9.0", "9.5"), tick=F, cex.axis=0.8)
+axis(1, seq(0, 250, 50), seq(0, 250, 50), cex.axis=0.8)
+title("Expression levels of 1769308_at", adj=0, 
+      cex.main=0.9, font.main=2, col.main="black")
+lines(seq(0, 240, 60), tapply(d$value, d$tps, mean), 
+      col=cols[2], lwd=2)
+@ 
+
+\begin{figure}[t]
+<<ref.label='f4', fig.keep='last', echo=FALSE>>=
+@
+\caption{Expression levels of three replications. Mean level is also shown.}\label{F4}
+\end{figure}
+
+\noindent We explicitly add the axis labels and title
+
+<<f4b,eval=FALSE, tidy=FALSE>>=
+axis(2, c(8.5, 9, 9.5), c("8.5", "9.0", "9.5"), tick=FALSE, 
+     cex.axis=0.8)
+axis(1, seq(0, 250, 50), seq(0, 250, 50), cex.axis=0.8)
+title("Expression levels of 1769308_at", adj=0, 
+      cex.main=0.9, font.main=2, col.main="black")
+@ 
+
+\noindent Finally we add the mean level\sidenote{We'll cover \cc{tapply} on later.}
+<<eval=FALSE, tidy=FALSE>>=
+lines(seq(0, 240, 60), tapply(d$value, d$tps, mean), 
+      col=cols[2], lwd=2)
+@
+
+\noindent to get figure \ref{F4}.
+\end{document}
+

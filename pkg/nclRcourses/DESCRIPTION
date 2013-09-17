@@ -16,3 +16,4 @@ Collate:
     'GetStudentID.R'
     'nclRcourses-package.R'
 Packaged: 2013-09-12 15:49:51 UTC; ncsg3
+VignetteBuilder: knitr

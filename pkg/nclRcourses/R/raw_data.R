@@ -11,3 +11,10 @@
 #' In: Microarray Image and Data Analysis: Theory and Practice. 
 #' CRC Press.
 NULL
+
+# library(lumi)
+# raw_data = lumiR.batch("~/Downloads/lumi_raw_data.txt")
+# vst_data = lumiT(raw_data, method="vst")
+# rsn_data = lumiN(vst_data, method="rsn")
+# analysis_ready_data = lumiQ(rsn_data)
+# 

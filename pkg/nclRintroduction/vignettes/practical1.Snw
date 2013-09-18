@@ -1,0 +1,296 @@
+%\VignetteIndexEntry{solutions1}
+\documentclass[a4paper,justified,openany]{tufte-handout}
+
+<<setup, include=FALSE, cache=FALSE>>=
+library(knitr)
+options(replace.assign=FALSE,width=50)
+
+opts_chunk$set(fig.path='figure/graphics-', 
+               cache.path='cache/graphics-', 
+               fig.align='center', 
+               dev='pdf', fig.width=5, fig.height=5, 
+               fig.show='hold', cache=FALSE, par=TRUE)
+knit_hooks$set(crop=hook_pdfcrop)
+
+knit_hooks$set(par=function(before, options, envir){
+    if (before && options$fig.show!='none') {
+        par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
+            mgp=c(2,.7,0),tcl=-.01, las=1)
+}}, crop=hook_pdfcrop)
+@
+
+
+\usepackage{amsmath}
+
+% Set up the images/graphics package
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{graphics/}}
+
+\title{Introduction to R: practical 1} 
+\author[Dr Colin Gillespie]{Dr Colin S.
+  Gillespie}
+%\date{}  % if the \date{} command is left out, the current date will be used
+
+% The following package makes prettier tables.  We're all about the bling!
+\usepackage{booktabs}
+
+% The units package provides nice, non-stacked fractions and better spacing
+% for units.
+\usepackage{units}
+
+% The fancyvrb package lets us customize the formatting of verbatim
+% environments.  We use a slightly smaller font.
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+\newcommand{\cc}{\texttt}
+\graphicspath{{../graphics/}}
+\setcounter{secnumdepth}{2}
+
+% \renewcommand{\hlcomment}[1]{\textcolor[rgb]{0.5,0.5,0.5}{#1}}%
+% \renewenvironment{Hchunk}%
+% {%
+%   \vspace{0.5em}\noindent\begin{lrbox}{\highlightbox}%
+%    \begin{minipage}[b]{\textwidth}%
+%     }%
+%     {%
+%     \end{minipage}%
+%   \end{lrbox}%
+%   \fcolorbox{highlightBorder}{highlightBg}{\usebox{\highlightbox}}%
+%   \vspace{0.5em}}%
+\usepackage{microtype}
+ \begin{document}
+
+\maketitle% this prints the handout title, author, and date
+
+\begin{abstract}
+  \noindent This practical aims at introducing you to the R interface. By the
+  end of this practical you should be able to load in data, calculate some
+  summary statistics and construct some basic plots.
+
+  If you have brought your own data, then I would recommend that you quickly
+  work through this practical first, then try to load in your own data.
+\end{abstract}
+
+\section{Getting started}
+
+\begin{enumerate}
+\item Open \cc{Rstudio}
+% \begin{center}
+%   {\small Start menu -> All Programs -> Statistical Software -> R ->
+%     Rstudio}\sidenote{This is roughly where it should be, but it depends on your
+%     set-up.}
+% \end{center}
+\item In \cc{Rstudio}, type a basic R command, say
+  
+<<>>=
+x = 5
+@
+
+\item Press \mbox{\cc{Ctrl + Enter}} anywhere on the line with \cc{x = 5}. This should
+  send the command \cc{x = 5} to the R console in the bottom left hand
+  window.\marginnote{In Rstudio click on \cc{Help} and \cc{Keyboard shortcuts}
+    to see other shortcuts.}
+\item In \cc{Rstudio}, save the file you are currently working on. Rstudio will
+  (correctly) add the file extension \cc{.R}
+\end{enumerate}
+Other \cc{Rstudio} commands are:
+\begin{itemize}
+\item If the cursor is at the beginning of the line, pressing \mbox{\cc{Ctrl +
+      Enter}} will send that line to the R console.
+\item If you highlight a few lines of R code, pressing \mbox{\cc{Ctrl + Enter}}
+  will send that code to the R console.
+\item Pressing \mbox{\cc{Ctrl + Shift + R}} sends the entire file to R console.
+\end{itemize}
+It's probably worth creating a directory to store any R files that you create.
+
+\section{The data}
+
+We are going to investigate the IMDB data set described in chapter 1. Movies
+were selected for inclusion if they had a known length, had been rated by at
+least one IMDB user and had an mpaa rating. This gives 4847 films, where each
+film has 24 associated variables. The first few rows are given in Table
+1.1 in the notes. This is \textbf{only a subset} of the data, the actual data set
+contains information on over 50,000 movies.
+
+\pagebreak
+
+\subsection{Retrieving the data}
+
+To download the data into R, we use the following command:\marginnote{You can
+  enter the url into your web browser and view the data directly.}
+
+<<>>=
+library(nclRintroduction)
+data(movies)
+d = movies
+@ 
+
+\noindent We can inspect the column names using:
+
+<<results='hide'>>=
+## d is a data frame
+colnames(d)
+@ 
+
+\noindent We easily change the column names, for example,
+
+<<>>=
+colnames(d)[17]
+colnames(d)[17] = "MPAA"
+@ 
+
+\noindent We can select individual columns, using either their column name:
+
+<<results='hide'>>=
+d$Year
+@ 
+
+\noindent or their column number:
+
+<<results='hide'>>=
+d[,2]
+@ 
+
+\noindent When vectors or data frames are too large to manage, we use the function
+\cc{head} to take a peek at the data:
+
+<<>>=
+head(d$Title, 5)
+@ 
+
+\begin{itemize}
+\item In the above function call, what does ``5'' specify? What happens if you
+  omit it?
+\item Another useful function is \cc{tail}. What does this function do?
+\end{itemize}
+Using the \cc{dim} function, how many columns and rows does \cc{d} have?
+
+\section{Scatter plots}
+
+Let's start with some simple scatter plots:
+
+<<F1, fig.keep='none'>>=
+plot(d$Length, d$Rating)
+@ 
+
+\noindent which gives figure \ref{F1}.
+\begin{marginfigure}
+<<ref.label='F1', dev='pdf', out.width='\\textwidth', echo=FALSE>>=
+@
+\caption{Scatter plot of movie length against rating.}\label{F1}
+\end{marginfigure}
+
+
+\noindent Now,
+\begin{itemize}
+\item When you call \cc{plot}, R guesses at suitable axis labels. Use the
+  \cc{xlab} and \cc{ylab} arguments to specify better axis labels. For example, 
+  
+<<F2, fig.keep='none'>>=
+plot(d$Length, d$Rating, xlab="Length", ylab="Rating")
+@ 
+
+\noindent gives figure \ref{F2}.
+
+\begin{marginfigure}
+<<ref.label='F2', dev='pdf', out.width='\\textwidth', echo=FALSE>>=
+@
+\caption{Scatter plot of movie length against rating with axis labels.}\label{F2}
+\end{marginfigure}
+
+\item Use the \cc{ylim} argument to specify a y-axis range from 1 to 10.
+\item Use the \cc{col} argument to change the colour of the points.
+\item Use the \cc{main} argument to give the plot a title.
+\item I tend to alter the default plot command using:
+  
+<<>>=
+par(mar=c(3,3,2,1), mgp=c(2,.7,0), tck=-.01, las=1)
+@ 
+
+\noindent What do you think? Can you determine what \cc{mar}, \cc{mgp}, \cc{tck}
+and \cc{las} mean?
+\end{itemize}
+
+
+\section{Summary Statistics}
+
+Use the commands \cc{mean}, \cc{median}, and \cc{sd} to calculate the summary
+statistics for the movie length.
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    Statistics & Value \\
+    \midrule
+    Mean & \hspace*{6cm} \\
+    Median & \\
+    Std. dev & \\
+    \bottomrule
+  \end{tabular}
+  \caption{Summary statistics for the movie data set.}
+\end{table}
+
+\section{Histograms}
+
+We will now investigate the distribution of movie years using histograms. Use the
+\cc{hist} function to plot a histogram of the movie years:
+
+<<F3, fig.keep='none'>>=
+hist(d$Year)
+@ 
+
+\begin{marginfigure}
+<<ref.label='F3', dev='pdf', out.width='\\textwidth', echo=FALSE>>=
+@
+\caption{Histogram of movie year.}\label{F3}
+\end{marginfigure}
+
+\noindent which gives figure \ref{F3}. The default method for determining the number of bins used in your
+histogram isn't that great. So you can use different rules 
+
+<<F4, fig.keep='none'>>=
+hist(d$Year, breaks="FD")
+@ 
+
+\noindent The arguments that we encountered when looking at scatter plots can be
+used with histograms.
+
+
+\section{Boxplots}
+
+Let's generate a boxplot for the ratings data:
+
+<<F5, fig.keep='none'>>=
+boxplot(d$Rating)
+@ 
+
+\begin{marginfigure}
+<<ref.label='F5', dev='pdf', out.width='\\textwidth', echo=FALSE>>=
+@
+\caption{Boxplot of movie ratings.}\label{F5}
+\end{marginfigure}
+
+
+\noindent All the usual arguments, such as \cc{xlab}, can be used here. Now
+lets, separate the movie data by whether it's a romantic movie:
+
+<<fig.keep='none'>>=
+boxplot(d$Rating ~ d$Romance)
+@ 
+
+\noindent Try generating a similar boxplot, but for other variables. What
+happens when you condition on more than one variable?
+
+\section{Solutions}
+
+Solutions are contained within this package:
+<<eval=FALSE>>=
+library(nclRintroduction)
+vignette("solutions1", package="nclRintroduction")
+@
+
+
+
+
+\end{document}

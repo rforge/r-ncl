@@ -1,0 +1,17 @@
+Package: nclRintroduction
+Type: Package
+Title: nclRintroduction
+Version: 0.11
+Date: 2012-12-01
+Author: Colin Gillespie
+Maintainer: Colin Gillespie <colin.gillespie@newcastle.ac.uk>
+Description: Great code
+License: GPL-3
+Depends:
+    R (>= 2.13),
+Collate:
+    'Get.R'
+    'GetDataFrame.R'
+    'movies.R'
+    'nclRintroduction-package.R'
+VignetteBuilder: knitr

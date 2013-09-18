@@ -1,0 +1,4 @@
+export(GetCharacterVector)
+export(GetDataFrame)
+export(GetLogicalVector)
+export(GetNumericVector)

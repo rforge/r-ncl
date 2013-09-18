@@ -1,0 +1,342 @@
+%\VignetteIndexEntry{solutions2}
+\documentclass[a4paper,justified,openany]{tufte-handout}
+
+
+<<setup, include=FALSE, cache=FALSE>>=
+library(knitr)
+options(replace.assign=FALSE,width=50)
+
+opts_chunk$set(fig.path='figure/graphics-', 
+               cache.path='cache/graphics-', 
+               fig.align='center', 
+               dev='pdf', fig.width=5, fig.height=5, 
+               fig.show='hold', cache=FALSE, par=TRUE)
+knit_hooks$set(crop=hook_pdfcrop)
+
+knit_hooks$set(par=function(before, options, envir){
+    if (before && options$fig.show!='none') {
+        par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
+            mgp=c(2,.7,0),tcl=-.01, las=1)
+}}, crop=hook_pdfcrop)
+@
+\usepackage{amsmath}
+
+% Set up the images/graphics package
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{graphics/}}
+
+\title{Practical 2 solutions} 
+\author[Dr Colin Gillespie]{Dr Colin S.
+  Gillespie}
+\date{}  % if the \date{} command is left out, the current date will be used
+
+% The following package makes prettier tables.  We're all about the bling!
+\usepackage{booktabs}
+
+% The units package provides nice, non-stacked fractions and better spacing
+% for units.
+\usepackage{units}
+
+% The fancyvrb package lets us customize the formatting of verbatim
+% environments.  We use a slightly smaller font.
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+\newcommand{\cc}{\texttt}
+\graphicspath{{../graphics/}}
+\setcounter{secnumdepth}{2}
+
+\usepackage{microtype}
+\begin{document}
+
+\maketitle% this prints the handout title, author, and date
+
+% \begin{abstract}
+%   \noindent This practical aims at introducing you to the R interface. By the
+%   end of this practical you should be able to load in data, calculate some
+%   summary statistics and construct some basic plots.
+
+%   If you have brought your own data, then I would recommend that you quickly
+%   work through this practical first, then try to load in your own data.
+% \end{abstract}
+\section{Simple linear regression}
+
+\begin{enumerate}
+\item \newthought{Consider the} data in table \ref{T1} for ice cream sales at Luigi
+  Minchella's ice cream parlour.
+\begin{enumerate}
+\item Perform a linear regression of $y$ on $x$. Should temperature be included
+  in the model?
+<<>>=
+x = c(4,4,7,8,12,15,16,17,14,11,7,5)
+y = c(73, 57, 81, 94, 110, 124, 134, 139, 124, 103, 81, 80)
+m = lm(y~x)
+summary(m)
+##The p-value for the gradient is 9.9e-09
+##This suggests temperatue is useful
+@
+
+\item Calculate the sample correlation coefficient $r$. Perform a hypothesis
+  test, where $H_0: \rho =0$ and $H_1: \rho \ne 0$.\sidenote{Where $\rho$ is the
+    population correlation coefficient.} Compare this $p$-value to the $p$-value
+  for testing if $\beta_1 =0$.
+
+<<>>=
+##The p-value for the correlation is also 9.9e-09
+cor.test(x, y)
+@  
+\item Construct a graph of the data. Add a dashed red line indicating the line
+  of best fit.
+<<F1, fig.keep='none', echo=1:2>>=
+plot(x, y, xlab="Temp", ylab="Sales")
+abline(m, col=2, lty=2)
+text(5, 130, "r=0.983")
+@
+
+\begin{marginfigure}
+\centering
+<<ref.label='F1', dev='pdf', out.width='\\textwidth', echo=FALSE>>=
+@
+\caption{Scatterplot with the earnings data. Also shows the line of best fit.}
+\end{marginfigure}
+
+\item Using the \cc{text} function, add the text \textit{r = 0.983} to your plot.
+<<eval=FALSE>>=
+text(5, 130, "r=0.983")
+@
+
+\item Plot the standardised residuals against the fitted values. Does the graph
+  look random?
+<<F2, fig.keep='none', echo=2>>=
+setnicepar(mfrow=c(1, 2))
+plot(fitted.values(m), rstandard(m))
+qqnorm(rstandard(m))
+@
+
+\item Construct a q-q plot of the standardised residuals.
+
+<<fig.keep='none'>>=
+qqnorm(rstandard(m))
+##Model diagnosics look good
+@
+
+\end{enumerate}
+\begin{figure}[h]
+\centering
+<<ref.label='F2', dev='pdf', out.width='\\textwidth', echo=FALSE, fig.width=10>>=
+@
+\caption{Model diagnostics.}
+\end{figure}
+
+\begin{table}[b]
+  \resizebox{1.05\textwidth}{!}{
+\centering
+\begin{tabular}{@{}l llllll llllll@{}}
+\toprule
+Month	&Jan	&Feb	&Mar	&Apr	&May	&Jun	&Jul	&Aug	&Sep
+&Oct	&Nov	&Dec \\ 
+\midrule
+$x$, $^\textrm{o}$C&4&4	&7	&8	&12	&15	&16	&17	&14	&11	&7	&5	\\
+$y$, $\pounds$000's&73&57&81	&94	&110	&124	&134	&139	&124
+&103	&81	&80 \\ 
+\bottomrule
+\end{tabular}}
+\caption{Monthly sales data from Luigi Minchella's ice
+  cream parlour.}\label{T1}
+\end{table}
+\clearpage
+
+
+\item \newthought{In a study} of the effect of temperature $x$ on yield $y$ of a chemical
+  process, the data in table \ref{T2} was obtained.
+\begin{enumerate}
+\item Perform a linear regression of $y$ on $x$.
+\item Calculate the sample correlation coefficient $r$.
+\item Plot the data and add the line of best fit to your plot.
+\item Plot the Studentized residuals against the fitted values.
+\item Construct a q-q plot of the Studentized residuals.
+\end{enumerate}
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}l llllll llllll@{}}
+    \toprule
+    $x$  & 25 & 26 & 27 & 28 & 29 & 30 & 31 & 32 & 33 & 34 & 35 & 36 \\
+    \midrule
+    $y$  & 10 & 16 & 13 & 17 & 20 & 18 & 19 & 23 & 25 & 22 & 29 & 26 \\ 
+    \bottomrule
+  \end{tabular}
+  \caption{Twelve measurements of from a study of temperature on yield.}\label{T2}
+\end{table}
+\end{enumerate}
+\section{Multiple linear regression}
+\begin{enumerate}
+
+
+ 
+\item \newthought{The data} (below) are from 101 consecutive patients attending a combined
+  thyroid-eye clinic. The patients have an endocrine disorder, Graves'
+  Ophthalmopathy, which affects various aspects of their eyesight. The
+  ophthalmologist measures various aspects of their eyesight and constructs an
+  overall index of how the disease affects their eyesight. This is the
+  Ophthalmic Index (OI) given in the dataset. The age of the patient and their
+  sex are also recorded. In practice, and as this is a chronic condition which
+  can be ameliorated but not cured, the OI would be monitored at successive
+  clinic visits to check on the patient's progress. However, these data are
+  obtained at presentation. We are interested in how OI changes with age and
+  gender. The data can be obtained from
+
+<<>>=
+library(nclRmodelling)
+data(graves)
+@ 
+
+\begin{enumerate}
+\item Fit the multivariate regression model predicting OI from age and gender.
+\item Examine the Studentized residual plots. Is there anything that would
+  suggest you have a problem with your model? What do you do?
+\end{enumerate}
+\item \newthought{Dr Phil} comes to see you with his data. He believes that IQ can be
+  predicted by the number of years education. Dr Phil does not differentiate
+  between primary, secondary and tertiary education. He has four variables:
+\begin{itemize}
+\item \cc{IQ} - the estimated IQ of the person (the response variable);
+\item \cc{AgeBegin} - the age of the person when they commenced education;
+\item \cc{AgeEnd} - the age of the person when they finished education;
+\item \cc{TotalYears} - the total number of years a person spent in education.
+\end{itemize}
+The data can be obtained from:
+
+<<>>=
+data(drphil)
+@ 
+
+Read the data into R and fit the linear regression model:
+\[
+IQ = \beta_0 + \beta_1 AgeBegin + \beta_2 AgeEnd + \beta_3 TotalYears + \epsilon
+\]
+Explain what is wrong with this model? Suggest a possible remedy. 
+
+<<>>=
+(m = lm(IQ ~ AgeBegin + AgeEnd + TotalYears, data=drphil))
+#The problem is TotalYears = AgeEnd - AgeBegin
+#Solution: remove TotalYears
+@
+
+\end{enumerate}
+
+\section{One way ANOVA tables}
+
+\begin{enumerate}
+\item \newthought{A pilot study} was developed to investigate whether music
+  influenced exam scores. Three groups of students listened to 10 minutes of
+  Mozart, silence or heavy metal before an IQ test. The results of the IQ test
+  are as follows
+  
+  \begin{table}[h]
+    \centering
+    \begin{tabular}{@{}l lllllll@{}}
+      \toprule
+      Mozart &  109 & 114 &  108 &  123 &  115 &  108 & 114\\
+      Silence & 113 & 114 &  113 &  108 &  119 &  112 & 110 \\
+      Heavy Metal & 103  & 94   &114 &  107 &  107 &  113 & 107\\
+      \bottomrule
+    \end{tabular}
+    \caption{Results from the study on how music affects examination performance.}
+  \end{table}
+\begin{enumerate}
+\item Construct a one-way ANOVA table. Are there differences between treatment groups?
+<<>>=
+x1 = c(109, 114, 108, 123, 115, 108, 114)
+x2 = c(113, 114, 113, 108, 119, 112, 110)
+x3 = c(103, 94, 114, 107, 107, 113, 107)
+dd = data.frame(values = c(x1, x2, x3), type = rep(c("M", "S", "H"), each=7))
+m = aov(values ~ type, dd)
+summary(m)
+##The p value is around 0.056.
+##This suggests a difference may exist.
+@
+\item Check the standardised residuals of your model.
+
+<<F3, fig.keep='none'>>=
+plot(fitted.values(m), rstandard(m))
+## Residual plot looks OK
+@
+
+\begin{marginfigure}
+\centering
+<<ref.label='F3', dev='pdf', out.width='\\textwidth', echo=FALSE>>=
+@
+\caption{Model diagnosics for the music data.}
+\end{marginfigure}
+
+\item Perform a multiple comparison test to determine where the difference lies.
+<<>>=
+TukeyHSD(m)
+@
+
+\end{enumerate}
+
+
+
+\end{enumerate}
+
+
+\newthought{The following sections} use the results of the Olympic heptathlon
+competition, Seoul, 1988. To enter the data into R, use the following commands:
+
+<<>>=
+data(hep)
+##Remove the athletes names and final scores.
+hep_s = hep[,2:8]
+@ 
+
+\section{Hierarchical clustering}
+
+\newthought{Using the heptathlon} data set, carry out a clustering analysis. Try
+different distance methods and clustering functions.
+
+<<>>=
+plot(hclust(dist(hep_s)), labels=hep[,1])
+@ 
+
+\section{Principal components analysis}
+
+\begin{enumerate}
+\item Calculate the correlation matrix of the \cc{hep} data set.
+<<>>=
+##Round to 2dp
+signif(cor(hep_s), 2)
+@
+
+\item Carry out a PCA on this data set.\sidenote{Remember to remove the
+athletes names.}
+  \begin{itemize}
+  \item Keep \cc{score} in your PCA analysis. What happens and why? Do you think
+    you should remove \cc{score}?
+<<>>=
+##Remove:
+##1st column: athletes name
+##Last column: It's a combination of the other columns
+dd = hep[ ,2:8]
+
+##Run principle components
+prcomp(dd)
+@
+
+  \item Do you think you need to scale the data?
+<<>>=
+##Yes!. run800m dominates the loading since
+##the scales differ
+@
+
+  \item Construct a biplot of the data.
+<<>>=
+prcomp(dd, scale=TRUE)
+biplot(prcomp(dd, scale=TRUE))
+@
+
+  \end{itemize}
+\end{enumerate}
+
+
+\end{document}

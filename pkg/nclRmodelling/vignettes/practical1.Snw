@@ -1,0 +1,262 @@
+%\VignetteIndexEntry{practical1}
+\documentclass[a4paper,justified,openany]{tufte-handout}
+
+<<setup, include=FALSE, cache=FALSE>>=
+library(knitr)
+options(replace.assign=FALSE,width=50)
+
+opts_chunk$set(fig.path='figure/graphics-', 
+               cache.path='cache/graphics-', 
+               fig.align='center', 
+               dev='pdf', fig.width=5, fig.height=5, 
+               fig.show='hold', cache=FALSE, par=TRUE)
+knit_hooks$set(crop=hook_pdfcrop)
+
+knit_hooks$set(par=function(before, options, envir){
+    if (before && options$fig.show!='none') {
+        par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
+            mgp=c(2,.7,0),tcl=-.01, las=1)
+}}, crop=hook_pdfcrop)
+@
+
+%\geometry{showframe}% for debugging purposes -- displays the margins
+
+\usepackage{amsmath}
+
+% Set up the images/graphics package
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{graphics/}}
+
+\title{Statistical modelling: practical 1} 
+\author[Dr Colin Gillespie]{Dr Colin S.
+  Gillespie}
+\date{}  % if the \date{} command is left out, the current date will be used
+
+% The following package makes prettier tables.  We're all about the bling!
+\usepackage{booktabs}
+
+% The units package provides nice, non-stacked fractions and better spacing
+% for units.
+\usepackage{units}
+
+% The fancyvrb package lets us customize the formatting of verbatim
+% environments.  We use a slightly smaller font.
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+\newcommand{\cc}{\texttt}
+\graphicspath{{../graphics/}}
+\setcounter{secnumdepth}{2}
+
+
+\usepackage{microtype}
+\begin{document}
+
+\maketitle% this prints the handout title, author, and date
+
+\begin{abstract}
+  \noindent I've starred, $^*$, some of the questions. This indicates that we didn't
+  directly cover the material in the lecture. If you are particular interested
+  in this statistical area, try the question. Otherwise, just move on.
+\end{abstract}
+<<echo=FALSE>>=
+x = c(78.64,79.01, 79.57, 79.52, 80.71, 79.95, 78.50,
+  79.10, 81.98, 80.09, 80.29, 80.22)
+y = c(81.92, 81.12, 82.47, 82.86, 82.89, 82.45,
+     82.51, 81.11, 83.07, 82.77, 82.38, 83.14)
+dd = data.frame(x, y)
+@ 
+
+\begin{enumerate}
+\item \newthought{Consider the} following data set:
+\begin{table}
+  \centering
+  \begin{tabular}{@{}llllll@{}}
+    \toprule
+    \multicolumn{6}{@{}l}{Method A}\\
+    \midrule
+    78.64 & 79.01 & 79.57 & 79.52 & 80.71 & 79.95\\
+    78.50 & 79.10 & 81.98 & 80.09 & 80.29 & 80.22\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{enumerate}
+\item Input the data into R.\sidenote{I would suggest entering the data into
+    Excel as a single column. Then export it as a \texttt{csv} file.}
+\item Construct a boxplot and a histogram of the data.
+\item Construct a q-q plot of the data.
+\item What is the mean and standard deviation of this data.
+\item Carry out a one sample $t$-test at the 99\% level, where
+  \[
+  H_0: \mu =79 \quad \text{and} \quad H_1: \mu \ne  79\;.
+\]
+\item Calculate a 95\% confidence interval for the population mean value.
+\item $^*$ Now carry out a \cc{wilcox.test}. Compare the $p$-values of this test to
+  the one sample $t$-test.
+\item $^*$ Use the \cc{str} function to explore the output of the \cc{wilcox.test} function.
+\item Imagine that this was a proper statistical analysis. Save your data as a
+  \cc{csv} file. Clean up your R script - commenting where necessary - and save
+  it as a file. You should be able to open the file and reproduce your analysis.
+\end{enumerate}
+
+\item \newthought{Another experiment} was carried out and the following data
+  were collected
+
+\begin{table}
+  \centering
+  \begin{tabular}{@{}llllll@{}}
+    \toprule
+    \multicolumn{6}{@{}l}{Method B}\\
+    \midrule
+     81.92 & 81.12 & 82.47 & 82.86 & 82.89 & 82.45 \\
+     82.51 & 81.11 & 83.07 & 82.77 & 82.38 & 83.14 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\begin{enumerate}
+\item Input the data into R. Combine the two data sets into a single data
+  frame.\sidenote{I would suggest entering the data into Excel. Have two
+    columns. Column 1 is the data and column 2 indicates the method. Export the
+    data as a \texttt{csv} file.}
+\item Exploratory data analysis.
+  \begin{itemize}
+  \item Construct boxplots, histograms and q-q plots for both data sets. Work
+    out the means and standard deviations. Before carrying out any statistical
+    test, what do you think your conclusions will be? Do you think the variances
+    are roughly equal? Do you think the data conforms to the normal
+    distribution.
+  \end{itemize}
+\item Carry out a two sample $t$-test. Assume that the variances are unequal.
+  Does this your answer compare to your intuition?
+\item Use the \cc{var.test} function to test for unequal
+  variances.\sidenote{This function isn't in the notes. Look at the help file.}
+  Does this correspond to your intuition?
+\item $^*$ Carry out a two sample $t$-test, assuming equal variances.
+\item $^*$ Now carry out a \cc{wilcox.test}.
+\item $^*$ When carrying out the Wilcoxon test, we assume a common distribution. This
+  assumption can be tested using the \textit{Kolmogorov-Smirnov} test:
+  \cc{ks.test}.\sidenote{Again this function isn't in the notes. Look at the
+    help file.} Is the assumption of a common distribution valid?
+\end{enumerate}
+
+\item \newthought{Suppose we} are interested whether successful business
+  executives are affected by their zodiac sign. We have collected 4265 samples
+  and obtained the following data
+
+\begin{table*}[h]
+  \resizebox{\textwidth}{!}{%
+
+  \centering
+  \begin{tabular}{@{}llll llll llll@{}}
+    \toprule
+    Aries & Taurus & Gemini & Cancer & Leo & Virgo & Libra & Scorpio &
+    Sagittarius & Capricorn & Aquarius & Pisces \\
+    \midrule
+    348 & 353 & 359 & 357 & 350 & 355 & 359 & 367 & 345 & 362 & 343 & 367\\
+\bottomrule
+  \end{tabular}}
+  \caption{Zodiac signs of 4265 business executives}
+  \label{tab:1}
+\end{table*}
+\begin{enumerate}
+\item Carry out a $\chi^2$ goodness of fit test on the zodiac data. Are business
+  executives distributed uniformly across zodiac signs?\sidenote{Use the
+    \cc{chisq.test} function}
+\item What are the expected values for each zodiac sign?
+\item The formula for calculating the residuals\sidenote{These residuals are
+    called Pearson residuals.} is given by
+  \[
+\frac{\text{observed} - \text{expected}}{\sqrt{\text{expected}}}
+\]
+Which residuals are large?
+\end{enumerate}
+
+<<echo=FALSE>>=
+x = c(348, 353, 359, 357, 350, 355, 359, 367, 345, 362, 343, 367)
+m = chisq.test(x)
+@ 
+%Page616 Intro Stats
+\item \newthought{If you brought} your own data along, feel free to begin
+  an initial analysis. We'll give advice on data entry, manipulation, etc.
+\item \newthought{The} University of Texas Southwestern Medical Center examined
+  whether the risk of contracting Hepatitis C was related to tattoo
+  use.\marginnote{Haley, R. and Fischer, P.R. 2001} The data from the study is
+  summarised as follows:
+
+\begin{table}[h]
+  \centering
+
+  \caption{Counts of patients by their Hepatitis C status, and whether they had a
+    tattoo from a parlour, from elsewhere or had now tattoo at all.}
+\begin{tabular}{@{}llll@{}}
+  \toprule
+  & Hepatitis C & No Hepatitis C & Total \\
+  \midrule
+  Tattoo, Parlour & 17 & 35 & 52 \\
+  Tattoo, elsewhere & 8 & 53  & 61 \\
+  No tattoo & 22 & 491 & 513\\
+  \midrule
+  Total & 47 & 579 & 626 \\
+  \bottomrule
+\end{tabular}
+\end{table}
+\begin{enumerate}
+\item Carry out a $\chi^2$ test to determine if the Hepatitis is related to
+  tattoo status.\sidenote{Use the \cc{chisq.test} function. How should you enter
+  the data?}
+\item When carrying out $\chi^2$ tests, we should make sure that individual
+  cells have expected values of at least five, otherwise the distributional
+  assumptions may be invalid. What are the expected values of each cell. Which
+  cells have an expected value less than five?
+\item Since some of the cells have expected values slightly less than five, we
+  should ensure that these aren't driving the test statistic. Look at the test
+  residuals. Which residuals are large? What should you do now?
+\end{enumerate}
+
+
+<<echo=FALSE, warning=FALSE>>=
+h = c(17, 8, 22)
+nh = c(35, 53, 491)
+dd = data.frame(h, nh)
+m = chisq.test(dd)
+#m$expected
+#image(m$residuals)
+@ 
+
+%Page 627
+
+% \item \newthought{The mathematical} constant $\pi$ is often approximated as
+%   3.141. The value of $\pi$ is irrational, that is, the decimal goes on forever
+%   without repeating any pattern. The following table tabulates the first one
+%   million digits of $\pi$.
+% \begin{table*}[h]
+%    \resizebox{\textwidth}{!}{%
+%   \centering
+%   \begin{tabular}{@{}l lllll lllll@{}}
+%     \toprule
+%     Digit & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
+%     \midrule
+%     Count & 99959 & 99758 & 100026 & 100229 & 100230 & 100359 & 99548 & 99800 &
+%     99985 & 100106 \\
+%     \bottomrule
+%   \end{tabular}}
+%   \caption{The first one million digits of $\pi$.}
+%   \label{tab:3}
+% \end{table*}
+
+% \noindent Test the hypothesis that the digits 0 to 9 are uniformly distributed
+% in the first million digits of $\pi$.
+\end{enumerate}
+
+
+\section{Solutions}
+
+Solutions are contained within this package:
+<<eval=FALSE>>=
+library(nclRmodelling)
+vignette("solutions1", package="nclRmodelling")
+@
+
+
+\end{document}

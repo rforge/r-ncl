@@ -1,3 +1,7 @@
+%\VignetteIndexEntry{practical1}
+%!Snw weave = knitr
+%\VignetteEngine{knitr::knitr}
+
 \documentclass[a4paper,justified,openany]{tufte-handout}
 
 <<setup, include=FALSE, cache=FALSE>>=

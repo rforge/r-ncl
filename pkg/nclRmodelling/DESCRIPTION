@@ -10,7 +10,8 @@ License: GPL-3
 Depends:
     R (>= 2.13),
 Suggests:
-    survival
+    survival,
+    knitr
 Collate:
     'datasets.R'
     'nclRmodelling-package.R'

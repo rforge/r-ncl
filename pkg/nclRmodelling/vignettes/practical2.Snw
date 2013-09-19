@@ -1,3 +1,6 @@
+%\VignetteIndexEntry{practical2}
+%!Snw weave = knitr
+%\VignetteEngine{knitr::knitr}
 \documentclass[a4paper,justified,openany]{tufte-handout}
 
 <<setup, include=FALSE, cache=FALSE>>=
@@ -12,7 +15,7 @@ opts_chunk$set(fig.path='figure/graphics-',
 knit_hooks$set(crop=hook_pdfcrop)
 
 knit_hooks$set(par=function(before, options, envir){
-    if (before && options$fig.show!='none') {
+    if (before && options$fig.show!="none") {
         par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
             mgp=c(2,.7,0),tcl=-.01, las=1)
 }}, crop=hook_pdfcrop)
@@ -301,26 +304,26 @@ dim(lung)
 To begin, we create a \cc{Surv} object:\sidenote{Look at \cc{?Surv} for
   further details.}
 
-<<results='hide'>>=
+<<results="hide">>=
 Surv(lung$time, lung$status)
 @ 
 
 \noindent We can fit a Kaplein-Meier curve using the \cc{surfit} function:
 
-<<results='hide'>>=
+<<results="hide">>=
 survfit(Surv(lung$time, lung$status)~1)
 @ 
 
 \noindent and also plot survival curve
 
-<<fig.keep='none'>>=
+<<fig.keep="none">>=
 plot(survfit(Surv(lung$time, lung$status)~1))
 @ 
 
 \noindent To fit the model using an additional covariate, we just alter the
 formula:
 
-<<fig.keep='none'>>=
+<<fig.keep="none">>=
 plot(survfit(Surv(lung$time, lung$status)~lung$sex))
 @ 
 
@@ -333,7 +336,7 @@ data(heart)
 
 \noindent and make the a \cc{Surv} object
 
-<<results='hide'>>=
+<<results="hide">>=
 Surv(heart$start, heart$stop, heart$event) 
 @ 
 

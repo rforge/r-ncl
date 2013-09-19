@@ -27,8 +27,7 @@ knit_hooks$set(par=function(before, options, envir){
 \graphicspath{{graphics/}}
 
 \title{Introduction to R: practical 1} 
-\author[Dr Colin Gillespie]{Dr Colin S.
-  Gillespie}
+\author[Dr Colin Gillespie]{Dr Colin Gillespie}
 %\date{}  % if the \date{} command is left out, the current date will be used
 
 % The following package makes prettier tables.  We're all about the bling!
@@ -127,7 +126,7 @@ d = movies
 
 \noindent We can inspect the column names using:
 
-<<results='hide'>>=
+<<results="hide">>=
 ## d is a data frame
 colnames(d)
 @ 
@@ -141,13 +140,13 @@ colnames(d)[17] = "MPAA"
 
 \noindent We can select individual columns, using either their column name:
 
-<<results='hide'>>=
+<<results="hide">>=
 d$Year
 @ 
 
 \noindent or their column number:
 
-<<results='hide'>>=
+<<results="hide">>=
 d[,2]
 @ 
 

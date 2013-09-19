@@ -1,0 +1,136 @@
+%\VignetteIndexEntry{practical2a}
+%!Snw weave = knitr
+%\VignetteEngine{knitr::knitr}
+
+\documentclass[a4paper,justified,openany]{tufte-handout}
+
+<<setup, include=FALSE, cache=FALSE>>=
+library(knitr)
+options(replace.assign=FALSE,width=50)
+
+opts_chunk$set(fig.path='figure/graphics-', 
+               cache.path='cache/graphics-', 
+               fig.align='center', 
+               dev='pdf', fig.width=5, fig.height=5, 
+               fig.show='hold', cache=FALSE, par=TRUE)
+knit_hooks$set(crop=hook_pdfcrop)
+
+knit_hooks$set(par=function(before, options, envir){
+    if (before && options$fig.show!='none') {
+        par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
+            mgp=c(2,.7,0),tcl=-.01, las=1)
+}}, crop=hook_pdfcrop)
+@
+
+\usepackage{amsmath,graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\title{Programming: Practical 2a} 
+\author[Dr Colin Gillespie]{Dr Colin Gillespie}
+\date{}  % if the \date{} command is left out, the current date will be used
+
+% The following package makes prettier tables.  We're all about the bling!
+\usepackage{booktabs}
+\usepackage{units}
+
+% The fancyvrb package lets us customize the formatting of verbatim
+% environments.  We use a slightly smaller font.
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+\newcommand{\cc}{\texttt}
+\setcounter{secnumdepth}{2}
+\usepackage{microtype}
+\begin{document}
+\maketitle% this prints the handout title, author, and date
+
+\newthought{In this} question, we are going to use a \cc{for} statement to
+  \cc{loop} over a large data set and construct some scatter plots. To generate
+  the data, run the following piece of R code
+
+<<>>=
+library(nclRprogramming)
+data(dummy_data)
+dd = dummy_data
+@ 
+
+\noindent The data frame \cc{dd} represents an experiment, where we have ten treatments:
+$A, B, \ldots, J$ and measurements at some time points. We want to create a
+scatter plot of measurement against time, for each treatment type.
+\begin{enumerate}
+\item First we create a scatter plot of one treatment:
+  
+<<F1, fig.keep='none', tidy=FALSE>>=
+plot(dd[dd$treatments=="A",]$time, 
+     dd[dd$treatments=="A",]$measurement)
+@ 
+
+\begin{marginfigure}
+\centering
+<<ref.label='F1', dev='pdf', out.width='\\textwidth', echo=FALSE>>=
+@
+\caption{Measurements againts time.}\label{F1}
+\end{marginfigure}
+
+Since the colnames are a bit long, let's shorten them:
+
+<<>>=
+colnames(dd) = c("m", "t", "trts")
+@
+
+
+\item To generate a scatter-plot for each treatment, we need to iterate over the different
+  treatment types:
+
+<<results='hide', fig.keep='none', tidy=FALSE>>=
+for(treat in unique(dd$trts)) {
+  plot(dd[dd$trts==treat,]$t, 
+       dd[dd$trts==treat,]$m)
+  readline("Hit return for next plot\n")
+}
+@ 
+
+\noindent A few questions:
+\begin{itemize}
+\item What does \cc{unique(dd\$trts)} give?
+\item In the \cc{for} loop, what variable is changing? What are it's possible values?
+\item What does the \cc{readline} function do?
+\end{itemize}
+
+\item Add \cc{xlab} and \cc{ylab} arguments to the plot command.
+\item To add a title to a plot we use the \cc{main} argument, viz:
+
+<<F2, fig.keep='none'>>=
+plot(dd[dd$trts=="A",]$t, 
+     dd[dd$trts=="A",]$m, 
+     main="Treatment")
+@
+
+\begin{marginfigure}
+\centering
+<<ref.label='F2', dev='pdf', out.width='\\textwidth', echo=FALSE>>=
+@
+\caption{Measurements againts time with a title.}\label{F2}
+\end{marginfigure}
+
+
+Rather than have a static title, make the title display the treatment type.
+
+\item The y-axis range should really be the same in all graphics. Add a
+  \cc{ylim} argument to fix the range.\sidenote{Hint: Work out the range before
+    the \cc{for} loop.}
+\item At each iteration, use the \cc{cat} function to print the average measurement level across all time points.
+\item On each graph, highlight any observations with a blue point if they are
+  larger than the mean + standard deviations or less than the mean - 
+  standard deviations. Use the \cc{points} function to highlight a point.
+\item Suppose we wanted to save individual graphs. Add in the \cc{pdf}
+  function to save the resulting graph. To get unique file names, use the paste
+  command:
+  
+<<>>=
+filename = paste("file", "1", ".pdf", sep="")
+@ 
+\item Put the above code in a function which takes the data frame as an argument.
+\item Alter your function to take another argument where you can save the graph
+  in a different directory.
+\end{enumerate}
+
+\end{document}

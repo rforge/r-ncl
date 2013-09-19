@@ -1,0 +1,204 @@
+%\VignetteIndexEntry{solutions1}
+%!Snw weave = knitr
+%\VignetteEngine{knitr::knitr}
+
+\documentclass[a4paper,justified,openany]{tufte-handout}
+
+<<setup, include=FALSE, cache=FALSE>>=
+library(knitr)
+options(replace.assign=FALSE,width=50)
+
+opts_chunk$set(fig.path='figure/graphics-', 
+               cache.path='cache/graphics-', 
+               fig.align='center', 
+               dev='pdf', fig.width=5, fig.height=5, 
+               fig.show='hold', cache=FALSE, par=TRUE)
+knit_hooks$set(crop=hook_pdfcrop)
+
+knit_hooks$set(par=function(before, options, envir){
+  if (before && options$fig.show!='none') {
+    par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
+        mgp=c(2,.7,0),tcl=-.01, las=1)
+  }}, crop=hook_pdfcrop)
+@
+
+
+\usepackage{amsmath}
+
+% Set up the images/graphics package
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{../graphics/}}
+
+\title{Practical 1} 
+\author[Dr Colin Gillespie]{Dr Colin S.
+Gillespie}
+\date{}  % if the \date{} command is left out, the current date will be used
+
+% The following package makes prettier tables.  We're all about the bling!
+\usepackage{booktabs}
+
+% The units package provides nice, non-stacked fractions and better spacing
+% for units.
+\usepackage{units}
+
+% The fancyvrb package lets us customize the formatting of verbatim
+% environments.  We use a slightly smaller font.
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+\newcommand{\cc}{\texttt}
+\graphicspath{{../graphics/}}
+\setcounter{secnumdepth}{2}
+
+
+\usepackage{microtype}
+\begin{document}
+
+\maketitle% this prints the handout title, author, and date
+
+\begin{abstract}
+\noindent I've added solutions to selected questions only.
+\end{abstract}
+
+
+
+\section{Practice questions}
+
+\begin{enumerate}
+\item Default arguments:
+
+<<>>=
+Fun1 = function(x=10) {
+  return(x)
+}
+
+Fun2 = function(x) {
+  return(x)
+}
+@ 
+\begin{enumerate}
+\item Why does \cc{Fun1()} work, but \cc{Fun2()} give an error
+message?\sidenote{{\color{red} \cc{Fun1()} has a default argument}}
+
+\item Change \cc{Fun1} so that it returns $\sqrt{x}$.
+
+<<>>=
+Fun1 = function(x=10) {
+  return(sqrt(x))
+}
+@ 
+
+\end{enumerate}
+\item Basic functions
+
+<<>>=
+v = 5
+Fun3 = function() {
+  v = 0
+  return(v)
+}
+Fun3()
+v
+@ 
+\begin{enumerate}
+\item Why does the final line return 5 and not 0.\sidenote{{\color{red} \cc{Fun3} uses
+the local variable \cc{c}}.}
+\item Delete line 3 in the above piece of code. Now change \cc{Fun3} to allow
+$v$ to be passed as an argument, i.e. we can write \cc{Fun3(5)}. Call
+this function to make sure it works.
+\item Now make the argument in \cc{Fun3} have a default value of $0$.
+
+<<>>=
+Fun3 = function(v=0) {
+  return(v)
+}
+@ 
+\end{enumerate}
+\item \cc{if} statements.
+
+<<>>=
+Fun4 = function(x) {
+  if(x==5) {
+    y = 0
+  } else {
+    y = 1
+  }
+  return(y)
+}
+@ 
+\begin{enumerate}
+\item Change \cc{Fun4} so that it:
+\begin{itemize}
+\item returns 1 if $x$ is positive;
+\item returns -1 if $x$ is negative;
+\item returns 0 if $x$ is zero.
+\end{itemize}
+<<>>=
+Fun4 = function(x) {
+  rtn_value = 0
+  if(x > 0) {
+    rtn_value = 1 
+  } else if (x < 0) {
+    rtn_value = -1
+  }
+  return(rtn_value)
+}
+@   
+
+\end{enumerate}
+\item \cc{for} loops.
+
+<<>>=
+total = 0
+for(i in 1:5) {
+  total = total + i
+}
+total
+@ 
+
+The \cc{for} loop above calculates 
+\[
+\sum_{i=1}^5 i
+\]
+\begin{enumerate}
+\item What is the final value of \cc{total} in the above piece of code?
+\item Change the above \cc{loop} to calculate the following summations:
+\[
+\mbox{(i)} \sum_{i=1}^{20} (i+1)  \quad \mbox{(ii)} \sum_{j=-10}^{15} j \quad \mbox{(iii)} \sum_{j=-10}^{10} \exp(j^{1/j})  
+\]
+\end{enumerate}
+\item More \cc{for} loops:
+
+<<>>=
+a = 2
+total = 0
+for(blob in a:5) {
+  total = total + blob
+}
+@
+
+\begin{enumerate}
+\item Delete line 1. Now put the above code in a function called \cc{Fun5},
+where \cc{a} is passed as an argument, i.e. we can call
+\cc{Fun5(1)}
+\item Alter the code so that the \cc{for} loop goes from \cc{a} to
+\cc{b}, rather than \cc{a} to 5. Allow \cc{b} to be passed as an
+argument, i.e. we can call \cc{Fun5(1,5)}.
+\item Change \cc{Fun5} so that it has default arguments of
+\cc{a=1} and \cc{b=10}.
+
+<<>>=
+Fun5 = function(a=1, b=10) {
+  total = 0
+  for(blob in a:b) {
+    total = total + blob
+  }
+  return(total)
+}
+@ 
+\end{enumerate}
+\end{enumerate}
+
+
+
+\end{document}

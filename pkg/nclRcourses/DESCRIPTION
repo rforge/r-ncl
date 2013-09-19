@@ -2,7 +2,7 @@ Package: nclRcourses
 Type: Package
 Title: Functions for R courses at Newcastle University
 Version: 0.12
-Date: 2013-09-17
+Date: 2013-09-19
 Author: Colin Gillespie
 Maintainer: Colin Gillespie <csgillespie@gmail.com>
 Description: Great code
@@ -10,7 +10,7 @@ License: GPL-3
 Depends:
     R (>= 2.13),
 Suggests:
-    lumi
+    lumi,knitr
 Collate:
     'yeast_long.R'
     'Get.R'

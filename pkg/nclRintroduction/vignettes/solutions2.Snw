@@ -1,4 +1,3 @@
-%\VignetteIndexEntry{solutions1}
 \documentclass[a4paper,justified,openany]{tufte-handout}
 <<setup, include=FALSE, cache=FALSE>>=
 library(knitr)

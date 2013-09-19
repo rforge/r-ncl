@@ -15,3 +15,5 @@ Collate:
     'movies.R'
     'nclRintroduction-package.R'
 VignetteBuilder: knitr
+Suggests:
+    knitr

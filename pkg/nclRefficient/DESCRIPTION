@@ -1,0 +1,17 @@
+Package: nclRefficient
+Type: Package
+Title: nclRefficient
+Version: 0.11
+Date: 2013-09-17
+Author: Colin Gillespie
+Maintainer: Colin Gillespie <colin.gillespie@newcastle.ac.uk>
+Description: Great code
+License: GPL-3
+Depends:
+    R (>= 2.13)
+Suggests:
+    knitr,
+    rbenchmark
+Collate:
+    'nclRefficient-package.R'
+VignetteBuilder: knitr

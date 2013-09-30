@@ -69,9 +69,9 @@ library(rbenchmark)
 
 \begin{enumerate}
 \item Reproduce the timing results in chapter 1 using the \texttt{benchmark} function from the \texttt{rbenchmark} package.
-\item \textbf{Case study} In this example, we are going to investigate loading a large data frame. First, we'll generate a large matrix of random numbers and save it as a csv file:\sidenote{If setting \cc{N=1e6} is too large for your machine, reduce it at bit. For example, \cc{N=500,000}.}
+\item \textbf{Case study} In this example, we are going to investigate loading a large data frame. First, we'll generate a large matrix of random numbers and save it as a csv file:\sidenote{If setting \cc{N=1e6} is too large for your machine, reduce it at bit. For example, \cc{N=50,000}.}
 <<practical1, cache=TRUE>>=
-N = 1e6
+N = 1e5
 m = as.data.frame(matrix(runif(N), ncol=1000))
 write.csv(m, file="example.csv", row.names=FALSE)
 @
@@ -139,7 +139,7 @@ d_df[,"c10"]
 d_df[,colnames(d_df) == "c10"]
 @
 Compare these four methods.
-\item Calculate the relative differences between selecting the first row of a data frame and matrix. Can you explain the (large) difference?
+
 \end{enumerate}
 <<echo=FALSE>>=
 n = 1

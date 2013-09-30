@@ -101,6 +101,11 @@ Which of the above give the biggest speed-ups? Are there any downsides to using 
 \end{enumerate}
 
 \newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Practical 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section*{Practical 2}
 
 \begin{enumerate}
@@ -118,7 +123,7 @@ d_df = as.data.frame(d_m)
 colnames(d_df) = paste("c", 1:ncol(d_df), sep="")
 @
 \begin{enumerate}
-item Using the following code, calculate the relative differences between selecting the first column/row of a data frame and matrix. 
+\item Using the following code, calculate the relative differences between selecting the first column/row of a data frame and matrix. 
 <<results='hide', tidy=FALSE>>=
 benchmark(replications=1000, 
           d_m[1,], d_df[1,], d_m[,1], d_df[,1],
@@ -184,10 +189,14 @@ for(i in 1:n){
 }
 @
 \noindent Using the \texttt{benchmark} function, time these three examples.
-
-
 \end{enumerate}
 \newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Practical 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 \section*{Practical 3: parallel programming}
 
 

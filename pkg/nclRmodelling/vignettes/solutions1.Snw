@@ -232,7 +232,7 @@ m = chisq.test(x)
 \item What are the expected values for each zodiac sign?
 <<>>=
 ##expected values
-m[["expected"]]
+(expected = m[["expected"]])
 @
 
 \item The formula for calculating the residuals\sidenote{These residuals are

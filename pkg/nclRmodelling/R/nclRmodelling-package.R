@@ -4,6 +4,5 @@
 #' @name nclRmodelling-package
 #' @aliases nclRmodelling
 #' @docType package
-#' @author \email{colin.gillespie@@newcastle.ac.uk}
 #' @keywords package
 NULL

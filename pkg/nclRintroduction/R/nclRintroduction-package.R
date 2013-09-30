@@ -1,9 +1,8 @@
 #' R courses at Newcastle University
 #' 
-#' Functions and datasets used in for external R courses at Newcastle University
-#' @name nclRcourses-package
-#' @aliases nclRcourses nclrcourses
+#' Functions and datasets used in for R courses at Newcastle University
+#' @name nclRintroduction-package
+#' @aliases nclRintroduction nclrintroduction
 #' @docType package
-#' @author \email{colin.gillespie@@newcastle.ac.uk}
 #' @keywords package
 NULL

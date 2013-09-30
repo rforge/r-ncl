@@ -4,6 +4,5 @@
 #' @name nclRprogramming-package
 #' @aliases nclRprogramming
 #' @docType package
-#' @author \email{colin.gillespie@@newcastle.ac.uk}
 #' @keywords package
 NULL

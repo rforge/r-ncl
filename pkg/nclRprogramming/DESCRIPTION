@@ -1,11 +1,15 @@
 Package: nclRprogramming
 Type: Package
 Title: nclRprogramming
-Version: 0.11
-Date: 2013-09-17
+Version: 0.1
+Date: 2013-09-30
+Authors@R: person("Gillespie", "Colin",
+    email="csgillespie@gmail.com",
+    role = c("aut", "cre"))
 Author: Colin Gillespie
-Maintainer: Colin Gillespie <colin.gillespie@newcastle.ac.uk>
-Description: Great code
+Maintainer: Colin Gillespie <csgillespie@gmail.com>
+Description: A package for the Newcastle University R courses.
+URL: http://www.ncl.ac.uk/maths/rcourse/
 License: GPL-3
 Depends:
     R (>= 2.13),

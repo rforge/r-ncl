@@ -1,61 +1,16 @@
-#' Dummy data
+#' Dummy data set
 #' 
-#' The data are from 101 consecutive patients attending a combined
-#' thyroid-eye clinic. The patients have an endocrine disorder, Graves'
-#' Ophthalmopathy, which affects various aspects of their eyesight. The
-#' ophthalmologist measures various aspects of their eyesight and constructs an
-#' overall index of how the disease affects their eyesight. This is the
-#' Ophthalmic Index (OI) given in the dataset. The age of the patient and their
-#' sex are also recorded. In practice, and as this is a chronic condition which
-#' can be ameliorated but not cured, the OI would be monitored at successive
-#' clinic visits to check on the patient's progress. However, these data are
-#' obtained at presentation. We are interested in how OI changes with age and
-#' gender. 
-#' @name graves
+#' This data frame dummy_data represents an experiment, 
+#' where we have ten treatments:
+#' A, B, ..., J and measurements at some time points. 
+#' We want to create a scatter plot of measurement against time, 
+#' for each treatment type.
+#' @name dummy_data
+#' @aliases dummy_data
 #' @docType data
-#' @usage data(graves)
+#' @usage data(dummy_data)
 #' @return A data frame 
 #' @keywords datasets
 #' @examples
-#' data(graves)
+#' data(dummy_data)
 NULL
-
-
-#' Dr Phil's data set
-#' 
-#' Dr Phil comes to see you with his data. He believes that IQ can be
-#' predicted by the number of years education. Dr Phil does not differentiate
-#' between primary, secondary and tertiary education. He has four variables:
-#' IQ, AgeBegin, AgeEnd, TotalYears
-#' @name drphil
-#' @docType data
-#' @usage data(drphil)
-#' @return A data frame
-#' @keywords datasets
-#' @examples
-#' data(drphil)
-NULL
-
-#' Heptathlon data set
-#' 
-#' Results of the Olympic heptathlon competition, Seoul, 1988.
-#' This dataset contains twenty-five observations on eight variables:
-#' \describe{
-#' \item{hurdles:}{ results of the 100m hurdles.}
-#' \item{highjump:}{ results of the high jump.}
-#' \item{shot:}{results of the shot put.}
-#' \item{run200m:}{results of the 200m race.}
-#' \item{longjump:}{results of the long jump.}
-#' \item{javelin:}{results of the javelin.}
-#' \item{run800m:}{results of the 800m race.}
-#' \item{score:}{final score.}
-#' }
-#' @name hep
-#' @docType data
-#' @usage data(hep)
-#' @return A data frame
-#' @keywords datasets
-#' @examples
-#' data(hep)
-NULL
-

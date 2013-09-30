@@ -101,7 +101,7 @@ g3 = g + geom_point() + stat_smooth(aes(colour=drv)) +
 
 \begin{marginfigure}
   \centering
-<<dev='pdf', out.width='\\textwidth', echo=FALSE, message=FALSE>>=
+<<dev='png', out.width='\\textwidth', echo=FALSE, message=FALSE>>=
 g1
 @
  \caption{Graphics for section 1.}\label{F1}
@@ -125,7 +125,7 @@ Now add a dashed loess line and change the axis labels. Hint: try
 \cc{stat\_smooth} and \cc{xlab(`New label')}.
 \begin{marginfigure}
   \centering
-<<dev='pdf', out.width='\\textwidth', echo=FALSE, message=FALSE>>=
+<<dev='png', out.width='\\textwidth', echo=FALSE, message=FALSE>>=
 g2
 @
 \caption{Graphics for section 1.}\label{F2}
@@ -139,7 +139,7 @@ g2
 @
 \begin{marginfigure}
   \centering
-<<dev='pdf', out.width='\\textwidth', echo=FALSE, message=FALSE>>=
+<<dev='png', out.width='\\textwidth', echo=FALSE, message=FALSE>>=
 g3
 @
  \caption{Graphics for section 1.}\label{F3}

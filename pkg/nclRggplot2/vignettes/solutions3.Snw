@@ -10,7 +10,7 @@ options(replace.assign=FALSE,width=50)
 opts_chunk$set(fig.path='figure/graphics-', 
                cache.path='cache/graphics-', 
                fig.align='center', 
-               dev='pdf', fig.width=5, fig.height=5, 
+               dev='png', fig.width=5, fig.height=5, 
                fig.show='hold', cache=FALSE, par=TRUE)
 knit_hooks$set(crop=hook_pdfcrop)
 
@@ -123,7 +123,7 @@ mpg$drv = factor(mpg$drv,
 
 \begin{figure}[t]
 \centering
-<<F1, echo=FALSE, cache=TRUE, fig.width="\\textwidth">>=
+<<F1, echo=FALSE, cache=TRUE, pos.width="\\textwidth",fig.width=6>>=
 aphids$Block = factor(aphids$Block)
 aphids$Water = factor(aphids$Water, 
                       levels=c("Low", "Medium", "High"))
@@ -195,7 +195,7 @@ g1 = g + geom_bar(aes(x=gender, fill=factor(dec)))
 
 \begin{marginfigure}
 \centering
-<<echo=FALSE, fig.width="\\textwidth">>=
+<<echo=FALSE, pos.width="\\textwidth">>=
 g1
 @
 \caption{Stacked bar chart of the Beauty data set.}\label{F2}

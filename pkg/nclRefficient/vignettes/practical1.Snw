@@ -61,7 +61,13 @@ knit_hooks$set(par=function(before, options, envir){
 <<>>=
 library(rbenchmark)
 @
-\noindent Each practical corresponds to a chapter in the notes.
+\noindent Each practical corresponds to a chapter in the notes. Solutions are included with the course package:
+
+
+<<eval=FALSE>>=
+library(nclRefficient)
+vignette("solutions1", package="nclRefficient")
+@
 
 
 \section*{Practical 1}

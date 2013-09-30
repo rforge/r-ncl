@@ -30,9 +30,8 @@ knit_hooks$set(par=function(before, options, envir){
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \graphicspath{{../graphics/}}
 
-\title{Efficient R: practical sheet} 
-\author[Dr Colin Gillespie]{Dr Colin S.
-Gillespie}
+\title{Efficient R: practical solutions} 
+\author[Dr Colin Gillespie]{Dr Colin Gillespie}
 \date{}  % if the \date{} command is left out, the current date will be used
 
 % The following package makes prettier tables.  We're all about the bling!
@@ -147,7 +146,7 @@ benchmark(replications=1000,
 
 Two things are going on here
 \begin{enumerate}
-\item The very large difference when selecting columns and rows (in data frames) is because the data is stored in column major-order. Although the matrix is also stored in column major-order, because everything is the same type, we can efficently select values.
+\item The very large difference when selecting columns and rows (in data frames) is because the data is stored in column major-order. Although the matrix is also stored in column major-order, because everything is the same type, we can efficiently select values.
 \item Matrices are also more memory efficient: 
 
 <<>>=

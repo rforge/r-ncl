@@ -91,8 +91,8 @@ x = 5
 
 \item Press \mbox{\cc{Ctrl + Enter}} anywhere on the line with \cc{x = 5}. This should
   send the command \cc{x = 5} to the R console in the bottom left hand
-  window.\marginnote{In Rstudio click on \cc{Help} and \cc{Keyboard shortcuts}
-    to see other shortcuts.}
+  window.\marginnote{In Rstudio click on \cc{Help} and \cc{Keyboard short cuts}
+    to see other short cuts.}
 \item In \cc{Rstudio}, save the file you are currently working on. Rstudio will
   (correctly) add the file extension \cc{.R}
 \end{enumerate}
@@ -207,12 +207,17 @@ plot(d$Length, d$Rating, xlab="Length", ylab="Rating")
 \item I tend to alter the default plot command using:
   
 <<>>=
-par(mar=c(3,3,2,1), mgp=c(2,.7,0), tck=-.01, las=1)
+op = par(mar=c(3,3,2,1), mgp=c(2,.7,0), 
+         tck=-.01, las=1)
 @ 
 
 \noindent What do you think? Can you determine what \cc{mar}, \cc{mgp}, \cc{tck}
 and \cc{las} mean?
 \end{itemize}
+To reset the plotting device, run the command
+<<>>=
+par(op)
+@
 
 
 \section{Summary Statistics}
@@ -284,7 +289,7 @@ boxplot(d$Rating ~ d$Romance)
 \noindent Try generating a similar boxplot, but for other variables. What
 happens when you condition on more than one variable?
 
-\section{Solutions}
+\section*{Solutions}
 
 Solutions are contained within this package:
 <<eval=FALSE>>=

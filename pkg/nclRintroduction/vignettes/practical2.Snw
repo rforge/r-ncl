@@ -154,7 +154,7 @@ lectures.
 \item How many movies were classified as both Action and Animation?
 \end{enumerate}
 
-\section{Solutions}
+\section*{Solutions}
 
 Solutions are contained within this package:
 <<eval=FALSE>>=

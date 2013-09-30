@@ -114,7 +114,7 @@ To download the data into R, we use the following command:\marginnote{You can
                                                                       enter the url into your web browser and view the data directly.}
 
 <<>>=
-  library(nclRintroduction)
+library(nclRintroduction)
 data(movies)
 d = movies
 @ 
@@ -193,24 +193,43 @@ plot(d$Length, d$Rating, xlab="Length", ylab="Rating")
 \end{marginfigure}
 
 \item Use the \cc{ylim} argument to specify a y-axis range from 1 to 10.
+<<fig.keep='none', tidy=FALSE>>=
+plot(d$Length, d$Rating, 
+     xlab="Length", ylab="Rating", 
+     ylim=c(1, 10))
+@ 
+
 \item Use the \cc{col} argument to change the colour of the points.
+<<fig.keep='none', tidy=FALSE>>=
+plot(d$Length, d$Rating, 
+     xlab="Length", ylab="Rating", 
+     ylim=c(1, 10), col=2)
+@ 
+
 \item Use the \cc{main} argument to give the plot a title.
 
-<<eval=FALSE>>=
-## Something like:
-plot(d$Length, d$Rating, xlab="Length", ylab="Rating", 
-     ylim = c(0,10))
+<<fig.keep='none', tidy=FALSE>>=
+plot(d$Length, d$Rating, 
+     xlab="Length", ylab="Rating", 
+     ylim=c(1, 10), col=2, 
+     main="Movie rating against length")
 @ 
 
 \item I tend to alter the default plot command using:
 
-<<>>=
-par(mar=c(3,3,2,1), mgp=c(2,.7,0), tck=-.01, las=1)
+<<tidy=FALSE>>=
+op = par(mar=c(3,3,2,1), mgp=c(2,.7,0), 
+         tck=-.01, las=1)
 @ 
 
 \noindent What do you think? Can you determine what \cc{mar}, \cc{mgp}, \cc{tck}
 and \cc{las} mean?
 \end{itemize}
+To reset the plotting device, run the command
+<<>>=
+par(op)
+@
+\newpage
 
 % mean(d$Length)
 % median(d$Length)
@@ -293,7 +312,8 @@ boxplot(d$Rating ~ d$Romance, axes=FALSE, frame.plot=TRUE,
         ylim=c(0,10))
 ## Y-axis. 0 to 10 in steps of 2.5
 axis(2,at=seq(0,10,2.5))
-## X-Axis, at 1 & 2, but have labels
+## X-Axis, at points x=1 & x=2, 
+## but with labels "non R" and "Romantic"
 axis(1,at=1:2, labels=c("Non R", "Romantic") )
 @ 
 

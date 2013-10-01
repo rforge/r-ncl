@@ -3,6 +3,7 @@
 \alias{Budget}
 \alias{Length}
 \alias{movies}
+\alias{sub_movies}
 \title{Movie information and user ratings from IMDB.com.}
 \value{
   A data frame with 4848 rows and 24 variables.

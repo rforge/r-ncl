@@ -24,7 +24,7 @@
 #' \item{action, animation, comedy, drama, documentary, romance, short.}{Binary variables representing if movie was classified as belonging to that genre.}}
 #'@references Credit: This data set was initially constructed by 
 #' Hadley Wickham at \url{http://had.co.nz/data/movies}
-#' @aliases Budget Length movies
+#' @aliases Budget Length movies sub_movies
 #'@keywords datasets
 #' @examples
 #' data(movies)

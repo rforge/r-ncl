@@ -7,8 +7,8 @@
 library(knitr)
 options(replace.assign=FALSE,width=50)
 
-opts_chunk$set(fig.path='figure/graphics-', 
-               cache.path='cache/graphics-', 
+opts_chunk$set(fig.path='knitr_figure/graphics-', 
+               cache.path='knitr_cache/graphics-', 
                fig.align='center', 
                dev='png', fig.width=5, fig.height=5, 
                fig.show='hold', cache=FALSE, par=TRUE)
@@ -278,7 +278,7 @@ dim(google)
 
 \begin{marginfigure}
 \centering
-<<echo=FALSE, width="\\textwidth">>=
+<<echo=FALSE, pos.width="\\textwidth">>=
 g
 @
 \caption{The google data set.}\label{F3}
@@ -325,13 +325,13 @@ g = ggplot(treats, aes(treatment, values)) +
 It's very easy to try a variety of options. For example, we could use a
 \cc{boxplot}:
 
-<<fig.width="0.8\\textwidth">>=
+<<pos.width="0.8\\textwidth">>=
 g + geom_boxplot() 
 @ 
 
 Or a dotplot
 
-<<message=FALSE,fig.width="0.8\\textwidth">>=
+<<message=FALSE,pos.width="0.8\\textwidth">>=
 g + geom_dotplot(binaxis="y", stackdir="center",
                  colour="blue", fill="blue")
 @ 
@@ -339,13 +339,13 @@ g + geom_dotplot(binaxis="y", stackdir="center",
 \newpage
 or plain (jittered) points
 
-<<fig.width="0.8\\textwidth">>=
+<<pos.width="0.8\\textwidth">>=
 g + geom_jitter()
 @ 
 
 Of course, we can have multiple layers. Here we have dotplots with errorbars:
 
-<<fig.width="0.8\\textwidth", message=FALSE, tidy=FALSE>>=
+<<pos.width="0.8\\textwidth", message=FALSE, tidy=FALSE>>=
 g +  geom_dotplot(binaxis="y", stackdir="center",
                   colour="blue", fill="blue") + 
   stat_summary(geom="errorbar", 

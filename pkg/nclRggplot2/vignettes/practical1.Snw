@@ -7,8 +7,8 @@
 library(knitr)
 options(replace.assign=FALSE,width=50)
 
-opts_chunk$set(fig.path='figure/graphics-', 
-               cache.path='cache/graphics-', 
+opts_chunk$set(fig.path='knitr_figure/graphics-', 
+               cache.path='knitr_cache/graphics-', 
                fig.align='center', 
                dev='pdf', fig.width=5, fig.height=5, 
                fig.show='hold', cache=FALSE, par=TRUE)

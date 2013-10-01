@@ -19,4 +19,5 @@ Suggests:
 Collate:
     'datasets.R'
     'nclRmodelling-package.R'
+    'beams.R'
 VignetteBuilder: knitr

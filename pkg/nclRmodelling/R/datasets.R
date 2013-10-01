@@ -59,3 +59,14 @@ NULL
 #' data(hep)
 NULL
 
+#' Ratfeed data set
+#' 
+#' The ratfeed data set
+#' @name ratfeed
+#' @docType data
+#' @usage data(ratfeed)
+#' @return A data frame
+#' @keywords datasets
+#' @examples
+#' data(ratfeed)
+NULL

@@ -257,4 +257,11 @@ i1
 \end{enumerate}
 
 
+\section*{Solutions}
+
+Solutions are contained within this package:
+<<eval=FALSE>>=
+library(nclRggplot2)
+vignette("solutions2", package="nclRggplot2")
+@
 \end{document}

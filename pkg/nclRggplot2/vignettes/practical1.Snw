@@ -60,6 +60,31 @@ knit_hooks$set(par=function(before, options, envir){
 
 \maketitle% this prints the handout title, author, and date
 
+First install the \cc{ggplot2} package
+
+<<eval=FALSE>>=
+install.packages("ggplot2")
+@
+
+\noindent then install the course package
+
+<<eval=FALSE, tidy=FALSE>>=
+##Windows & Linux users
+install.packages("nclRggplot2", 
+                 repos="http://R-Forge.R-project.org")
+##Apple users 
+install.packages("nclRggplot2", 
+                 repos="http://R-Forge.R-project.org", 
+                 type="source")
+@ 
+
+\noindent To load the package, use
+
+<<>>=
+library(nclRggplot2)
+@ 
+
+
 \section{Practical 1}
 
 To get you familiar with the underlying \cc{ggplot2} concepts, we'll recreate
@@ -286,7 +311,7 @@ g + geom_bar(aes(x=gender, fill=factor(dec)),
     0 & 0 & 31 & 4.4 & Female & 48 &  1&421 \\
     \bottomrule
   \end{tabular}
-  \label{T1.3}
+  \label{T2}
 \end{table}
 
 This data set is from a study where researchers were interested in whether a
@@ -305,7 +330,7 @@ lecturers' attractiveness affected their course evaluation.\cite{Hamermesh2003} 
   professor in the picture, to make their ratings independent of age, and to
   keep 5 in mind as an average. The scores were then normalised.
 \end{itemize}
-Table \ref{T1.3} gives the first few rows of the data set. 
+Table \ref{T2} gives the first few rows of the data set. 
 
 
 \end{document}

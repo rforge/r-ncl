@@ -305,6 +305,13 @@ data(treats)
 \item Would facets be useful?
 \end{itemize}
 
+\section*{Solutions}
+
+Solutions are contained within this package:
+<<eval=FALSE>>=
+library(nclRggplot2)
+vignette("solutions3", package="nclRggplot2")
+@
 
 
 

@@ -137,7 +137,7 @@ Parking'?\marginnote{ \underline{\hspace*{6cm}}}\\
 
 Our first go at simulating Monopoly will ignore community chest, chance cards,
 and the `Go To Jail' square. This means that we are simply going round the
-board. The code in the above function, rolls the dice \cc{no\_of\_rolls} time, and stores the squares that are landed on in the vector \cc{landings}. 
+board. The code in the \cc{SimulateMonopoly} function, rolls the dice \cc{no\_of\_rolls} time, and stores the squares that are landed on in the vector \cc{landings}. 
 
 <<>>=
 SimulateMonopoly = function(no_of_rolls) {    
@@ -153,13 +153,29 @@ SimulateMonopoly = function(no_of_rolls) {
   }
   return(landings)
 }
-no_of_rolls = 2000
+no_of_rolls = 50000
+@
+<<echo=FALSE>>=
+no_of_rolls = 100
+@
+
+\noindent We can then call the function using:
+<<>>=
 sim = SimulateMonopoly(no_of_rolls)
 @
 
+<<echo=FALSE>>=
+# no_of_rolls = 2000000
+# sim1 = SimulateMonopoly(no_of_rolls)
+# saveRDS(sim1, file="vignettes/sim1.RData")
+sim = readRDS("sim1.RData")
+@
+
+
 \noindent We can then plot the results
-<<F1, fig.keep='none'>>=
-plot(sim/sum(sim), ylim=c(0, 0.06), type='l')
+<<F1, fig.keep='none', tidy=FALSE>>=
+plot(sim/sum(sim), ylim=c(0, 0.06), type='l', 
+        xlab="Square", ylab="Probability")
 @ 
 
 
@@ -233,18 +249,26 @@ SimulateMonopoly = function(no_of_rolls) {
 <<>>=
 sim2 = SimulateMonopoly(no_of_rolls)
 @
+<<echo=FALSE>>=
+# no_of_rolls = 2000000
+# sim2 = SimulateMonopoly(no_of_rolls)
+# saveRDS(sim2, file="vignettes/sim2.RData")
+sim2 = readRDS("sim2.RData")
+@
+
 
 \noindent and plot
 
-<<F2, fig.keep='none'>>=
-plot(sim2/sum(sim2), ylim=c(0, 0.06), type="l")
+<<F2, fig.keep='none', tidy=FALSE>>=
+plot(sim2/sum(sim2), ylim=c(0, 0.06), type="l", 
+     xlab="Square", ylab="Probability")
 @ 
 
 \begin{marginfigure}
 \centering
 <<ref.label='F2', dev='pdf', out.width='\\textwidth', echo=FALSE>>=
 @
-\caption{Probability of landing on monopoly square with the first community chest card implemented. To see a difference you will need to use many more simulations, at least 10000.}
+\caption{Probability of landing on monopoly square with the first community chest card implemented. Incorporating a single cummunity chest card has very little effect. For this graphic, I used 2 million simulations! }
 \end{marginfigure}
 
 \noindent What is the the rationale for lines 14--20?
@@ -335,6 +359,17 @@ A Chance card is most likely to move players. There are three chance areas on th
 \end{tabular}}
 \caption{Monopoly squares with associated square numbers}\label{T_1}
 \end{table}
+
+
+
+\section*{Solutions}
+
+Solutions are contained within this package:
+<<eval=FALSE>>=
+library(nclRprogramming)
+vignette("solutions2b", package="nclRprogramming")
+@
+
 
 \end{document}
 

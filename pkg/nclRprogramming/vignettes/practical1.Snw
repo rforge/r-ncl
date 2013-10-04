@@ -62,6 +62,29 @@ knit_hooks$set(par=function(before, options, envir){
   what's going on, please ask.
 \end{abstract}
 
+
+
+\section*{Course package}
+
+First we'll install the course R package. 
+
+<<eval=FALSE, tidy=FALSE>>=
+##Windows & Linux users
+install.packages("nclRprogramming", 
+                 repos="http://R-Forge.R-project.org")
+##Apple users 
+install.packages("nclRprogramming", 
+                 repos="http://R-Forge.R-project.org", 
+                 type="source")
+@ 
+
+\noindent To load the package, use
+
+<<>>=
+library(nclRprogramming)
+@ 
+
+
 \section{Practice questions}
 
 \begin{enumerate}
@@ -175,6 +198,13 @@ for(blob in a:5) {
 \end{enumerate}
 \end{enumerate}
 
+\section*{Solutions}
+
+Solutions are contained within this package:
+<<eval=FALSE>>=
+library(nclRprogramming)
+vignette("solutions1", package="nclRprogramming")
+@
 
 
 

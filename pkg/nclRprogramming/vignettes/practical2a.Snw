@@ -133,4 +133,12 @@ filename = paste("file", "1", ".pdf", sep="")
   in a different directory.
 \end{enumerate}
 
+\section*{Solutions}
+
+Solutions are contained within this package:
+<<eval=FALSE>>=
+library(nclRprogramming)
+vignette("solutions2a", package="nclRprogramming")
+@
+
 \end{document}

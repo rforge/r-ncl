@@ -56,6 +56,7 @@ knit_hooks$set(par=function(before, options, envir){
 
 \maketitle% this prints the handout title, author, and date
 
+
 \begin{abstract}
   \noindent I've starred, $^*$, some of the questions. This indicates that we didn't
   directly cover the material in the lecture. If you are particular interested
@@ -68,6 +69,29 @@ y = c(81.92, 81.12, 82.47, 82.86, 82.89, 82.45,
      82.51, 81.11, 83.07, 82.77, 82.38, 83.14)
 dd = data.frame(x, y)
 @ 
+
+
+\section*{Course R package}
+
+First we'll install the course R package. 
+
+<<eval=FALSE, tidy=FALSE>>=
+##Windows & Linux users
+install.packages("nclRmodelling", 
+                 repos="http://R-Forge.R-project.org")
+##Apple users 
+install.packages("nclRmodelling", 
+                 repos="http://R-Forge.R-project.org", 
+                 type="source")
+@ 
+
+\noindent To load the package, use
+
+<<>>=
+library(nclRmodelling)
+@ 
+
+\section*{Questions}
 
 \begin{enumerate}
 \item \newthought{Consider the} following data set:

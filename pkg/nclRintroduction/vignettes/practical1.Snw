@@ -106,6 +106,28 @@ Other \cc{Rstudio} commands are:
 \end{itemize}
 It's probably worth creating a directory to store any R files that you create.
 
+Next we'll install the course R package. Installing this
+  package is straightforward
+
+<<eval=FALSE, tidy=FALSE>>=
+##Windows & Linux users
+install.packages("nclRintroduction", 
+                 repos="http://R-Forge.R-project.org")
+##Apple users 
+install.packages("nclRintroduction", 
+                 repos="http://R-Forge.R-project.org", 
+                 type="source")
+@ 
+
+\noindent To load the package, use
+
+<<>>=
+library(nclRintroduction)
+@ 
+
+
+
+
 \section{The data}
 
 We are going to investigate the IMDB data set described in chapter 1. Movies
@@ -115,7 +137,7 @@ film has 24 associated variables. The first few rows are given in Table
 1.1 in the notes. This is \textbf{only a subset} of the data, the actual data set
 contains information on over 50,000 movies.
 
-\pagebreak
+
 
 \subsection{Retrieving the data}
 

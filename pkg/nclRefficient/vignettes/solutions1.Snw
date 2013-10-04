@@ -59,6 +59,26 @@ knit_hooks$set(par=function(before, options, envir){
 <<>>=
 library(rbenchmark)
 @
+
+\noindent and have installed the course R package. 
+
+<<eval=FALSE, tidy=FALSE>>=
+##Windows & Linux users
+install.packages("nclRefficient", 
+                 repos="http://R-Forge.R-project.org")
+##Apple users 
+install.packages("nclRefficient", 
+                 repos="http://R-Forge.R-project.org", 
+                 type="source")
+@ 
+
+\noindent To load the package, use
+
+<<>>=
+library(nclRefficient)
+@ 
+
+
 \noindent Each practical corresponds to a chapter in the notes.
 
 
@@ -250,6 +270,14 @@ detectCores()
 \item Run the dice game Monte-Carlo example in the notes. Vary the parameter \texttt{M}.\sidenote{Try setting \texttt{M=50} and varying \texttt{N}.} 
 \end{enumerate}
 
+
+\section*{Solutions}
+
+Solutions are contained within this package:
+<<eval=FALSE>>=
+library(nclRefficient)
+vignette("solutions1", package="nclRefficient")
+@
 
 
 

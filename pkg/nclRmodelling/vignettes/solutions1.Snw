@@ -7,8 +7,8 @@
 library(knitr)
 options(replace.assign=FALSE,width=50)
 
-opts_chunk$set(fig.path='figure/graphics-', 
-               cache.path='cache/graphics-', 
+opts_chunk$set(fig.path='knitr_figure/graphics-', 
+               cache.path='knitr_cache/graphics-', 
                fig.align='center', 
                dev='pdf', fig.width=5, fig.height=5, 
                fig.show='hold', cache=FALSE, par=TRUE)
@@ -247,7 +247,7 @@ m[["residuals"]]
 @
 
 \end{enumerate}
-
+\item Own data question
 \item \newthought{The} University of Texas Southwestern Medical Center examined
   whether the risk of contracting Hepatitis C was related to tattoo
   use.\marginnote{Haley, R. and Fischer, P.R. 2001} The data from the study is
@@ -298,30 +298,6 @@ m[["expected"]]
 \end{enumerate}
 
 
-
-%Page 627
-\newpage
-\item \newthought{The mathematical} constant $\pi$ is often approximated as
-  3.141. The value of $\pi$ is irrational, that is, the decimal goes on forever
-  without repeating any pattern. The following table tabulates the first one
-  million digits of $\pi$.
-\begin{table*}[h]
-   \resizebox{\textwidth}{!}{%
-  \centering
-  \begin{tabular}{@{}l lllll lllll@{}}
-    \toprule
-    Digit & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
-    \midrule
-    Count & 99959 & 99758 & 100026 & 100229 & 100230 & 100359 & 99548 & 99800 &
-    99985 & 100106 \\
-    \bottomrule
-  \end{tabular}}
-  \caption{The first one million digits of $\pi$.}
-  \label{tab:3}
-\end{table*}
-
-\noindent Test the hypothesis that the digits 0 to 9 are uniformly distributed
-in the first million digits of $\pi$.
 \end{enumerate}
 
 \end{document}

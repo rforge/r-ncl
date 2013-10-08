@@ -176,6 +176,35 @@ wilcox.test(dd$x)$p.value
 \end{table}
 \begin{enumerate}
 \item Input the data into R. Combine the two data sets into a single data frame.
+
+<<echo=FALSE>>=
+d1 = data.frame(value = x)
+d2 = data.frame(value = y)
+@
+
+Suppose you have two separate data files. Here is some code that will help you combine them. First we read in the separate files:
+<<eval=FALSE>>=
+d1 = read.csv("Method1.csv")
+d2 = read.csv("Method2.csv")
+@
+\noindent In order to combine the data frames, they must have the same column names:
+<<>>=
+head(d1, 2)
+head(d2, 2)
+@
+\noindent We combine data frames using \cc{rbind}\sidenote{\cc{rbind} - row bind} 
+<<>>=
+d = rbind(d1, d2)
+@
+\noindent Finally we create a new column to indicate the Method\sidenote{\cc{rep} is the replicate function. See \cc{?rep}.}
+<<>>=
+d$Method = rep(1:2, each=12)
+head(d, 2)
+@
+
+
+
+
 \item Exploratory data analysis.
   \begin{itemize}
   \item Construct boxplots, histograms and q-q plots for both data sets. Work
@@ -185,11 +214,26 @@ wilcox.test(dd$x)$p.value
     distribution.
   \end{itemize}
 \item Carry out a two sample $t$-test. Assume that the variances are unequal.
+
+<<>>=
+t.test(value ~ Method, data=d, var.equal=FALSE)
+@
+
   Does this your answer compare to your intuition?
 \item Use the \cc{var.test} function to test for unequal
   variances.\sidenote{This function isn't in the notes. Look at the help file.}
+<<>>=
+var.test(value ~ Method, data=d)
+@
+\noindent Since the $p =0.2585$, this does not provide enough evidence to reject $H_0$ and so we don't have any reason to believe that the variances are unequal.
+
   Does this correspond to your intuition?
 \item Carry out a two sample $t$-test, assuming equal variances.
+
+<<>>=
+t.test(value ~ Method, data=d, var.equal=TRUE)
+@
+
 \item Now carry out a \cc{wilcox.test}.
 \item When carrying out the Wilcoxon test, we assume a common distribution. This
   assumption can be tested using the \textit{Kolmogorov-Smirnov} test:

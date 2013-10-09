@@ -117,7 +117,7 @@ Rather than have a static title, make the title display the treatment type.
 \item The y-axis range should really be the same in all graphics. Add a
   \cc{ylim} argument to fix the range.\sidenote{Hint: Work out the range before
     the \cc{for} loop.}
-\item At each iteration, use the \cc{cat} function to print the average measurement level across all time points.
+\item At each iteration, use the \cc{message} function to print the average measurement level across all time points.
 \item On each graph, highlight any observations with a blue point if they are
   larger than the mean + standard deviations or less than the mean - 
   standard deviations. Use the \cc{points} function to highlight a point.

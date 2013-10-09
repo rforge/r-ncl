@@ -131,7 +131,7 @@ for(treat in unique(dd$trts)) {
 @ 
 
 
-\item At each iteration, use the \cc{cat} function to print the average measurement level across all time points.
+\item At each iteration, use the \cc{message} function to print the average measurement level across all time points.
 \item On each graph, highlight any observations with a blue point if they are
 larger than the mean + standard deviations or less than the mean - 
 standard deviations. Use the \cc{points} function to highlight a point.
@@ -170,6 +170,7 @@ viewgraphs = function(dd, colour=TRUE, save=FALSE) {
     
     ##Calculate the limits
     values = dd[sel,]$m
+    message(mean(values))
     upper_lim = mean(values) + sd(values)
     lower_lim = mean(values) - sd(values)
     

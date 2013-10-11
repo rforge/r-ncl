@@ -11,9 +11,12 @@
 \description{
   The internet movie database, \url{http://imdb.com/}, is a
   website devoted to collecting movie data supplied by
-  studios and fans. It claims to be the biggest movie
-  database on the web and is run by amazon.  More about
-  information imdb.com can be found online,
+  studios and fans.
+}
+\details{
+  It claims to be the biggest movie database on the web and
+  is run by amazon.  More about information \url{imdb.com
+  }can be found online,
   \url{http://imdb.com/help/show_leaf?about}, including
   information about the data collection process,
   \url{http://imdb.com/help/show_leaf?infosource}.

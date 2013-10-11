@@ -8,8 +8,8 @@
 library(knitr)
 options(replace.assign=FALSE,width=50)
 
-opts_chunk$set(fig.path='figure/graphics-', 
-               cache.path='cache/graphics-', 
+opts_chunk$set(fig.path='knitr_figure/graphics-', 
+               cache.path='knitr_cache/graphics-', 
                fig.align='center', 
                dev='pdf', fig.width=5, fig.height=5, 
                fig.show='hold', cache=FALSE, par=TRUE)
@@ -34,7 +34,6 @@ knit_hooks$set(par=function(before, options, envir){
 \author[Dr Colin Gillespie]{Dr Colin Gillespie}
 %\date{}  % if the \date{} command is left out, the current date will be used
 
-% The following package makes prettier tables.  We're all about the bling!
 \usepackage{booktabs}
 
 % The units package provides nice, non-stacked fractions and better spacing
@@ -48,20 +47,8 @@ knit_hooks$set(par=function(before, options, envir){
 \newcommand{\cc}{\texttt}
 \graphicspath{{../graphics/}}
 \setcounter{secnumdepth}{2}
-
-% \renewcommand{\hlcomment}[1]{\textcolor[rgb]{0.5,0.5,0.5}{#1}}%
-% \renewenvironment{Hchunk}%
-% {%
-%   \vspace{0.5em}\noindent\begin{lrbox}{\highlightbox}%
-%    \begin{minipage}[b]{\textwidth}%
-%     }%
-%     {%
-%     \end{minipage}%
-%   \end{lrbox}%
-%   \fcolorbox{highlightBorder}{highlightBg}{\usebox{\highlightbox}}%
-%   \vspace{0.5em}}%
 \usepackage{microtype}
- \begin{document}
+\begin{document}
 
 \maketitle% this prints the handout title, author, and date
 
@@ -78,11 +65,10 @@ knit_hooks$set(par=function(before, options, envir){
 
 \begin{enumerate}
 \item Open \cc{Rstudio}
-% \begin{center}
-%   {\small Start menu -> All Programs -> Statistical Software -> R ->
-%     Rstudio}\sidenote{This is roughly where it should be, but it depends on your
-%     set-up.}
-% \end{center}
+\item Now open a new R script:
+\begin{verbatim}
+File -> New File -> R Script
+\end{verbatim}
 \item In \cc{Rstudio}, type a basic R command, say
   
 <<>>=
@@ -106,29 +92,56 @@ Other \cc{Rstudio} commands are:
 \end{itemize}
 It's probably worth creating a directory to store any R files that you create.
 
-Next we'll install the course R package. Installing this
-  package is straightforward
+
+\subsection{Rstudio projects}
+
+RStudio projects are a really neat way of keeping track of your work. You can 
+create an RStudio project:
+\begin{itemize}
+\item In a brand new directory
+\item In an existing directory where you already have R code and data
+\item By cloning a version control (Git or Subversion) repository
+\end{itemize}
+\noindent First create a directory of where you want to store todays code. For example,
+\begin{verbatim}
+  C:/My Documents/nclcourse/introduction
+\end{verbatim}
+\noindent Next, create an RStudio project, by
+\begin{verbatim}
+  File -> New Project -> New Directory
+\end{verbatim}
+\noindent Then selecting the directory you have just created. Whenever you start RStudio, you can easily switch to this project, via
+\begin{verbatim}
+  File -> Recent Projects
+\end{verbatim}
+\noindent or
+\begin{verbatim}
+  File -> Open Projects
+\end{verbatim}
+\noindent Further details about RStudio projects is available from their website
+\begin{center}
+  \url{http://www.rstudio.com/ide/docs/using/projects}
+\end{center}
+
+
+\subsection{Course R package}
+
+Installing the the course R package\sidenote{A package is an \textit{add-on} or a \textit{module}. It provides with additional functions and data.} 
+is straightforward:
 
 <<eval=FALSE, tidy=FALSE>>=
-##Windows & Linux users
-install.packages("nclRintroduction", 
-                 repos="http://R-Forge.R-project.org")
-##Apple users 
-install.packages("nclRintroduction", 
-                 repos="http://R-Forge.R-project.org", 
-                 type="source")
+source("http://www.mas.ncl.ac.uk/~ncsg3/install_ncl_packages.R")
 @ 
 
-\noindent To load the package, use
+\noindent This R package contains the copies of the practicals, solutions and data sets that we require. To load the package, use
 
 <<>>=
 library(nclRintroduction)
 @ 
 
+\newpage
 
-
-
-\section{The data}
+\section{The data set}
 
 We are going to investigate the IMDB data set described in chapter 1. Movies
 were selected for inclusion if they had a known length, had been rated by at
@@ -141,7 +154,7 @@ contains information on over 50,000 movies.
 
 \subsection{Retrieving the data}
 
-To download the data into R, we use the following command:\marginnote{You can
+To access the data into R, we use the following command:\marginnote{You can
   enter the url into your web browser and view the data directly.}
 
 <<>>=
@@ -157,7 +170,7 @@ d = movies
 colnames(d)
 @ 
 
-\noindent We easily change the column names, for example,
+\noindent We can change the column names, for example,
 
 <<>>=
 colnames(d)[17]
@@ -190,7 +203,7 @@ head(d$Title, 5)
 \end{itemize}
 Using the \cc{dim} function, how many columns and rows does \cc{d} have?
 
-\section{Scatter plots}
+\section{Scatter plots (chapter 5.1 of the notes)}
 
 Let's start with some simple scatter plots:
 
@@ -226,7 +239,8 @@ plot(d$Length, d$Rating, xlab="Length", ylab="Rating")
 \item Use the \cc{ylim} argument to specify a y-axis range from 1 to 10.
 \item Use the \cc{col} argument to change the colour of the points.
 \item Use the \cc{main} argument to give the plot a title.
-\item I tend to alter the default plot command using:
+\item I tend to alter the default plot command using:\sidenote{An explantion of 
+\cc{op} and \cc{par} are given at the end of this practical.}
   
 <<>>=
 op = par(mar=c(3,3,2,1), mgp=c(2,.7,0), 

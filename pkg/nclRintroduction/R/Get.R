@@ -1,4 +1,4 @@
-#'Generate random vectors
+#' Generate random vectors
 #'
 #' These functions create vectors of numerics, logicals or characters.
 #' Given a seed, the functions will always return the 

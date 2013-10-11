@@ -11,7 +11,7 @@
   GetCharacterVector(seed = 1)
 }
 \arguments{
-  \item{seed}{a positive interger for the random number
+  \item{seed}{A positive interger for the random number
   generator. Default 1.}
 }
 \description{

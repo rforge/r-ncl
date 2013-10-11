@@ -5,7 +5,7 @@
   GetDataFrame(seed = 1)
 }
 \arguments{
-  \item{seed}{a positive interger for the random number
+  \item{seed}{A positive interger for the random number
   generator. Default 1.}
 }
 \value{
@@ -17,8 +17,6 @@
   random number generator.
 }
 \examples{
-##Given the same student id
-##the same data set is returned
 d1 = GetDataFrame()
 d2 = GetDataFrame(10)
 identical(d1, d2)

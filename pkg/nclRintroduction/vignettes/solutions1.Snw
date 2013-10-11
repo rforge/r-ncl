@@ -8,8 +8,8 @@
   library(knitr)
 options(replace.assign=FALSE,width=50)
 
-opts_chunk$set(fig.path='figure/graphics-', 
-               cache.path='cache/graphics-', 
+opts_chunk$set(fig.path='knitr_figure/graphics-', 
+               cache.path='knitr_cache/graphics-', 
                fig.align='center', 
                dev='pdf', fig.width=5, fig.height=5, 
                fig.show='hold', cache=FALSE, par=TRUE)
@@ -67,35 +67,6 @@ work through this practical first, then try to load in your own data.
 
 \section{Getting started}
 
-\begin{enumerate}
-\item Open \cc{Rstudio}
-% \begin{center}
-%   {\small Start menu -> All Programs -> Statistical Software -> R ->
-%     Rstudio}\sidenote{This is roughly where it should be, but it depends on your
-%     set-up.}
-% \end{center}
-\item In \cc{Rstudio}, type a basic R command, say
-
-<<>>=
-x = 5
-@
-
-\item Press \mbox{\cc{Ctrl + Enter}} anywhere on the line with \cc{x = 5}. This should
-send the command \cc{x = 5} to the R console in the bottom left hand
-window.\marginnote{In Rstudio click on \cc{Help} and \cc{Keyboard shortcuts}
-to see other shortcuts.}
-\item In \cc{Rstudio}, save the file you are currently working on. Rstudio will
-(correctly) add the file extension \cc{.R}
-\end{enumerate}
-Other \cc{Rstudio} commands are:
-\begin{itemize}
-\item If the cursor is at the beginning of the line, pressing \mbox{\cc{Ctrl +
-Enter}} will send that line to the R console.
-\item If you highlight a few lines of R code, pressing \mbox{\cc{Ctrl + Enter}}
-will send that code to the R console.
-\item Pressing \mbox{\cc{Ctrl + Shift + R}} sends the entire file to R console.
-\end{itemize}
-It's probably worth creating a directory to store any R files that you create.
 
 \section{The data}
 
@@ -110,8 +81,8 @@ contains information on over 50,000 movies.
 
 \subsection{Retrieving the data}
 
-To download the data into R, we use the following command:\marginnote{You can
-                                                                      enter the url into your web browser and view the data directly.}
+To access the data into R, we use the following 
+command:\marginnote{You can enter the url into your web browser and view the data directly.}
 
 <<>>=
 library(nclRintroduction)
@@ -205,6 +176,13 @@ plot(d$Length, d$Rating,
      xlab="Length", ylab="Rating", 
      ylim=c(1, 10), col=2)
 @ 
+\noindent  Or
+<<fig.keep='none', tidy=FALSE>>=
+plot(d$Length, d$Rating, 
+     xlab="Length", ylab="Rating", 
+     ylim=c(1, 10), col="red")
+@ 
+\noindent Type \cc{colours()} to see the available named colours.
 
 \item Use the \cc{main} argument to give the plot a title.
 
@@ -215,7 +193,8 @@ plot(d$Length, d$Rating,
      main="Movie rating against length")
 @ 
 
-\item I tend to alter the default plot command using:
+\item I tend to alter the default plot command using:\sidenote{An explantion of 
+\cc{op} and \cc{par} are given at the end of this practical.}
 
 <<tidy=FALSE>>=
 op = par(mar=c(3,3,2,1), mgp=c(2,.7,0), 
@@ -224,7 +203,19 @@ op = par(mar=c(3,3,2,1), mgp=c(2,.7,0),
 
 \noindent What do you think? Can you determine what \cc{mar}, \cc{mgp}, \cc{tck}
 and \cc{las} mean?
+\begin{itemize}
+\item \cc{mar}: A numerical vector of the form c(bottom, left, top, right) 
+which gives the number of lines of margin to be specified on the four 
+sides of the plot. The default is \cc{c(5, 4, 4, 2) + 0.1}.
+\item \cc{mgp}: The margin line for the axis title, axis labels and axis line. 
+The first number affects title,  whereas the second and third values affect 
+axis. The default is \cc{c(3, 1, 0)}.
+\item \cc{tck}: Reduces the tick length.
+\item \cc{las}: Changes the style the axis labels. \cc{las=1} rotates the 
+$y$-axis label by 90 degrees.
 \end{itemize}
+\end{itemize}
+
 To reset the plotting device, run the command
 <<>>=
 par(op)

@@ -6,7 +6,8 @@
 \title{R courses at Newcastle University}
 \description{
   Functions and datasets used in for R courses at Newcastle
-  University
+  University. This package is used in the "Introduction to
+  R" course".
 }
 \keyword{package}
 

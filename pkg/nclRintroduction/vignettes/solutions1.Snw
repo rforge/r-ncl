@@ -232,13 +232,13 @@ Use the commands \cc{mean}, \cc{median}, and \cc{sd} to calculate the summary
 statistics for the movie length.
 \begin{table}[h]
 \centering
-\begin{tabular}{@{}ll@{}}
+\begin{tabular}{@{}lll@{}}
 \toprule
-Statistics & Value \\
+Statistics & Value & Command\\
 \midrule
-Mean & \Sexpr{mean(d$Length)} \\
-Median & \Sexpr{median(d$Length)} \\
-Std. dev & \Sexpr{sd(d$Length)} \\
+Mean & \Sexpr{mean(d$Length)}  & \cc{mean(d\$Length)} \\
+Median & \Sexpr{median(d$Length)} & \cc{median(d\$Length)}\\
+Std. dev & \Sexpr{sd(d$Length)} & \cc{median(d\$Length)}\\
 \bottomrule
 \end{tabular}
 \caption{Summary statistics for the movie data set.}

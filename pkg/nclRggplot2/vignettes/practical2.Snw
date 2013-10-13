@@ -118,11 +118,11 @@ free to experiment.
   
 <<fig.keep='none'>>=
 ggplot(data=mpg, aes(x=displ, y=hwy)) +  
-  geom_point() 
+  geom_point() + xlab("Displacement")
 @  
 
-Now add a dashed loess line and change the axis labels. Hint: try
-\cc{stat\_smooth} and \cc{xlab(`New label')}.
+Now add a dashed loess line and change the $y$-axis label. 
+Hint: try \cc{stat\_smooth} and \cc{ylab(`New label')}.
 \begin{marginfigure}
   \centering
 <<dev='png', out.width='\\textwidth', echo=FALSE, message=FALSE>>=

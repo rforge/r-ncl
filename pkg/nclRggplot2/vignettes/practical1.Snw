@@ -279,11 +279,11 @@ g + geom_bar(aes(x=gender, fill=factor(dec)))
 
 \noindent We can adjust the layout of this bar plot using ggplot's position
 adjustments. The five possible adjustments are listed in table \ref{T1}. The
-default adjustment is \cc{dodge}
+default adjustment is \cc{stack}
 
 <<fig.keep='none', tidy=FALSE>>=
 g + geom_bar(aes(x=gender, fill=factor(dec)), 
-             position="dodge")
+             position="stack")
 @ 
 
 \item Try the other adjustments.

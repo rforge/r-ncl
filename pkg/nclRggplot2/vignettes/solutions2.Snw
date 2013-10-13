@@ -102,9 +102,9 @@ data(mpg)
 # mpg$drv = factor(mpg$drv, 
 #    levels = c("Front", "Rear", "4wd"))
 
-g = ggplot(data=mpg, aes(x=displ, y=hwy)) + 
+g = ggplot(data=mpg, aes(x=displ, y=hwy)) 
+g1 = g + geom_point() + stat_smooth(linetype=2) + 
   xlab("Displacement") + ylab("Highway mpg")
-g1 = g + geom_point() + stat_smooth(linetype=2)
 g2 = g1 + geom_point(data=subset(mpg, manufacturer=="audi"), 
    aes(x=displ, y=hwy), 
   colour="red", size=4, alpha=0.4)
@@ -133,11 +133,11 @@ free to experiment.
   
 <<fig.keep='none'>>=
 ggplot(data=mpg, aes(x=displ, y=hwy)) +  
-  geom_point() 
+  geom_point() + xlab("Displacement")
 @  
 
-Now add a dashed loess line and change the axis labels. Hint: try
-\cc{stat\_smooth} and \cc{xlab(`New label')}.
+Now add a dashed loess line and change the $y$-axis label. 
+Hint: try \cc{stat\_smooth} and \cc{xlab(`New label')}.
 
 <<echo=9>>=
 <<F1>>

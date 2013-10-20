@@ -1,7 +1,7 @@
 \docType{package}
 \name{mas2316-package}
-\alias{mas2316}
 \alias{MAS2316}
+\alias{mas2316}
 \alias{mas2316-package}
 \title{MAS2316}
 \description{

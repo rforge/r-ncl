@@ -95,7 +95,13 @@ for(treat in unique(dd$trts)) {
 \item What does the \cc{readline} function do?
 \end{itemize}
 
-\item Add \cc{xlab} and \cc{ylab} arguments to the plot command.
+\item The default axis labels aren't great. So we can change the $x$-axis label using \cc{xlab}:
+<<fig.keep='none', tidy=FALSE>>=
+plot(dd[dd$trts==treat,]$t, 
+       dd[dd$trts==treat,]$m,
+     xlab="Time")
+@
+Use \cc{ylab} to alter the $y$-axis label.
 \item To add a title to a plot we use the \cc{main} argument, viz:
 
 <<F2, fig.keep='none'>>=

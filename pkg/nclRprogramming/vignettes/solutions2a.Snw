@@ -95,24 +95,35 @@ for(treat in unique(dd$trts)) {
 \item What does the \cc{readline} function do?
 \end{itemize}
 
-\item Add \cc{xlab} and \cc{ylab} arguments to the plot command.
+\item The default axis labels aren't great. So we can change the $x$-axis label using \cc{xlab}:
+<<fig.keep='none', tidy=FALSE>>=
+plot(dd[dd$trts==treat,]$t, 
+       dd[dd$trts==treat,]$m,
+     xlab="Time")
+@
+Use \cc{ylab} to alter the $y$-axis label.
+<<fig.keep='none', tidy=FALSE>>=
+plot(dd[dd$trts==treat,]$t, 
+       dd[dd$trts==treat,]$m,
+     xlab="Time", ylab="Measurement")
+@
+
 \item To add a title to a plot we use the \cc{main} argument, viz:
 
-<<F2, fig.keep='none'>>=
+<<F2, fig.keep='none', tidy=FALSE>>=
 plot(dd[dd$trts=="A",]$t, 
      dd[dd$trts=="A",]$m, 
-     main="Treatment")
+     main="Treatment", 
+     xlab="Time", ylab="Measurement")
 @
 
 Rather than have a static title, make the title display the treatment type.
 
 <<results='hide', fig.keep='none', tidy=FALSE>>=
-for(treat in unique(dd$trts)) {
-  plot(dd[dd$trts==treat,]$t, 
-       dd[dd$trts==treat,]$m, 
-       main=paste("Treament", treat))
-  readline("Hit return for next plot\n")
-}
+plot(dd[dd$trts==treat,]$t, 
+  dd[dd$trts==treat,]$m, 
+  main=paste("Treament", treat),
+  xlab="Time", ylab="Measurement")
 @ 
 
 
@@ -120,18 +131,23 @@ for(treat in unique(dd$trts)) {
 \cc{ylim} argument to fix the range.\sidenote{Hint: Work out the range before
 the \cc{for} loop.}
 
-<<results='hide', fig.keep='none', tidy=FALSE>>=
-for(treat in unique(dd$trts)) {
-  plot(dd[dd$trts==treat,]$t, 
-       dd[dd$trts==treat,]$m, 
-       main=paste("Treament", treat), 
-       ylim=c(-2, 10))
-  readline("Hit return for next plot\n")
-}
+<< fig.keep='none', tidy=FALSE>>=
+range(dd$m)
+plot(dd[dd$trts==treat,]$t, 
+     dd[dd$trts==treat,]$m, 
+     main=paste("Treament", treat), 
+     xlab="Time", ylab="Measurement",
+     ylim=c(-2, 10))
 @ 
 
 
 \item At each iteration, use the \cc{message} function to print the average measurement level across all time points.
+
+<<results='hide'>>=
+##Within the for loop have the line
+message(mean(dd[dd$trts==treat,]$m))
+@
+
 \item On each graph, highlight any observations with a blue point if they are
 larger than the mean + standard deviations or less than the mean - 
 standard deviations. Use the \cc{points} function to highlight a point.
@@ -140,7 +156,7 @@ function to save the resulting graph. To get unique file names, use the paste
 command:
 
 <<>>=
-filename = paste("file", "1", ".pdf", sep="")
+(filename = paste("file", "1", ".pdf", sep=""))
 @ 
 \item Put the above code in a function which takes the data frame as an argument.
 \item Alter your function to take another argument where you can save the graph

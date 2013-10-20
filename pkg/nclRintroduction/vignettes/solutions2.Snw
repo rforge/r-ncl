@@ -68,8 +68,7 @@ Some of the questions below are straight forward, others are bit more tricky.
 \begin{itemize}
 \item The last sub-questions of Q1 and Q2  are hard.
 \end{itemize}
-For the harder questions, have a look at the \cc{which} function in R. Before
-starting the practical, run the {following commands:
+Before starting the practical, run the {following commands:
 
 <<>>=
 library(nclRintroduction)
@@ -122,6 +121,8 @@ sum(x1 > q1 & x1 < med)
 the sample standard deviation?\marginnote{$\bar x_1$ is the mean value and
 $sd(x_1)$ is the standard deviation of $x_1$.}
 <<>>=
+length(x1[x1 > (mean(x1) + 2*sd(x1))])
+##Or
 sum(x1 > (mean(x1) + 2*sd(x1)))
 @
 
@@ -160,6 +161,8 @@ especially when combined with \cc{sum}, \cc{sort}, etc.
 \begin{enumerate}
 \item How many times does ``A'' appear in \cc{x2}?
 <<>>=
+length(x2[x2=="A"])
+##Or
 sum(x2=="A")
 @
 \item Which letter appears the most? If more than one letter appears, just give
@@ -194,16 +197,20 @@ lectures.
 \item How many rows does \cc{y} have?
 <<>>=
 dim(y)[1]
+## Or
+nrow(y)
 @
 
 \item How many columns does \cc{y} have?
 <<>>=
 dim(y)[2]
+## Or
+ncol(y)
 @
 
 \item How many movies are there where budget is known, i.e. where \cc{Budget $!= -1$}?
 <<>>=
-dim(y[y$Budget != -1,])[1]
+nrow(y[y$Budget != -1,])
 ##Or
 sum(y$Budget != -1)
 @
@@ -212,18 +219,24 @@ sum(y$Budget != -1)
 than 7.5 (not including 2.5 and 7.5)? How would you include the values 2.5 and
 7.5 in your condition?
 <<>>=
+nrow(y[y$Rating < 2.5 | y$Rating > 7.5,])
+##
 sum(y$Rating < 2.5 | y$Rating > 7.5)
 @
 
 \item How many movies are there where the length is greater than 120 and have a
 rating of more than 7.5 - (not including 120 and 7.5)?
 <<>>=
+nrow(y[y$Length > 120 & y$Rating > 7.5,])
+##Or
 sum(y$Length > 120 & y$Rating > 7.5)
 @
 
 \item How many movies were made in 1980 and have a rating above 5.0?
 <<>>=
-  sum(y$Year == 1980 & y$Rating > 5.0)
+nrow(y[y$Year == 1980 & y$Rating > 5.0,])
+##Or
+sum(y$Year == 1980 & y$Rating > 5.0)
 @
 \item How many movies are classified as Action?
 <<>>=

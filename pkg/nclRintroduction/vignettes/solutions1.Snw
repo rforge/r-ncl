@@ -221,11 +221,6 @@ To reset the plotting device, run the command
 par(op)
 @
 \newpage
-
-% mean(d$Length)
-% median(d$Length)
-% sd(d$Length)
-% quantile(d$Length)[c(2,4)]
 \section{Summary Statistics}
 
 Use the commands \cc{mean}, \cc{median}, and \cc{sd} to calculate the summary
@@ -315,6 +310,24 @@ axis(1,at=1:2, labels=c("Non R", "Romantic") )
 \caption{Boxplot of movie ratings split according to romance.}
 \end{marginfigure}
 
+\section*{Discussion of the \cc{par} function}
+
+The \cc{par} function is used to set or query graphical parameters. You can see a list of available parameters by looking at the help file \cc{?par} or by just typing
+\cc{par()} in the console. All of the available parameters have default settings (see the help page). 
+
+
+When we run the command 
+<<>>=
+(op = par(cex.lab=0.9))
+@
+\noindent The axis label size is reduced to 90\% of the base size. The parameter \cc{op} is set to the \textit{previous} value of \cc{cex.axis}, i.e.
+<<>>=
+op
+@
+\noindent By setting \cc{op} to the \textit{previous} value, we can easily reset the graphical parameters via
+<<>>=
+par(op)
+@
 
 
 \end{document}

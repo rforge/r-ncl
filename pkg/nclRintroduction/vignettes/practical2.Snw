@@ -68,8 +68,7 @@ Some of the questions below are straight forward, others are bit more tricky.
 \begin{itemize}
 \item The last sub-questions of Q1 and Q2  are hard.
 \end{itemize}
-For the harder questions, have a look at the \cc{which} function in R. Before
-starting the practical, run the {following commands:
+Before starting the practical, run the following commands:
 
 <<>>=
 library(nclRintroduction)

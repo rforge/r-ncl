@@ -325,6 +325,32 @@ boxplot(d$Rating ~ d$Romance)
 \noindent Try generating a similar boxplot, but for other variables. What
 happens when you condition on more than one variable?
 
+\section*{Discussion of the \cc{par} function}
+
+The \cc{par} function is used to set or query graphical parameters. You can see a list of available parameters by looking at the help file \cc{?par} or by just typing
+\cc{par()} in the console. All of the available parameters have default settings (see the help page). 
+
+
+When we run the command 
+<<>>=
+(op = par(cex.lab=0.9))
+@
+\noindent The axis label size is reduced to 90\% of the base size. The parameter \cc{op} is set to the \textit{previous} value of \cc{cex.axis}, i.e.
+<<>>=
+op
+@
+\noindent By setting \cc{op} to the \textit{previous} value, we can easily reset the graphical parameters via
+<<>>=
+par(op)
+@
+
+
+
+
+
+
+
+
 \section*{Solutions}
 
 Solutions are contained within this package:

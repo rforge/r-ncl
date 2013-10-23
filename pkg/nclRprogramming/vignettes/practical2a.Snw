@@ -117,8 +117,13 @@ plot(dd[dd$trts=="A",]$t,
 \caption{Measurements againts time with a title.}\label{F2}
 \end{marginfigure}
 
+\noindent We can combine strings/characters using the \cc{paste} function, for example
 
-Rather than have a static title, make the title display the treatment type.
+<<>>=
+paste("Treatment", treat)
+@
+
+\noindent Rather than have a static title, make the title of each plot display the treatment type.
 
 \item The y-axis range should really be the same in all graphics. Add a
   \cc{ylim} argument to fix the range.\sidenote{Hint: Work out the range before
@@ -126,15 +131,15 @@ Rather than have a static title, make the title display the treatment type.
 \item At each iteration, use the \cc{message} function to print the average measurement level across all time points.
 \item On each graph, highlight any observations with a blue point if they are
   larger than the mean + standard deviations or less than the mean - 
-  standard deviations. Use the \cc{points} function to highlight a point.
+  standard deviations. Use the \cc{points} function to highlight a point.\sidenote{\textbf{Hint:} You don't need \cc{if} statements here. Just subset your data frame and pass this new data frame to the points function.}
 \item Suppose we wanted to save individual graphs. Add in the \cc{pdf}
   function to save the resulting graph. To get unique file names, use the paste
   command:
   
 <<>>=
-filename = paste("file", "1", ".pdf", sep="")
+filename = paste("file", treat, ".pdf", sep="")
 @ 
-\item Put the above code in a function which takes the data frame as an argument.
+\item Put the your code, i.e. the \cc{for} loop and plotting commands, in a function which takes the data frame as an argument.
 \item Alter your function to take another argument where you can save the graph
   in a different directory.
 \end{enumerate}

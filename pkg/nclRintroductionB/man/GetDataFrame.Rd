@@ -1,0 +1,24 @@
+\name{GetDataFrame}
+\alias{GetDataFrame}
+\title{Subset of the yeast data set}
+\usage{
+  GetDataFrame(seed = 1)
+}
+\arguments{
+  \item{seed}{A positive interger for the random number
+  generator. Default 1.}
+}
+\value{
+  A data frame with a random numer of rows
+}
+\description{
+  This function creates a subset (of random rows) of the
+  yeast data set data frame. The seed argument resets the
+  random number generator.
+}
+\examples{
+d1 = GetDataFrame()
+d2 = GetDataFrame(10)
+identical(d1, d2)
+}
+

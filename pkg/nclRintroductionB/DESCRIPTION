@@ -1,21 +1,23 @@
-Package: nclRprogramming
+Package: nclRintroductionB
 Type: Package
-Title: nclRprogramming
+Title: nclRintroductionB
 Version: 0.12
-Date: 2013-10-23
-Authors@R: person("Gillespie", "Colin",
+Date: 2013-10-20
+Authors@R: person("Colin", "Gillespie",
     email="csgillespie@gmail.com",
     role = c("aut", "cre"))
 Author: Colin Gillespie
 Maintainer: Colin Gillespie <csgillespie@gmail.com>
 Description: A package for the Newcastle University R courses.
 URL: http://www.ncl.ac.uk/maths/rcourse/
-License: GPL-3
+License: GPL-3 | GPL-2
 Depends:
-    R (>= 2.13),
+    R (>= 2.15),
+Collate:
+    'Get.R'
+    'GetDataFrame.R'
+    'movies.R'
+    'nclRintroduction-package.R'
+VignetteBuilder: knitr
 Suggests:
     knitr
-Collate:
-    'datasets.R'
-    'nclRprogramming-package.R'
-VignetteBuilder: knitr

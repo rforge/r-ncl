@@ -112,11 +112,11 @@ Fun3 = function(x) {
 @ 
 \begin{enumerate}
 \item Why does this work:
-<<>>=
+<<eval=FALSE>>=
 Fun2()
 @
 \noindent but this raises an error\sidenote{{\color{red} \cc{Fun1()} has a default argument}}
-<<>>=
+<<eval=FALSE>>=
 Fun3()
 @
  

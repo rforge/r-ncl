@@ -127,11 +127,11 @@ Fun3 = function(x) {
 @ 
 \begin{enumerate}
 \item Why does this work:
-<<>>=
+<<eval=FALSE>>=
 Fun2()
 @
 \noindent but this raises an error
-<<>>=
+<<eval=FALSE>>=
 Fun3()
 @
 \item Change \cc{Fun2} so that it returns \cc{x}$\times$\cc{x}.

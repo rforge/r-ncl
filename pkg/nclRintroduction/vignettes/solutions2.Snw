@@ -148,42 +148,8 @@ sort(x1)[50]
 %         th}}}$ occurrence of \cc{TRUE}.
 % \end{enumerate}
 
+
 \subsection*{Question 2}
-
-Run the following R code
-
-<<>>=
-x2 = GetCharacterVector()
-@ 
-
-\noindent In the following questions, the function \cc{table} is quite useful,
-especially when combined with \cc{sum}, \cc{sort}, etc.
-\begin{enumerate}
-\item How many times does ``A'' appear in \cc{x2}?
-<<>>=
-length(x2[x2=="A"])
-##Or
-sum(x2=="A")
-@
-\item Which letter appears the most? If more than one letter appears, just give
-the first letter (if the letters were sorted in alphabetical order).
-<<>>=
-sort(table(x2), decreasing=TRUE)[1]
-@
-
-\item \textbf{Very tricky:} How many pairs of letters are there in
-\cc{x2}.\sidenote{For example, in \cc{AABCCC} we would have 3 pairs: \cc{AA},
-\cc{CC} and \cc{CC}.}
-
-<<>>=
-l = length(x2)
-x2_a = x2[1:(l-1)]; x2_b = x2[2:l];
-sum(x2_a == x2_b) 
-@
-
-\end{enumerate}
-
-\subsection*{Question 3}
 
 Run the following R code
 
@@ -250,5 +216,39 @@ sum(y$Action == 1 & y$Animation == 1)
 \end{enumerate}
 
 
+\subsection*{Question 3}
+
+Run the following R code
+
+<<>>=
+x2 = GetCharacterVector()
+@ 
+
+\noindent In the following questions, the function \cc{table} is quite useful,
+especially when combined with \cc{sum}.
+\begin{enumerate}
+\item How many times does ``A'' appear in \cc{x2}?
+<<>>=
+length(x2[x2=="A"])
+##Or
+sum(x2=="A")
+@
+\item Which letter appears the most? If more than one letter appears, just give
+the first letter (if the letters were sorted in alphabetical order).
+<<>>=
+sort(table(x2), decreasing=TRUE)[1]
+@
+
+\item \textbf{Very tricky:} How many pairs of letters are there in
+\cc{x2}.\sidenote{For example, in \cc{AABCCC} we would have 3 pairs: \cc{AA},
+\cc{CC} and \cc{CC}.}
+
+<<>>=
+l = length(x2)
+x2_a = x2[1:(l-1)]; x2_b = x2[2:l];
+sum(x2_a == x2_b) 
+@
+
+\end{enumerate}
 
 \end{document}

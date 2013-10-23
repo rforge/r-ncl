@@ -110,26 +110,9 @@ x1 = GetNumericVector()
 %         th}}}$ occurrence of \cc{TRUE}.
 % \end{enumerate}
 
+
+
 \subsection*{Question 2}
-
-Run the following R code
-
-<<>>=
-x2 = GetCharacterVector()
-@ 
-
-\noindent In the following questions, the function \cc{table} is quite useful,
-especially when combined with \cc{sum}, \cc{sort}, etc.
-\begin{enumerate}
-\item How many times does ``A'' appear in \cc{x2}?
-\item Which letter appears the most? If more than one letter appears, just give
-  the first letter (if the letters were sorted in alphabetical order).
-\item \textbf{Very tricky:} How many pairs of letters are there in
-  \cc{x2}.\sidenote{For example, in \cc{AABCCC} we would have 3 pairs: \cc{AA},
-    \cc{CC} and \cc{CC}.}
-\end{enumerate}
-
-\subsection*{Question 3}
 
 Run the following R code
 
@@ -152,6 +135,26 @@ lectures.
 \item How many movies are classified as Action?
 \item How many movies were classified as both Action and Animation?
 \end{enumerate}
+
+\subsection*{Question 3 (Bonus materia)}
+
+Run the following R code
+
+<<>>=
+x2 = GetCharacterVector()
+@ 
+
+\noindent In the following questions, the function \cc{table} is quite useful,
+especially when combined with \cc{sort}.
+\begin{enumerate}
+\item How many times does ``A'' appear in \cc{x2}?
+\item Which letter appears the most? If more than one letter appears, just give
+  the first letter (if the letters were sorted in alphabetical order).
+\item \textbf{Very tricky:} How many pairs of letters are there in
+  \cc{x2}.\sidenote{For example, in \cc{AABCCC} we would have 3 pairs: \cc{AA},
+    \cc{CC} and \cc{CC}.}
+\end{enumerate}
+
 
 \section*{Solutions}
 

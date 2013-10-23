@@ -30,7 +30,7 @@ knit_hooks$set(par=function(before, options, envir){
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \graphicspath{{../graphics/}}
 
-\title{Practical 1} 
+\title{Practical 1 solutions} 
 \author[Dr Colin Gillespie]{Dr Colin S.
 Gillespie}
 \date{}  % if the \date{} command is left out, the current date will be used
@@ -65,55 +65,71 @@ Gillespie}
 \section{Practice questions}
 
 \begin{enumerate}
+\item Basic functions
+
+<<>>=
+v = 5
+Fun1 = function() {
+  v = 0
+  return(v)
+}
+Fun1()
+v
+@ 
+\begin{enumerate}
+\item Why does the final line return 5 and not 0.\sidenote{{\color{red} \cc{Fun1} uses
+the local variable \cc{c}}.}
+\item Delete line 3 in the above piece of code. Now change \cc{Fun1} to allow
+$v$ to be passed as an argument, i.e. we can write \cc{Fun1(5)}. Call
+this function to make sure it works.
+
+<<>>=
+Fun1 = function(v) {
+  return(v)
+}
+Fun1(10)
+@
+
+
+\item Now make the argument in \cc{Fun1} have a default value of $0$.
+
+<<>>=
+Fun1 = function(v=0) {
+  return(v)
+}
+@ 
+\end{enumerate}
 \item Default arguments:
 
 <<>>=
-Fun1 = function(x=10) {
+Fun2 = function(x=10) {
   return(x)
 }
 
-Fun2 = function(x) {
+Fun3 = function(x) {
   return(x)
 }
 @ 
 \begin{enumerate}
-\item Why does \cc{Fun1()} work, but \cc{Fun2()} give an error
-message?\sidenote{{\color{red} \cc{Fun1()} has a default argument}}
-
-\item Change \cc{Fun1} so that it returns $\sqrt{x}$.
+\item Why does this work:
+<<>>=
+Fun2()
+@
+\noindent but this raises an error\sidenote{{\color{red} \cc{Fun1()} has a default argument}}
+<<>>=
+Fun3()
+@
+ 
+\item Change \cc{Fun2} so that it returns $\sqrt{x}$.
 
 <<>>=
-Fun1 = function(x=10) {
+Fun2 = function(x=10) {
   return(sqrt(x))
 }
 @ 
 
 \end{enumerate}
-\item Basic functions
 
-<<>>=
-v = 5
-Fun3 = function() {
-  v = 0
-  return(v)
-}
-Fun3()
-v
-@ 
-\begin{enumerate}
-\item Why does the final line return 5 and not 0.\sidenote{{\color{red} \cc{Fun3} uses
-the local variable \cc{c}}.}
-\item Delete line 3 in the above piece of code. Now change \cc{Fun3} to allow
-$v$ to be passed as an argument, i.e. we can write \cc{Fun3(5)}. Call
-this function to make sure it works.
-\item Now make the argument in \cc{Fun3} have a default value of $0$.
-
-<<>>=
-Fun3 = function(v=0) {
-  return(v)
-}
-@ 
-\end{enumerate}
 \item \cc{if} statements.
 
 <<>>=
@@ -146,6 +162,7 @@ Fun4 = function(x) {
 @   
 
 \end{enumerate}
+\newpage
 \item \cc{for} loops.
 
 <<>>=
@@ -161,12 +178,31 @@ The \cc{for} loop above calculates
 \sum_{i=1}^5 i
 \]
 \begin{enumerate}
-\item What is the final value of \cc{total} in the above piece of code?
+\item What is the final value of \cc{total} in the above piece of code?\sidenote{{\color{red} total = \Sexpr{total}}}
 \item Change the above \cc{loop} to calculate the following summations:
 \[
-\mbox{(i)} \sum_{i=1}^{20} (i+1)  \quad \mbox{(ii)} \sum_{j=-10}^{15} j \quad \mbox{(iii)} \sum_{j=-10}^{10} \exp(j^{1/j})  
+\mbox{(i)} \sum_{i=1}^{20} (i+1)  
 \]
+<<>>=
+total = 0
+for(i in 1:20) {
+  total = total + (i + 1)
+}
+total
+@
+\[
+\mbox{(ii)} \sum_{j=-10}^{15} j 
+\]
+<<>>=
+total = 0
+for(j in -10:15) {
+  total = total + j
+}
+total
+@
+
 \end{enumerate}
+\newpage
 \item More \cc{for} loops:
 
 <<>>=
@@ -177,13 +213,37 @@ for(blob in a:5) {
 }
 @
 
+
 \begin{enumerate}
 \item Delete line 1. Now put the above code in a function called \cc{Fun5},
 where \cc{a} is passed as an argument, i.e. we can call
 \cc{Fun5(1)}
+
+<<>>=
+Fun5 = function(a) {
+  total = 0
+  for(blob in a:5){
+    total = total + blob
+  }
+  return(total)
+}
+Fun5(1)
+@
+
 \item Alter the code so that the \cc{for} loop goes from \cc{a} to
 \cc{b}, rather than \cc{a} to 5. Allow \cc{b} to be passed as an
 argument, i.e. we can call \cc{Fun5(1,5)}.
+<<>>=
+Fun5 = function(a, b) {
+  total = 0
+  for(blob in a:b){
+    total = total + blob
+  }
+  return(total)
+}
+Fun5(1, 5)
+@
+
 \item Change \cc{Fun5} so that it has default arguments of
 \cc{a=1} and \cc{b=10}.
 
@@ -195,6 +255,7 @@ Fun5 = function(a=1, b=10) {
   }
   return(total)
 }
+Fun5(5)
 @ 
 \end{enumerate}
 \end{enumerate}

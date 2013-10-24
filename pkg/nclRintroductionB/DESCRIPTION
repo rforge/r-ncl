@@ -18,6 +18,3 @@ Collate:
     'GetDataFrame.R'
     'movies.R'
     'nclRintroduction-package.R'
-VignetteBuilder: knitr
-Suggests:
-    knitr

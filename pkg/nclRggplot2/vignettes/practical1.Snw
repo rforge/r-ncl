@@ -91,7 +91,13 @@ To get you familiar with the underlying \cc{ggplot2} concepts, we'll recreate
 some standard graphics. Some these of plots aren't particularly useful, we are
 just using them for illustration purposes.
 
-\newthought{To begin}, load the library
+\newthought{To begin with}, install the package
+
+<<eval=FALSE>>=
+install.packages("ggplot2")
+@
+
+\noindent then load the package:
 
 <<>>=
 library(ggplot2)

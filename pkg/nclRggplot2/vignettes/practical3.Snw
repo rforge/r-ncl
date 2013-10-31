@@ -296,7 +296,7 @@ g1
 
 An experiment was conducted: two treatments, \cc{A} and \cc{B}, were tested. The data can be downloaded into R using the following commands:
 <<cache=TRUE>>=
-data(treats)
+data(cell_data)
 @
 \noindent Within each treatment group, there are two patient types: \cc{Case} and
 \cc{Control}. What plot do you think would be most suitable for this data?

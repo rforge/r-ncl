@@ -134,7 +134,7 @@ Fun2()
 <<eval=FALSE>>=
 Fun3()
 @
-\item Change \cc{Fun2} so that it returns \cc{x}$\times$\cc{x}.
+\item Change \cc{Fun2} so that it returns \cc{x} $\times$ \cc{x}.
 \item Now change \cc{Fun2} so that is takes in take two arguments, \cc{x} and \cc{y}. Both arguments should have default value of 10. The function should return \cc{x}$\times${y}.
 \end{enumerate}
 \item \cc{if} statements.

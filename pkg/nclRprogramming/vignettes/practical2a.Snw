@@ -132,7 +132,8 @@ paste("Treatment", treat)
 \item On each graph, highlight any observations with a blue point if they are
   larger than the mean + standard deviations or less than the mean - 
   standard deviations. Use the \cc{points} function to highlight a point.\sidenote{\textbf{Hint:} You don't need \cc{if} statements here. Just subset your data frame and pass this new data frame to the points function.} For example, to highlight the points (1,2) and (3, 4) we use the command:
-<<>>=
+<<echo=-1, fig.keep='none'>>=
+plot(0)
 points(c(1, 3), c(2, 4), col=2)
 @
 

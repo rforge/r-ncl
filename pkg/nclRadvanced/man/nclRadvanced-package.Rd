@@ -1,0 +1,13 @@
+\docType{package}
+\name{nclRadvanced-package}
+\alias{nclRadvanced}
+\alias{nclRadvanced-package}
+\alias{nclradvanced}
+\title{R courses at Newcastle University}
+\description{
+  Functions and datasets used in for R courses at Newcastle
+  University. This package is used in the "Advanced R
+  programming" course".
+}
+\keyword{package}
+

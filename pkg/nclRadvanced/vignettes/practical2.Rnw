@@ -5,7 +5,8 @@
 \documentclass[a4paper,justified,openany]{tufte-handout}
 
 <<setup, include=FALSE, cache=FALSE>>=
-  library(knitr)
+library(knitr)
+library(methods)
 options(replace.assign=FALSE,width=50)
 
 opts_chunk$set(fig.path='knitr_figure/graphics-', 

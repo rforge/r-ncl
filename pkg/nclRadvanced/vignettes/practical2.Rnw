@@ -91,7 +91,7 @@ knit_hooks$set(par=function(before, options, envir){
 
 \section*{Solutions}
 
-Solutions are contained within this package:
+Solutions are contained within the course package
 <<eval=FALSE>>=
 library("nclRadvanced")
 vignette("solutions2", package="nclRadvanced")

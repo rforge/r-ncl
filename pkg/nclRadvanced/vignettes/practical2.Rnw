@@ -52,20 +52,17 @@ knit_hooks$set(par=function(before, options, envir){
 
 \maketitle% this prints the handout title, author, and date
 
-\begin{abstract}
-\noindent This practical aims at introducing you to the R interface. By the
 
-\end{abstract}
 
 \section{S3 objects}\label{S3}
 
 \begin{enumerate}
-\item Following the cohort example in the notes, suppose we want to make a generic for the \cc{mean} function. 
+\item Following the cohort example in the notes, suppose we want to create method called \cc{mean}. 
 \begin{itemize}
 \item List all methods associated with the \cc{mean} function.
-\item Have a quick look at the source code of \cc{mean.default}
-\item What are the arguments of the \cc{mean} generic?
-\item Create a function called \cc{mean.cohort} that returns a vector containing the weight and height mean.\sidenote{Ensure that you can pass in the standard \cc{mean} arguments, i.e. \cc{na.rm}.}
+\item Examine the source code of \cc{mean.default}. 
+\item What are the arguments of \cc{mean.default}?
+\item Create a function called \cc{mean.cohort} that returns a vector containing the mean weight and mean height.\sidenote{Ensure that you can pass in the standard \cc{mean} arguments, i.e. \cc{na.rm}.}
 \end{itemize}
 \item Let's now make a similar function for the standard deviation
 \begin{itemize}
@@ -76,7 +73,7 @@ knit_hooks$set(par=function(before, options, envir){
 \end{enumerate}
 
 
-\section{S4 objects}
+\section{S4 objects}\label{S4}
 
 \marginnote{I've intentionally mirrored the functions from section \ref{S3} of this practical to highlight the differences.}
 \begin{enumerate}

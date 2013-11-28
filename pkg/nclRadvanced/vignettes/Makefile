@@ -15,6 +15,7 @@ force:
 	cp -v practical1.Rnw solutions1.Rnw
 	cp -v practical2.Rnw solutions2.Rnw
 	make all
+	mv $(PDFFILES) ../inst/doc/
 
 all: $(PDFFILES)
 
@@ -22,7 +23,6 @@ all: $(PDFFILES)
 commit: 
 	make clean
 	make force
-	mv $(PDFFILES) ../inst/doc/
 	svn commit ../
 
 

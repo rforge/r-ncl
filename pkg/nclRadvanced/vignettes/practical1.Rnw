@@ -28,7 +28,6 @@ knit_hooks$set(par=function(before, options, envir){
 x = get("con", envir=sys.frame(1))
 fname = summary(x)$description
 show = grepl("solutions", fname)
-show = TRUE
 @
 
 
@@ -39,7 +38,7 @@ show = TRUE
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \graphicspath{{graphics/}}
 
-\title{Advanced R programming: practical 1} 
+\title{Advanced R programming: \Sexpr{ifelse(show, "solutions","practical")} 1} 
 \author[Dr Colin Gillespie]{Dr Colin Gillespie}
 %\date{}  % if the \date{} command is left out, the current date will be used
 
@@ -176,7 +175,7 @@ f = function(x) {
 f(10)
 @
 
-<<echo=show, results='hide'>>=
+<<echo=show, results='hide', message=show>>=
 ##Solution: The easiest way to understand is to use print statements
 f = function(x) {
   f = function(x) {

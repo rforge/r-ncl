@@ -22,15 +22,21 @@ knit_hooks$set(par=function(before, options, envir){
   }}, crop=hook_pdfcrop)
 @
 
+<<echo=FALSE>>=
+##Get this file name
+x = get("con", envir=sys.frame(1))
+fname = summary(x)$description
+show = grepl("solutions", fname)
+show = TRUE
+results = ifelse(show, "markup", "hide")
+@
 
 \usepackage{amsmath}
-
 % Set up the images/graphics package
 \usepackage{graphicx}
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \graphicspath{{graphics/}}
-
-\title{Advanced R: practical 2} 
+\title{Advanced R: \Sexpr{ifelse(show, "solutions","practical")}  2} 
 \author[Dr Colin Gillespie]{Dr Colin Gillespie}
 %\date{}  % if the \date{} command is left out, the current date will be used
 
@@ -52,23 +58,47 @@ knit_hooks$set(par=function(before, options, envir){
 
 \maketitle% this prints the handout title, author, and date
 
-
-
 \section{S3 objects}\label{S3}
 
 \begin{enumerate}
 \item Following the cohort example in the notes, suppose we want to create method called \cc{mean}. 
 \begin{itemize}
-\item List all methods associated with the \cc{mean} function.
+\item List all the S3 methods associated with the \cc{mean} function.
+<<echo=show, results=results>>=
+methods("mean")
+@
+
 \item Examine the source code of \cc{mean.default}. 
+<<echo=show, results="hide">>=
+body("mean.default")
+@
 \item What are the arguments of \cc{mean.default}?
+<<echo=show, results=results>>=
+args("mean")
+@
 \item Create a function called \cc{mean.cohort} that returns a vector containing the mean weight and mean height.\sidenote{Ensure that you can pass in the standard \cc{mean} arguments, i.e. \cc{na.rm}.}
+<<echo=show, results='hide'>>=
+mean.cohort = function(x, ...) {
+  m1 = mean(x$details[ ,1], ...)
+  m2 = mean(x$details[ ,2], ...)
+  return(c(m1, m2))
+}
+@
+
 \end{itemize}
 \item Let's now make a similar function for the standard deviation
 \begin{itemize}
 \item Look at the arguments of the standard \cc{sd} function.
 \item Create an function call \cc{sd.cohort} that returns a vector containing the weight and height standard deviation.\sidenote{Ensure that you can pass in the standard \cc{sd} arguments, i.e. \cc{na.rm}.}
 \item Create a default \cc{sd} function. Look at \cc{cor.default} in the notes for a hint.
+<<echo=show, results=results>>=
+sd.default = function(x, ...) stats::sd(x, ...)
+sd.cohort = function(x, ...) {
+  s1 = sd(x$details[ ,1], ...)
+  s2 = sd(x$details[ ,2], ...)
+  return(c(s1, s2))
+} 
+@
 \end{itemize}
 \end{enumerate}
 
@@ -80,9 +110,33 @@ knit_hooks$set(par=function(before, options, envir){
 \item Following the cohort example in the notes, suppose we want to make a generic for the \cc{mean} function. 
 \begin{itemize}
 \item Using the \cc{isGeneric} function, determine if the \cc{mean} function is an S4 generic. If not, use \cc{setGeneric} to create an S4 generic.
+<<echo=show, results=results>>=
+isGeneric("mean")
+setGeneric("mean")
+@
 \item Using \cc{setMethod}, create a \cc{mean} method for the \cc{Cohort} class.\sidenote{Be careful to match the arguments.}
+<<echo=show, results=results>>=
+setMethod("mean", signature=c("Cohort"), 
+          definition=function(x, ...) {
+            m1 = mean(x@details[ ,1], ...)
+            m2 = mean(x@details[ ,2], ...)
+            return(c(m1, m2))
+      }
+)
+@
 \end{itemize}
 \item Repeat the above steps for the \cc{sd} function.
+<<echo=show, results=results>>=
+isGeneric("sd")
+setGeneric("sd")
+setMethod("sd", signature=c("Cohort"), 
+          definition=function(x, ...) {
+            m1 = sd(x@details[ ,1], ...)
+            m2 = sd(x@details[ ,2], ...)
+            return(c(m1, m2))
+      }
+)
+@
 \end{enumerate}
 
 

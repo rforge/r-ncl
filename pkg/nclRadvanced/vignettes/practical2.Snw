@@ -1,0 +1,102 @@
+%\VignetteIndexEntry{practical2}
+%!Snw weave = knitr
+%\VignetteEngine{knitr::knitr}
+
+\documentclass[a4paper,justified,openany]{tufte-handout}
+
+<<setup, include=FALSE, cache=FALSE>>=
+  library(knitr)
+options(replace.assign=FALSE,width=50)
+
+opts_chunk$set(fig.path='knitr_figure/graphics-', 
+               cache.path='knitr_cache/graphics-', 
+               fig.align='center', 
+               dev='pdf', fig.width=5, fig.height=5, 
+               fig.show='hold', cache=FALSE, par=TRUE)
+knit_hooks$set(crop=hook_pdfcrop)
+
+knit_hooks$set(par=function(before, options, envir){
+  if (before && options$fig.show!='none') {
+    par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
+        mgp=c(2,.7,0),tcl=-.01, las=1)
+  }}, crop=hook_pdfcrop)
+@
+
+
+\usepackage{amsmath}
+
+% Set up the images/graphics package
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{graphics/}}
+
+\title{Advanced R: practical 2} 
+\author[Dr Colin Gillespie]{Dr Colin Gillespie}
+%\date{}  % if the \date{} command is left out, the current date will be used
+
+\usepackage{booktabs}
+
+% The units package provides nice, non-stacked fractions and better spacing
+% for units.
+\usepackage{units}
+
+% The fancyvrb package lets us customize the formatting of verbatim
+% environments.  We use a slightly smaller font.
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+\newcommand{\cc}{\texttt}
+\graphicspath{{../graphics/}}
+\setcounter{secnumdepth}{2}
+\usepackage{microtype}
+\begin{document}
+
+\maketitle% this prints the handout title, author, and date
+
+\begin{abstract}
+\noindent This practical aims at introducing you to the R interface. By the
+
+\end{abstract}
+
+\section{S3 objects}\label{S3}
+
+\begin{enumerate}
+\item Following the cohort example in the notes, suppose we want to make a generic for the \cc{mean} function. 
+\begin{itemize}
+\item List all methods associated with the \cc{mean} function.
+\item Have a quick look at the source code of \cc{mean.default}
+\item What are the arguments of the \cc{mean} generic?
+\item Create a function called \cc{mean.cohort} that returns a vector containing the weight and height mean.\sidenote{Ensure that you can pass in the standard \cc{mean} arguments, i.e. \cc{na.rm}.}
+\end{itemize}
+\item Let's now make a similar function for the standard deviation
+\begin{itemize}
+\item Look at the arguments of the standard \cc{sd} function.
+\item Create an function call \cc{sd.cohort} that returns a vector containing the weight and height standard deviation.\sidenote{Ensure that you can pass in the standard \cc{sd} arguments, i.e. \cc{na.rm}.}
+\item Create a default \cc{sd} function. Look at \cc{cor.default} in the notes for a hint.
+\end{itemize}
+
+
+\section{S4 objects}
+
+\marginnote{I've intentionally mirrored the functions from section \ref{S3} of this practical to highlight the differences.}
+\begin{enumerate}
+\item Following the cohort example in the notes, suppose we want to make a generic for the \cc{mean} function. 
+\begin{itemize}
+\item Using the \cc{isGeneric} function, determine if the \cc{mean} function is an S4 generic. If not, use \cc{setGeneric} to create an S4 generic.
+\item Using \cc{setMethod}, create a \cc{mean} method for the \cc{Cohort} class.\sidenote{Be careful to match the arguments.}
+\end{itemize}
+\item Repeat the above steps for the \cc{sd} function.
+\end{enumerate}
+
+
+\section*{Solutions}
+
+Solutions are contained within this package:
+<<eval=FALSE>>=
+library("nclRadvanced")
+vignette("solutions2", package="nclRadvanced")
+@
+
+
+
+
+\end{document}

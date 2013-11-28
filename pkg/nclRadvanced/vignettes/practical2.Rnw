@@ -73,6 +73,7 @@ knit_hooks$set(par=function(before, options, envir){
 \item Create an function call \cc{sd.cohort} that returns a vector containing the weight and height standard deviation.\sidenote{Ensure that you can pass in the standard \cc{sd} arguments, i.e. \cc{na.rm}.}
 \item Create a default \cc{sd} function. Look at \cc{cor.default} in the notes for a hint.
 \end{itemize}
+\end{enumerate}
 
 
 \section{S4 objects}

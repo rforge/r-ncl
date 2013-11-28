@@ -29,6 +29,8 @@ knit_hooks$set(par=function(before, options, envir){
 x = get("con", envir=sys.frame(1))
 fname = summary(x)$description
 show = grepl("solutions", fname)
+#show = TRUE
+results = ifelse(show, "markup", "hide")
 @
 
 
@@ -145,7 +147,7 @@ Scoping can get tricky. \textbf{Before} running the example code below, predict 
 f = function(x) return(x + 1)
 f(10)
 @
-<<echo=show, tidy=FALSE>>=
+<<echo=show, tidy=FALSE, results=results>>=
 ##Nothing strange here. We just get 
 f(10)
 @
@@ -176,7 +178,7 @@ f = function(x) {
 f(10)
 @
 
-<<echo=show, results='hide', message=show>>=
+<<echo=show, results=results, message=show>>=
 ##Solution: The easiest way to understand is to use print statements
 f = function(x) {
   f = function(x) {
@@ -293,7 +295,7 @@ r$get_num_calls()
 
 \end{itemize}
 
-<<randu, echo=show>>=
+<<randu, echo=show, results=results>>=
 @
 
 

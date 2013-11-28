@@ -28,7 +28,7 @@ knit_hooks$set(par=function(before, options, envir){
 x = get("con", envir=sys.frame(1))
 fname = summary(x)$description
 show = grepl("solutions", fname)
-show = TRUE
+#show = TRUE
 results = ifelse(show, "markup", "hide")
 @
 
@@ -117,7 +117,7 @@ isGeneric("mean")
 setGeneric("mean")
 @
 \item Using \cc{setMethod}, create a \cc{mean} method for the \cc{Cohort} class.\sidenote{Be careful to match the arguments.}
-<<echo=show, results=results>>=
+<<echo=show, results=results, message=FALSE>>=
 setMethod("mean", signature=c("Cohort"), 
           definition=function(x, ...) {
             m1 = mean(x@details[ ,1], ...)
@@ -128,7 +128,7 @@ setMethod("mean", signature=c("Cohort"),
 @
 \end{itemize}
 \item Repeat the above steps for the \cc{sd} function.
-<<echo=show, results=results>>=
+<<echo=show, results=results, message=FALSE>>=
 isGeneric("sd")
 setGeneric("sd")
 setMethod("sd", signature=c("Cohort"), 

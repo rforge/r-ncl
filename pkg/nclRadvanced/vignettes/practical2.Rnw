@@ -93,6 +93,7 @@ mean.cohort = function(x, ...) {
 \item Create an function call \cc{sd.cohort} that returns a vector containing the weight and height standard deviation.\sidenote{Ensure that you can pass in the standard \cc{sd} arguments, i.e. \cc{na.rm}.}
 \item Create a default \cc{sd} function. Look at \cc{cor.default} in the notes for a hint.
 <<echo=show, results=results>>=
+sd = function(x, ...) UseMehod("sd")
 sd.default = function(x, ...) stats::sd(x, ...)
 sd.cohort = function(x, ...) {
   s1 = sd(x$details[ ,1], ...)
@@ -131,9 +132,9 @@ setMethod("mean", signature=c("Cohort"),
 isGeneric("sd")
 setGeneric("sd")
 setMethod("sd", signature=c("Cohort"), 
-          definition=function(x, ...) {
-            m1 = sd(x@details[ ,1], ...)
-            m2 = sd(x@details[ ,2], ...)
+          definition=function(x, na.rm=FALSE) {
+            m1 = sd(x@details[ ,1], na.rm=na.rm)
+            m2 = sd(x@details[ ,2], na.rm=na.rm)
             return(c(m1, m2))
       }
 )

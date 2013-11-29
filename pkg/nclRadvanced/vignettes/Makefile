@@ -1,32 +1,27 @@
-## $* = filename without extension
+	## $* = filename without extension
 ## $@ = the output file
 ## $< = the input file
 
 .SUFFIXES: .tex .pdf .Rnw .R
 
+PRACTICALS = practical1 practical2
+SOLUTIONS = solutions1 solutions2
+INCLUDES =  $(PRACTICALS) $(SOLUTIONS) 
 
-INCLUDES = practical1 practical2 solutions1 solutions2
-TEX = $(INCLUDES:=.tex) 
-RFILES = $(INCLUDES:=.R)
-RNWFILES = $(INCLUDES:=.Rnw)
 PDFFILES = $(INCLUDES:=.pdf)
 
-force:
-	cp -v practical1.Rnw solutions1.Rnw
-	cp -v practical2.Rnw solutions2.Rnw
-	make all
-	mv $(PDFFILES) ../inst/doc/
 
 all: $(PDFFILES)
-
+	cp $(PDFFILES) ../inst/doc/
 
 commit: 
 	make clean
-	make force
+	make all
 	svn commit ../
 
 
 view: all
+	acroread ../inst/doc/*.pdf
 
 .Rnw.pdf:
 	Rscript -e "require(knitr); knit('$*.Rnw')"
@@ -43,5 +38,6 @@ clean:
 
 cleaner:
 	make clean
+	rm -fv $(SOLUTIONS:=.Rnw)
 	rm -fvr auto/ 
 

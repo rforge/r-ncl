@@ -2,16 +2,12 @@ Package: nclRadvanced
 Type: Package
 Title: nclRadvanced
 Version: 0.10.0
-Date: 2013-11-28
-Authors@R: person("Colin", "Gillespie", email="csgillespie@gmail.com", role =
-    c("aut", "cre"))
+Date: 2013-11-29
+Authors@R: person("Colin", "Gillespie", email="csgillespie@gmail.com", role = c("aut", "cre"))
 Author: Colin Gillespie
 Maintainer: Colin Gillespie <csgillespie@gmail.com>
 Description: A package for the Newcastle University R courses.
 URL: http://www.ncl.ac.uk/maths/rcourse/
 License: GPL-3 | GPL-2
-Depends:
-    R (>= 3.0),
-Collate:
-    'nclRadvanced-package.R'
-    'ash30.R'
+Depends: R (>= 3.0),
+Collate: 'nclRadvanced-package.R' 'ash30.R'

@@ -38,6 +38,5 @@ clean:
 
 cleaner:
 	make clean
-	rm -fv $(SOLUTIONS:=.Rnw)
 	rm -fvr auto/ 
 

@@ -1,0 +1,200 @@
+%\VignetteIndexEntry{practical2}
+%!Snw weave = knitr
+%\VignetteEngine{knitr::knitr}
+
+\documentclass[a4paper,justified,openany]{tufte-handout}
+
+<<setup, include=FALSE, cache=FALSE>>=
+library(knitr)
+library(methods)
+options(replace.assign=FALSE,width=50)
+
+opts_chunk$set(fig.path='knitr_figure/graphics-', 
+               cache.path='knitr_cache/graphics-', 
+               fig.align='center', 
+               dev='pdf', fig.width=5, fig.height=5, 
+               fig.show='hold', cache=FALSE, par=TRUE)
+knit_hooks$set(crop=hook_pdfcrop)
+
+knit_hooks$set(par=function(before, options, envir){
+  if (before && options$fig.show!='none') {
+    par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
+        mgp=c(2,.7,0),tcl=-.01, las=1)
+  }}, crop=hook_pdfcrop)
+@
+
+<<echo=FALSE>>=
+##Get this file name
+x = get("con", envir=sys.frame(1))
+fname = summary(x)$description
+show = grepl("solutions", fname)
+if(!show) {
+  fname_solutions = gsub("practical", "solutions", fname)
+  cmd = paste("cp", fname, fname_solutions)
+  system(cmd)
+}
+results = ifelse(show, "markup", "hide")
+@
+
+\usepackage{amsmath}
+% Set up the images/graphics package
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{graphics/}}
+\title{Advanced R programming: \Sexpr{ifelse(show, "solutions","practical")}  2} 
+\author[Dr Colin Gillespie]{Dr Colin Gillespie}
+%\date{}  % if the \date{} command is left out, the current date will be used
+
+\usepackage{booktabs}
+
+% The units package provides nice, non-stacked fractions and better spacing
+% for units.
+\usepackage{units}
+
+% The fancyvrb package lets us customize the formatting of verbatim
+% environments.  We use a slightly smaller font.
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+\newcommand{\cc}{\texttt}
+\graphicspath{{../graphics/}}
+\setcounter{secnumdepth}{2}
+\usepackage{microtype}
+\begin{document}
+
+\maketitle% this prints the handout title, author, and date
+
+\section{S3 objects}\label{S3}
+
+\begin{enumerate}
+\item Following the cohort example in the notes, suppose we want to create a \cc{mean} method.
+\begin{itemize}
+\item List all S3 methods associated with the \cc{mean} function.
+<<echo=show, results=results>>=
+methods("mean")
+@
+
+\item Examine the source code of \cc{mean.default}. 
+<<echo=show, results="hide">>=
+body("mean.default")
+@
+\item What are the arguments of \cc{mean.default}?
+<<echo=show, results=results>>=
+args("mean")
+@
+\item Create a function called \cc{mean.cohort} that returns a vector containing the mean weight and mean height.\sidenote{Ensure that you can pass in the standard \cc{mean} arguments, i.e. \cc{na.rm}.}
+<<echo=show, results='hide'>>=
+mean.cohort = function(x, ...) {
+  m1 = mean(x$details[ ,1], ...)
+  m2 = mean(x$details[ ,2], ...)
+  return(c(m1, m2))
+}
+@
+
+\end{itemize}
+\item Let's now make a similar function for the standard deviation
+\begin{itemize}
+\item Look at the arguments of the \cc{sd} function.
+\item Create an function call \cc{sd.cohort} that returns a vector containing the weight and height standard deviation.\sidenote{Ensure that you can pass in the standard \cc{sd} arguments, i.e. \cc{na.rm}.}
+\item Create a default \cc{sd} function. Look at \cc{cor.default} in the notes for a hint.
+<<echo=show, results=results>>=
+sd = function(x, ...) UseMehod("sd")
+sd.default = function(x, ...) stats::sd(x, ...)
+sd.cohort = function(x, ...) {
+  s1 = sd(x$details[ ,1], ...)
+  s2 = sd(x$details[ ,2], ...)
+  return(c(s1, s2))
+} 
+@
+\end{itemize}
+\end{enumerate}
+
+
+\section{S4 objects}\label{S4}
+
+\marginnote{I've intentionally mirrored the functions from section \ref{S3} of this practical to highlight the differences.}
+\begin{enumerate}
+\item Following the \cc{Cohort} example in the notes, suppose we want to make a generic for the \cc{mean} function. 
+\begin{itemize}
+\item Using the \cc{isGeneric} function, determine if the \cc{mean} function is an S4 generic. If not, use \cc{setGeneric} to create an S4 generic.
+<<echo=show, results=results>>=
+isGeneric("mean")
+setGeneric("mean")
+@
+\item Using \cc{setMethod}, create a \cc{mean} method for the \cc{Cohort} class.\sidenote{Be careful to match the arguments.}
+<<echo=show, results=results, message=FALSE>>=
+setMethod("mean", signature=c("Cohort"), 
+          definition=function(x, ...) {
+            m1 = mean(x@details[ ,1], ...)
+            m2 = mean(x@details[ ,2], ...)
+            return(c(m1, m2))
+      }
+)
+@
+\end{itemize}
+\item Repeat the above steps for the \cc{sd} function.
+<<echo=show, results=results, message=FALSE>>=
+isGeneric("sd")
+setGeneric("sd")
+setMethod("sd", signature=c("Cohort"), 
+          definition=function(x, na.rm=FALSE) {
+            m1 = sd(x@details[ ,1], na.rm=na.rm)
+            m2 = sd(x@details[ ,2], na.rm=na.rm)
+            return(c(m1, m2))
+      }
+)
+@
+\end{enumerate}
+
+\section{Reference classes}
+
+<<P2, echo=FALSE>>=
+randu = setRefClass("randu", 
+    fields = list(calls = "numeric", seed="numeric", state="numeric"))
+randu$methods(get_state = function() state)
+randu$methods(set_state = function(initial) state <<- initial)
+randu$methods(get_seed = function() seed)
+randu$methods(get_num_calls = function() calls)
+randu$methods(r = function() {
+  calls <<- calls + 1
+  state <<- (65539*state) %% 2^31
+  return(state/2^31)
+})
+@
+
+The example in the notes created a random number generator using a reference class.
+\begin{itemize}
+\item Reproduce the \cc{randu} generator from the notes and make sure that it works as advertised.\sidenote{The reference class version, not the function closure generator.}
+\item When we initialise the random number generator, the very first state is called the \cc{seed}. Store this variable and create a new function called \cc{get\_seed} that will return the initial seed, i.e.\marginnote{Reference classes also have an initialise method - that way we would only specify the seed and would then initialise the other variables. I'll give you an example in the solutions.}
+<<>>=
+r = randu(calls=0, seed=10, state=10)
+r$r()
+r$get_state()
+r$get_seed()
+@
+<<echo=show>>=
+##Solutions - see below
+@
+\item Create a variable that stores the number of times the generator has been called. You should be able to access this variable with the function \cc{get\_num\_calls}
+<<>>=
+r = randu(calls=0, seed=10, state=10)
+r$get_num_calls()
+r$r()
+r$r()
+r$get_num_calls()
+@
+
+\end{itemize}
+
+
+\section*{Solutions}
+
+Solutions are contained within the course package
+<<eval=FALSE>>=
+library("nclRadvanced")
+vignette("solutions2", package="nclRadvanced")
+@
+
+
+
+
+\end{document}

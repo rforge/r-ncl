@@ -9,7 +9,7 @@ SOLUTIONS = solutions1 solutions2
 INCLUDES =  $(PRACTICALS) $(SOLUTIONS) 
 
 PDFFILES = $(INCLUDES:=.pdf)
-
+#R_HOME = /usr/
 
 all: $(PDFFILES)
 	cp $(PDFFILES) ../inst/doc/
@@ -19,15 +19,13 @@ commit:
 	make all
 	svn commit ../
 
-
 view: all
 	acroread ../inst/doc/*.pdf
 
 .Rnw.pdf:
-	Rscript -e "require(knitr); knit('$*.Rnw')"
+	`$(R_HOME)/bin/Rscript  -e "require(knitr); knit('$*.Rnw')"`
+#	Rscript -e "require(knitr); knit('$*.Rnw')"
 	pdflatex $*.tex; pdflatex $*.tex;
-
-
 
 clean:
 	rm -fv $(PDFFILES) $(RFILES)  *.tex *.synctex.gz
@@ -38,5 +36,6 @@ clean:
 
 cleaner:
 	make clean
-	rm -fvr auto/ 
+	rm -fvr auto/
+	rm -fvr *.tar.gz *.Rcheck
 

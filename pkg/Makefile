@@ -1,4 +1,4 @@
-	## $* = filename without extension
+## $* = filename without extension
 ## $@ = the output file
 ## $< = the input file
 
@@ -12,7 +12,7 @@ PDFFILES = $(INCLUDES:=.pdf)
 #R_HOME = /usr/
 
 all: $(PDFFILES)
-	cp $(PDFFILES) ../inst/doc/
+#	cp $(PDFFILES) ../inst/doc/
 
 commit: 
 	make clean

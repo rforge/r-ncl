@@ -1,6 +1,10 @@
 %\VignetteIndexEntry{practical1}
 %!Snw weave = knitr
 %\VignetteEngine{knitr::knitr}
+<<echo=FALSE>>=
+results = "hide"; show = FALSE
+@
+
 
 \documentclass[a4paper,justified,openany]{tufte-handout}
 
@@ -26,16 +30,18 @@ knit_hooks$set(par=function(before, options, envir){
 
 <<echo=FALSE>>=
 ##Get this file name
-x = get("con", envir=sys.frame(1))
-fname = summary(x)$description
-show = grepl("solutions", fname)
-#show = TRUE
-if(!show) {
-  fname_solutions = gsub("practical", "solutions", fname)
-  cmd = paste("cp", fname, fname_solutions)
-  system(cmd)
-}
-results = ifelse(show, "markup", "hide")
+# if(exists(.local_file)) {
+#   x = get("con", envir=sys.frame(1))
+#   fname = summary(x)$description
+#   show = grepl("solutions", fname)
+#   #show = TRUE
+#   if(!show) {
+#     fname_solutions = gsub("practical", "solutions", fname)
+#     cmd = paste("cp", fname, fname_solutions)
+#     system(cmd)
+#   }
+#   results = ifelse(show, "markup", "hide")
+# }
 @
 
 \usepackage{amsmath}

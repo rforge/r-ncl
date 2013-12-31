@@ -6,43 +6,35 @@
 
 PKG = nclRadvanced
 DIR = vignettes
+
 PRACS = practical1 practical2
-
 SOLS = solutions1 solutions2
-INCLUDES =  $(PRACS)  $(SOLS) 
+ALL =  $(PRACS)  $(SOLS) 
 
-SOLSPDFS = $(SOLS:=.pdf)
-PRACSPDFS = $(PRACS:=.pdf)
-PDFFILES = $(INCLUDES:=.pdf)
+SOLSPDF = $(SOLS:=.pdf)
+PRACSPDF = $(PRACS:=.pdf)
+ALLPDF = $(ALL:=.pdf)
 
-#PDFFILES = $(addprefix $(DIR)/,$(INCLUDES:=.pdf))
+PRACSRNW =  $(PRACS:=.Rnw)
+SOLSRNW =  $(SOLS:=.Rnw)
 
 force: 
 	make -C $(DIR) -f ../Makefile all
 
+all: $(PRACSPDF)
+	## Copy practical file to solutions
+	$(foreach var, \
+		$(PRACSRNW), \
+		cp $(var) $(subst practical, solutions, $(var);))
 
-# SOLUTIONS:  $(PRACS:=.Rnw)
-# 	cp $< $(subst practical, solutions, $<)
-	# cd $(DIR) && \
-	# cp practical1.Rnw solutions1.Rnw 
-	# cp practical2.Rnw solutions2.Rnw && \
-	# sed -i "5s/.*/results='show'/" solutions1.Rnw && \
-	# sed -i "5s/.*/results='show'/" solutions2.Rnw
-
-
-
-
-all: $(PRACSPDFS)
-	cp practical1.Rnw solutions1.Rnw
-	sed -i "5s/.*/results='show';show=TRUE/" solutions1.Rnw
-
-	cp practical2.Rnw solutions2.Rnw
-	sed -i "5s/.*/results='show';show=TRUE/" solutions2.Rnw
+	## Updated to show results
+	$(foreach var, \
+		$(SOLSRNW), \
+		sed -i "5s/.*/results='show';show=TRUE/" $(var);)
 	$(MAKE) -f ../Makefile solutions
-	cp $(PRACFILES) $(SOLSPDFS) ../../../www/$(PKG)/
+	cp $(ALLPDF) ../../../www/$(PKG)/
 
-solutions: $(SOLSPDFS)
-
+solutions: $(SOLSPDF)
 
 commit: 
 	make clean
@@ -53,6 +45,18 @@ view:
 	make force
 	acroread ../../www/$(PKG)/*.pdf
 
+build:
+	make clean
+	cd ../ && R CMD build $(PKG)
+
+check:
+	make build
+	cd ../ && R CMD check --as-cran $(PKG)_*.tar.gz
+
+install: 
+	make build
+	cd ../ && R CMD INSTALL $(PKG)_*.tar.gz
+
 .Rnw.pdf:
 	sed -i "1s/.*/%\\\VignetteIndexEntry{$*}/" $*.Rnw
 	Rscript  -e "require(knitr); knit('$*.Rnw', output='$*.tex')"
@@ -61,7 +65,7 @@ view:
 
 clean:
 	cd $(DIR) && \
-	rm -fv $(INCLUDES:=.pdf)  *.tex *.synctex.gz \
+	rm -fv $(ALLPDF)  *.tex *.synctex.gz \
 		*.aux *.dvi *.log *.toc *.bak *~ *.blg *.bbl *.lot *.lof \
 		 *.nav *.snm *.out *.pyc \#*\# _region_* _tmp.* *.vrb \
 		Rplots.pdf example.RData d.csv.gz mygraph.* \

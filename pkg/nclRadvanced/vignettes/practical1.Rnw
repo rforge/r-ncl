@@ -2,9 +2,9 @@
 %!Snw weave = knitr
 %\VignetteEngine{knitr::knitr}
 <<echo=FALSE>>=
-results = "hide"; show = FALSE
+results = "hide";  echo=FALSE
 @
-
+ 
 
 \documentclass[a4paper,justified,openany]{tufte-handout}
 
@@ -28,21 +28,6 @@ knit_hooks$set(par=function(before, options, envir){
 @
 
 
-<<echo=FALSE>>=
-##Get this file name
-# if(exists(.local_file)) {
-#   x = get("con", envir=sys.frame(1))
-#   fname = summary(x)$description
-#   show = grepl("solutions", fname)
-#   #show = TRUE
-#   if(!show) {
-#     fname_solutions = gsub("practical", "solutions", fname)
-#     cmd = paste("cp", fname, fname_solutions)
-#     system(cmd)
-#   }
-#   results = ifelse(show, "markup", "hide")
-# }
-@
 
 \usepackage{amsmath}
 
@@ -51,7 +36,7 @@ knit_hooks$set(par=function(before, options, envir){
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \graphicspath{{graphics/}}
 
-\title{Advanced R programming: \Sexpr{ifelse(show, "solutions","practical")} 1} 
+\title{Advanced R programming: \Sexpr{ifelse(echo, "solutions","practical")} 1} 
 \author[Dr Colin Gillespie]{Dr Colin Gillespie}
 %\date{}  % if the \date{} command is left out, the current date will be used
 
@@ -95,7 +80,7 @@ arg_explore(1, 3, rg = 1)
 
 \noindent Can you write down a set of rules that R uses when matching arguments?
 
-<<echo=show, tidy=FALSE>>=
+<<echo=echo, tidy=FALSE>>=
 ## SOLUTION
 ## See http://goo.gl/NKsved for the offical document
 ## To summeriase, matching happens in a three stage pass:
@@ -116,7 +101,7 @@ plot(type="l", 1:10, 11:20)
 rnorm(mean=4, 4, n=5)
 @
 
-<<echo=show, tidy=FALSE, results='hide', fig.keep='none'>>=
+<<echo=echo, tidy=FALSE, results='hide', fig.keep='none'>>=
 ## SOLUTION
 #plot(type="l", 1:10, 11:20) is equivilent to
 plot(x=1:10, y=11:20, type="l")
@@ -136,7 +121,7 @@ arg_explore2 = function(arg1 = 5, ...)
 
 \begin{itemize}
 \item What do \cc{alist}, \cc{substitute} and \cc{eval} do?\sidenote{Hint: the easiest way to figure this out is to alter the \cc{arg\_explore2} function, i.e. remove \cc{eval}, then remove \cc{substitute}, etc.}
-<<echo=show, tidy=FALSE>>=
+<<echo=echo, tidy=FALSE>>=
 ## SOLUTION
 #1. eval - just evalulats an R expression
 #2. substritute - returns the unevaluated expression
@@ -157,7 +142,7 @@ Scoping can get tricky. \textbf{Before} running the example code below, predict 
 f = function(x) return(x + 1)
 f(10)
 @
-<<echo=show, tidy=FALSE, results=results>>=
+<<echo=echo, tidy=FALSE, results=results>>=
 ##Nothing strange here. We just get 
 f(10)
 @
@@ -188,8 +173,8 @@ f = function(x) {
 f(10)
 @
 
-<<echo=show, results=results, message=show>>=
-##Solution: The easiest way to understand is to use print statements
+<<echo=echo, results=results, message=echo>>=
+## Solution: The easiest way to understand is to use print statements
 f = function(x) {
   f = function(x) {
     f = function(x) {
@@ -225,7 +210,7 @@ f = function(x) {
 f(10)
 @
 
-<<echo=show, results='hide'>>=
+<<echo=echo, results='hide'>>=
 ##Solution: The easiest way to understand is to use print statements as above
 @
 \end{enumerate}
@@ -236,7 +221,7 @@ f(10)
 Following the examples in the notes, where we created a function closure for the normal and uniform distributions. Create a similar closure for
 \begin{itemize}
 \item the Poisson distribution,\sidenote{Hint: see \cc{rpois} and \cc{dpois}.}
-<<echo=show>>=
+<<echo=echo>>=
 poisson = function(lambda) {
      r = function(n=1) rpois(n, lambda)
      d = function(x, log=FALSE) dpois(x, lambda, log=log)
@@ -244,7 +229,7 @@ poisson = function(lambda) {
 }
 @ 
 \item and the Geometric distribution.\sidenote{Hint: see \cc{rgeom} and \cc{dgeom}.}
-<<echo=show>>=
+<<echo=echo>>=
 geometric = function(prob) {
      r = function(n=1) rgeom(n, prob)
      d = function(x, log=FALSE) dgeom(x, prob, log=log)
@@ -291,7 +276,7 @@ r$r()
 r$get_state()
 r$get_seed()
 @
-<<echo=show>>=
+<<echo=echo>>=
 ##Solutions - see below
 @
 \item Create a variable that stores the number of times the generator has been called. You should be able to access this variable with the function \cc{get\_num\_calls}
@@ -305,7 +290,7 @@ r$get_num_calls()
 
 \end{itemize}
 
-<<randu, echo=show, results=results>>=
+<<randu, echo=echo, results=results>>=
 @
 
 

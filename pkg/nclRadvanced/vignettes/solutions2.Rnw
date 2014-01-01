@@ -2,7 +2,7 @@
 %!Snw weave = knitr
 %\VignetteEngine{knitr::knitr}
 <<echo=FALSE>>=
-results='show';show=TRUE
+results='show';echo=TRUE
 @
 
 \documentclass[a4paper,justified,openany]{tufte-handout}
@@ -26,25 +26,12 @@ knit_hooks$set(par=function(before, options, envir){
   }}, crop=hook_pdfcrop)
 @
 
-<<echo=FALSE>>=
-##Get this file name
-# x = get("con", envir=sys.frame(1))
-# fname = summary(x)$description
-# show = grepl("solutions", fname)
-# if(!show) {
-#   fname_solutions = gsub("practical", "solutions", fname)
-#   cmd = paste("cp", fname, fname_solutions)
-#   system(cmd)
-# }
-# results = ifelse(show, "markup", "hide")
-@
-
 \usepackage{amsmath}
 % Set up the images/graphics package
 \usepackage{graphicx}
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \graphicspath{{graphics/}}
-\title{Advanced R programming: \Sexpr{ifelse(show, "solutions","practical")}  2} 
+\title{Advanced R programming: \Sexpr{ifelse(echo, "solutions","practical")}  2} 
 \author[Dr Colin Gillespie]{Dr Colin Gillespie}
 %\date{}  % if the \date{} command is left out, the current date will be used
 
@@ -72,20 +59,20 @@ knit_hooks$set(par=function(before, options, envir){
 \item Following the cohort example in the notes, suppose we want to create a \cc{mean} method.
 \begin{itemize}
 \item List all S3 methods associated with the \cc{mean} function.
-<<echo=show, results=results>>=
+<<echo=echo, results=results>>=
 methods("mean")
 @
 
 \item Examine the source code of \cc{mean.default}. 
-<<echo=show, results="hide">>=
+<<echo=echo, results="hide">>=
 body("mean.default")
 @
 \item What are the arguments of \cc{mean.default}?
-<<echo=show, results=results>>=
+<<echo=echo, results=results>>=
 args("mean")
 @
 \item Create a function called \cc{mean.cohort} that returns a vector containing the mean weight and mean height.\sidenote{Ensure that you can pass in the standard \cc{mean} arguments, i.e. \cc{na.rm}.}
-<<echo=show, results='hide'>>=
+<<echo=echo, results='hide'>>=
 mean.cohort = function(x, ...) {
   m1 = mean(x$details[ ,1], ...)
   m2 = mean(x$details[ ,2], ...)
@@ -99,7 +86,7 @@ mean.cohort = function(x, ...) {
 \item Look at the arguments of the \cc{sd} function.
 \item Create an function call \cc{sd.cohort} that returns a vector containing the weight and height standard deviation.\sidenote{Ensure that you can pass in the standard \cc{sd} arguments, i.e. \cc{na.rm}.}
 \item Create a default \cc{sd} function. Look at \cc{cor.default} in the notes for a hint.
-<<echo=show, results=results>>=
+<<echo=echo, results=results>>=
 sd = function(x, ...) UseMehod("sd")
 sd.default = function(x, ...) stats::sd(x, ...)
 sd.cohort = function(x, ...) {
@@ -119,12 +106,12 @@ sd.cohort = function(x, ...) {
 \item Following the \cc{Cohort} example in the notes, suppose we want to make a generic for the \cc{mean} function. 
 \begin{itemize}
 \item Using the \cc{isGeneric} function, determine if the \cc{mean} function is an S4 generic. If not, use \cc{setGeneric} to create an S4 generic.
-<<echo=show, results=results>>=
+<<echo=echo, results=results>>=
 isGeneric("mean")
 setGeneric("mean")
 @
 \item Using \cc{setMethod}, create a \cc{mean} method for the \cc{Cohort} class.\sidenote{Be careful to match the arguments.}
-<<echo=show, results=results, message=FALSE>>=
+<<echo=echo, results=results, message=FALSE>>=
 setMethod("mean", signature=c("Cohort"), 
           definition=function(x, ...) {
             m1 = mean(x@details[ ,1], ...)
@@ -135,7 +122,7 @@ setMethod("mean", signature=c("Cohort"),
 @
 \end{itemize}
 \item Repeat the above steps for the \cc{sd} function.
-<<echo=show, results=results, message=FALSE>>=
+<<echo=echo, results=results, message=FALSE>>=
 isGeneric("sd")
 setGeneric("sd")
 setMethod("sd", signature=c("Cohort"), 
@@ -174,7 +161,7 @@ r$r()
 r$get_state()
 r$get_seed()
 @
-<<echo=show>>=
+<<echo=echo>>=
 ##Solutions - see below
 @
 \item Create a variable that stores the number of times the generator has been called. You should be able to access this variable with the function \cc{get\_num\_calls}

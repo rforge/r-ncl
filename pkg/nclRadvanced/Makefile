@@ -11,17 +11,22 @@ PRACS = practical1 practical2
 SOLS = solutions1 solutions2
 ALL =  $(PRACS)  $(SOLS) 
 
-SOLSPDF = $(SOLS:=.pdf)
 PRACSPDF = $(PRACS:=.pdf)
+SOLSPDF = $(SOLS:=.pdf)
 ALLPDF = $(ALL:=.pdf)
 
 PRACSRNW =  $(PRACS:=.Rnw)
 SOLSRNW =  $(SOLS:=.Rnw)
+.PHONY: force  all clean commit cleaner sols
 
 force: 
 	make -C $(DIR) -f ../Makefile all
 
 all: $(PRACSPDF)
+	$(MAKE) -f ../Makefile solutions*.Rnw
+	$(MAKE) -f ../Makefile sols
+
+solutions%.Rnw: $(PRACSPDF)
 	## Copy practical file to solutions
 	$(foreach var, \
 		$(PRACSRNW), \
@@ -30,11 +35,10 @@ all: $(PRACSPDF)
 	## Updated to show results
 	$(foreach var, \
 		$(SOLSRNW), \
-		sed -i "5s/.*/results='show';show=TRUE/" $(var);)
-	$(MAKE) -f ../Makefile solutions
-	cp $(ALLPDF) ../../../www/$(PKG)/
+		sed -i "5s/.*/results='show';echo=TRUE/" $(var);)
 
-solutions: $(SOLSPDF)
+sols: $(SOLSPDF)
+	cp $(ALLPDF) ../../../www/$(PKG)/
 
 commit: 
 	make clean
@@ -64,7 +68,7 @@ install:
 	pdflatex $*.tex
 
 clean:
-	cd $(DIR) && \
+	cd $(DIR) && rm -fvr knitr_figure && \
 	rm -fv $(ALLPDF)  *.tex *.synctex.gz \
 		*.aux *.dvi *.log *.toc *.bak *~ *.blg *.bbl *.lot *.lof \
 		 *.nav *.snm *.out *.pyc \#*\# _region_* _tmp.* *.vrb \

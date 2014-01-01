@@ -1,6 +1,9 @@
 %\VignetteIndexEntry{practical2}
 %!Snw weave = knitr
 %\VignetteEngine{knitr::knitr}
+<<echo=FALSE>>=
+results = "hide"; echo = FALSE
+@
 
 \documentclass[a4paper,justified,openany]{tufte-handout}
 <<setup, include=FALSE, cache=FALSE>>=
@@ -15,10 +18,10 @@ opts_chunk$set(fig.path='figure/graphics-',
 knit_hooks$set(crop=hook_pdfcrop)
 
 knit_hooks$set(par=function(before, options, envir){
-    if (before && options$fig.show!='none') {
-        par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
-            mgp=c(2,.7,0),tcl=-.01, las=1)
-}}, crop=hook_pdfcrop)
+  if (before && options$fig.show!='none') {
+    par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
+        mgp=c(2,.7,0),tcl=-.01, las=1)
+  }}, crop=hook_pdfcrop)
 @
 \usepackage{amsmath}
 
@@ -27,9 +30,9 @@ knit_hooks$set(par=function(before, options, envir){
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \graphicspath{{graphics/}}
 
-\title{Introduction to R: practical 2} 
+\title{Introduction to R: practical 2 \Sexpr{ifelse(echo, "solutions", "")}}
 \author[Dr Colin Gillespie]{Dr Colin S.
-  Gillespie}
+Gillespie}
 \date{}  % if the \date{} command is left out, the current date will be used
 
 % The following package makes prettier tables.  We're all about the bling!
@@ -53,13 +56,13 @@ knit_hooks$set(par=function(before, options, envir){
 \maketitle% this prints the handout title, author, and date
 
 \begin{abstract}
-  \noindent Often when we commence an analysis we want to partition the data in
-  different ways. For example, selecting data points greater than a particular
-  value. In this practical we will investigate how this is done using R's
-  logical operators.
+\noindent Often when we commence an analysis we want to partition the data in
+different ways. For example, selecting data points greater than a particular
+value. In this practical we will investigate how this is done using R's
+logical operators.
 
-  If you have your own data set, try the questions below, then load your own
-  data.
+If you have your own data set, try the questions below, then load your own
+data.
 \end{abstract}
 
 \section*{Question difficulty}
@@ -68,10 +71,10 @@ Some of the questions below are straight forward, others are bit more tricky.
 \begin{itemize}
 \item The last sub-questions of Q1 and Q2  are hard.
 \end{itemize}
-Before starting the practical, run the following commands:
+Before starting the practical, run the {following commands:
 
 <<>>=
-library(nclRintroduction)
+library("nclRintroduction")
 @ 
 
 \subsection*{Question 1}
@@ -81,19 +84,57 @@ Run the following R code
 <<>>=
 x1 = GetNumericVector()
 @ 
-  
+
 \begin{enumerate}
 \item What is length of \cc{x1}?
+<<echo=echo, results=results>>=
+length(x1)
+@
+
 \item What is the 55$^{{\tiny \text{th}}}$ element of \cc{x1}?
+<<echo=echo, results=results>>=
+x1[55]
+@
+
 \item What is the final element of \cc{x1}?
+<<echo=echo, results=results>>=
+x1[length(x1)]
+@
+
 \item What is the mean value of \cc{x1}?
+<<echo=echo, results=results>>=
+mean(x1)
+@
+
 \item What is the smallest value of \cc{x1}?
+<<echo=echo, results=results>>=
+min(x1)
+@
+
 \item How many values are greater than the first quartile but less than the median?
+<<echo=echo, results=results>>=
+q1 = quantile(x1)[2]
+med = median(x1)
+length(x1[x1 > q1 & x1 < med])
+##Or
+sum(x1 > q1 & x1 < med)
+@
+
 \item How many values are greater than the $\bar x_1 + 2 sd(x_1)$, where $sd$ is
-  the sample standard deviation?\marginnote{$\bar x_1$ is the mean value and
-    $sd(x_1)$ is the standard deviation of $x_1$.}
+the sample standard deviation?\marginnote{$\bar x_1$ is the mean value and
+$sd(x_1)$ is the standard deviation of $x_1$.}
+<<echo=echo, results=results>>=
+length(x1[x1 > (mean(x1) + 2*sd(x1))])
+##Or
+sum(x1 > (mean(x1) + 2*sd(x1)))
+@
+
 \item \textbf{Tricky:} What is the 50$^{{\tiny \text{th}}}$ smallest value in
-  \cc{x1}?
+\cc{x1}?
+<<echo=echo, results=results>>=
+sort(x1)[50]
+@
+
 \end{enumerate}
 
 % \subsection*{Question 2}
@@ -111,7 +152,6 @@ x1 = GetNumericVector()
 % \end{enumerate}
 
 
-
 \subsection*{Question 2}
 
 Run the following R code
@@ -124,19 +164,62 @@ y = GetDataFrame()
 lectures.
 \begin{enumerate}
 \item How many rows does \cc{y} have?
+<<echo=echo, results=results>>=
+dim(y)[1]
+## Or
+nrow(y)
+@
+
 \item How many columns does \cc{y} have?
+<<echo=echo, results=results>>=
+dim(y)[2]
+## Or
+ncol(y)
+@
+
 \item How many movies are there where budget is known, i.e. where \cc{Budget $!= -1$}?
+<<echo=echo, results=results>>=
+nrow(y[y$Budget != -1,])
+##Or
+sum(y$Budget != -1)
+@
+
 \item How many movies are there where the rating is less than 2.5 or greater
-  than 7.5 (not including 2.5 and 7.5)? How would you include the values 2.5 and
-  7.5 in your condition?
+than 7.5 (not including 2.5 and 7.5)? How would you include the values 2.5 and
+7.5 in your condition?
+<<echo=echo, results=results>>=
+nrow(y[y$Rating < 2.5 | y$Rating > 7.5,])
+##
+sum(y$Rating < 2.5 | y$Rating > 7.5)
+@
+
 \item How many movies are there where the length is greater than 120 and have a
-  rating of more than 7.5 - (not including 120 and 7.5)?
+rating of more than 7.5 - (not including 120 and 7.5)?
+<<echo=echo, results=results>>=
+nrow(y[y$Length > 120 & y$Rating > 7.5,])
+##Or
+sum(y$Length > 120 & y$Rating > 7.5)
+@
+
 \item How many movies were made in 1980 and have a rating above 5.0?
+<<echo=echo, results=results>>=
+nrow(y[y$Year == 1980 & y$Rating > 5.0,])
+##Or
+sum(y$Year == 1980 & y$Rating > 5.0)
+@
 \item How many movies are classified as Action?
+<<echo=echo, results=results>>=
+sum(y$Action)
+@
+
 \item How many movies were classified as both Action and Animation?
+<<echo=echo, results=results>>=
+sum(y$Action == 1 & y$Animation == 1)
+@
 \end{enumerate}
 
-\subsection*{Question 3 (Bonus materia)}
+
+\subsection*{Question 3}
 
 Run the following R code
 
@@ -145,24 +228,30 @@ x2 = GetCharacterVector()
 @ 
 
 \noindent In the following questions, the function \cc{table} is quite useful,
-especially when combined with \cc{sort}.
+especially when combined with \cc{sum}.
 \begin{enumerate}
 \item How many times does ``A'' appear in \cc{x2}?
+<<echo=echo, results=results>>=
+length(x2[x2=="A"])
+##Or
+sum(x2=="A")
+@
 \item Which letter appears the most? If more than one letter appears, just give
-  the first letter (if the letters were sorted in alphabetical order).
-\item \textbf{Very tricky:} How many pairs of letters are there in
-  \cc{x2}.\sidenote{For example, in \cc{AABCCC} we would have 3 pairs: \cc{AA},
-    \cc{CC} and \cc{CC}.}
-\end{enumerate}
-
-
-\section*{Solutions}
-
-Solutions are contained within this package:
-<<eval=FALSE>>=
-library(nclRintroduction)
-vignette("solutions2", package="nclRintroduction")
+the first letter (if the letters were sorted in alphabetical order).
+<<echo=echo, results=results>>=
+sort(table(x2), decreasing=TRUE)[1]
 @
 
+\item \textbf{Very tricky:} How many pairs of letters are there in
+\cc{x2}.\sidenote{For example, in \cc{AABCCC} we would have 3 pairs: \cc{AA},
+\cc{CC} and \cc{CC}.}
+
+<<echo=echo, results=results>>=
+l = length(x2)
+x2_a = x2[1:(l-1)]; x2_b = x2[2:l];
+sum(x2_a == x2_b) 
+@
+
+\end{enumerate}
 
 \end{document}

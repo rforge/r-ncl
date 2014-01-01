@@ -1,7 +1,9 @@
 %\VignetteIndexEntry{practical1}
 %!Snw weave = knitr
 %\VignetteEngine{knitr::knitr}
-
+<<echo=FALSE>>=
+results = "hide"; echo = FALSE
+@
 \documentclass[a4paper,justified,openany]{tufte-handout}
 
 <<setup, include=FALSE, cache=FALSE>>=
@@ -30,7 +32,7 @@ knit_hooks$set(par=function(before, options, envir){
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \graphicspath{{graphics/}}
 
-\title{Introduction to R: practical 1} 
+\title{Introduction to R: practical 1 \Sexpr{ifelse(echo, "solutions", "")}}  
 \author[Dr Colin Gillespie]{Dr Colin Gillespie}
 %\date{}  % if the \date{} command is left out, the current date will be used
 
@@ -130,13 +132,23 @@ Installing the the course R package\sidenote{A package is an \textit{add-on} or 
 is straightforward:
 
 <<eval=FALSE, tidy=FALSE>>=
-source("http://www.mas.ncl.ac.uk/~ncsg3/install.R")
+install.packages("nclRintroduction", 
+                 repos="http://R-Forge.R-project.org")
 @ 
+
+\noindent If this doesn't work, try
+
+<<eval=FALSE, tidy=FALSE>>=
+install.packages("nclRintroduction", 
+                 repos="http://R-Forge.R-project.org", 
+                 type="source")
+@ 
+
 
 \noindent This R package contains the copies of the practicals, solutions and data sets that we require. To load the package, use
 
 <<>>=
-library(nclRintroduction)
+library("nclRintroduction")
 @ 
 
 \newpage
@@ -199,7 +211,16 @@ head(d$Title, 5)
 \begin{itemize}
 \item In the above function call, what does ``5'' specify? What happens if you
   omit it?
+<<echo=echo, results=results>>=
+##5 specifies the number of rows to return
+## For example, using 2 gives
+head(d$Title, 2)
+@
+  
 \item Another useful function is \cc{tail}. What does this function do?
+<<echo=echo, results=results>>=
+## tail gives the *last* few values/rows
+@
 \end{itemize}
 Using the \cc{dim} function, how many columns and rows does \cc{d} have?
 
@@ -217,7 +238,6 @@ plot(d$Length, d$Rating)
 @
 \caption{Scatter plot of movie length against rating.}\label{F1}
 \end{marginfigure}
-
 
 \noindent Now,
 \begin{itemize}
@@ -237,18 +257,55 @@ plot(d$Length, d$Rating, xlab="Length", ylab="Rating")
 \end{marginfigure}
 
 \item Use the \cc{ylim} argument to specify a y-axis range from 1 to 10.
+
+<<fig.keep='none', tidy=FALSE, echo=echo>>=
+plot(d$Length, d$Rating, 
+     xlab="Length", ylab="Rating", 
+     ylim=c(1, 10))
+@ 
 \item Use the \cc{col} argument to change the colour of the points.
+<<fig.keep='none', tidy=FALSE, echo=echo>>=
+plot(d$Length, d$Rating, 
+     xlab="Length", ylab="Rating", 
+     ylim=c(1, 10), col=2)
+##Or
+plot(d$Length, d$Rating, 
+     xlab="Length", ylab="Rating", 
+     ylim=c(1, 10), col="red")
+@ 
+
 \item Use the \cc{main} argument to give the plot a title.
+<<fig.keep='none', tidy=FALSE, echo=echo>>=
+plot(d$Length, d$Rating, 
+     xlab="Length", ylab="Rating", 
+     ylim=c(1, 10), col=2, 
+     main="Movie rating against length")
+@ 
+
 \item I tend to alter the default plot command using:\sidenote{An explantion of 
 \cc{op} and \cc{par} are given at the end of this practical.}
   
-<<>>=
+<<tidy=FALSE>>=
 op = par(mar=c(3,3,2,1), mgp=c(2,.7,0), 
          tck=-.01, las=1)
 @ 
 
 \noindent What do you think? Can you determine what \cc{mar}, \cc{mgp}, \cc{tck}
 and \cc{las} mean?
+<<tidy=FALSE, echo=echo>>=
+#  * mar: A numerical vector of the form c(bottom, left, top, right) 
+# which gives the number of lines of margin to be specified on the four 
+# sides of the plot. The default is c(5, 4, 4, 2) + 0.1
+# 
+#  * mgp: The margin line for the axis title, axis labels and axis line. 
+# The first number affects title,  whereas the second and third values affect 
+# axis. The default is c(3, 1, 0).
+# 
+#  * tck: Reduces the tick length.
+# 
+#  * las: Changes the style the axis labels. las=1 rotates the y-axis label by 90 degrees.
+@
+
 \end{itemize}
 To reset the plotting device, run the command
 <<>>=
@@ -273,6 +330,16 @@ statistics for the movie length.
   \end{tabular}
   \caption{Summary statistics for the movie data set.}
 \end{table}
+
+<<echo=echo, results=results>>=
+##Mean
+mean(d$Length)
+##Mean
+median(d$Length)
+##Mean
+sd(d$Length)
+@
+
 
 \section{Histograms}
 
@@ -324,6 +391,29 @@ boxplot(d$Rating ~ d$Romance)
 
 \noindent Try generating a similar boxplot, but for other variables. What
 happens when you condition on more than one variable?
+
+<<fig.keep='none', echo=echo>>=
+##Conditioning on other variables
+boxplot(d$Rating ~ d$Romance + d$Action)
+@
+
+
+
+
+<<F6, fig.keep='none', echo=echo>>=
+## Change axis labels
+## Plot a boxplot but skip the labels
+boxplot(d$Rating ~ d$Romance, axes=FALSE, frame.plot=TRUE,
+        ylim=c(0,10))
+## Y-axis. 0 to 10 in steps of 2.5
+axis(2,at=seq(0,10,2.5))
+## X-Axis, at points x=1 & x=2, 
+## but with labels "non R" and "Romantic"
+axis(1,at=1:2, labels=c("Non R", "Romantic") )
+@ 
+
+
+
 
 \section*{Discussion of the \cc{par} function}
 

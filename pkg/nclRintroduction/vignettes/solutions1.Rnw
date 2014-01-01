@@ -1,11 +1,13 @@
 %\VignetteIndexEntry{solutions1}
 %!Snw weave = knitr
 %\VignetteEngine{knitr::knitr}
-
+<<echo=FALSE>>=
+results='show';echo=TRUE
+@
 \documentclass[a4paper,justified,openany]{tufte-handout}
 
 <<setup, include=FALSE, cache=FALSE>>=
-  library(knitr)
+library(knitr)
 options(replace.assign=FALSE,width=50)
 
 opts_chunk$set(fig.path='knitr_figure/graphics-', 
@@ -16,10 +18,10 @@ opts_chunk$set(fig.path='knitr_figure/graphics-',
 knit_hooks$set(crop=hook_pdfcrop)
 
 knit_hooks$set(par=function(before, options, envir){
-  if (before && options$fig.show!='none') {
-    par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
-        mgp=c(2,.7,0),tcl=-.01, las=1)
-  }}, crop=hook_pdfcrop)
+    if (before && options$fig.show!='none') {
+        par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
+            mgp=c(2,.7,0),tcl=-.01, las=1)
+}}, crop=hook_pdfcrop)
 @
 
 
@@ -30,12 +32,10 @@ knit_hooks$set(par=function(before, options, envir){
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \graphicspath{{graphics/}}
 
-\title{Practical 1 Solutions} 
-\author[Dr Colin Gillespie]{Dr Colin S.
-                            Gillespie}
+\title{Introduction to R: practical 1 \Sexpr{ifelse(echo, "solutions", "")}}  
+\author[Dr Colin Gillespie]{Dr Colin Gillespie}
 %\date{}  % if the \date{} command is left out, the current date will be used
 
-% The following package makes prettier tables.  We're all about the bling!
 \usepackage{booktabs}
 
 % The units package provides nice, non-stacked fractions and better spacing
@@ -49,26 +49,111 @@ knit_hooks$set(par=function(before, options, envir){
 \newcommand{\cc}{\texttt}
 \graphicspath{{../graphics/}}
 \setcounter{secnumdepth}{2}
-
-
 \usepackage{microtype}
 \begin{document}
 
 \maketitle% this prints the handout title, author, and date
 
 \begin{abstract}
-\noindent This practical aims at introducing you to the R interface. By the
-end of this practical you should be able to load in data, calculate some
-summary statistics and construct some basic plots.
+  \noindent This practical aims at introducing you to the R interface. By the
+  end of this practical you should be able to load in data, calculate some
+  summary statistics and construct some basic plots.
 
-If you have brought your own data, then I would recommend that you quickly
-work through this practical first, then try to load in your own data.
+  If you have brought your own data, then I would recommend that you quickly
+  work through this practical first, then try to load in your own data.
 \end{abstract}
 
 \section{Getting started}
 
+\begin{enumerate}
+\item Open \cc{Rstudio}
+\item Now open a new R script:
+\begin{verbatim}
+File -> New File -> R Script
+\end{verbatim}
+\item In \cc{Rstudio}, type a basic R command, say
+  
+<<>>=
+x = 5
+@
 
-\section{The data}
+\item Press \mbox{\cc{Ctrl + Enter}} anywhere on the line with \cc{x = 5}. This should
+  send the command \cc{x = 5} to the R console in the bottom left hand
+  window.\marginnote{In Rstudio click on \cc{Help} and \cc{Keyboard short cuts}
+    to see other short cuts.}
+\item In \cc{Rstudio}, save the file you are currently working on. Rstudio will
+  (correctly) add the file extension \cc{.R}
+\end{enumerate}
+Other \cc{Rstudio} commands are:
+\begin{itemize}
+\item If the cursor is at the beginning of the line, pressing \mbox{\cc{Ctrl +
+      Enter}} will send that line to the R console.
+\item If you highlight a few lines of R code, pressing \mbox{\cc{Ctrl + Enter}}
+  will send that code to the R console.
+\item Pressing \mbox{\cc{Ctrl + Shift + R}} sends the entire file to R console.
+\end{itemize}
+It's probably worth creating a directory to store any R files that you create.
+
+
+\subsection{Rstudio projects}
+
+RStudio projects are a really neat way of keeping track of your work. You can 
+create an RStudio project:
+\begin{itemize}
+\item In a brand new directory
+\item In an existing directory where you already have R code and data
+\item By cloning a version control (Git or Subversion) repository
+\end{itemize}
+\noindent First create a directory of where you want to store todays code. For example,
+\begin{verbatim}
+  C:/My Documents/nclcourse/introduction
+\end{verbatim}
+\noindent Next, create an RStudio project, by
+\begin{verbatim}
+  File -> New Project -> New Directory
+\end{verbatim}
+\noindent Then selecting the directory you have just created. Whenever you start RStudio, you can easily switch to this project, via
+\begin{verbatim}
+  File -> Recent Projects
+\end{verbatim}
+\noindent or
+\begin{verbatim}
+  File -> Open Projects
+\end{verbatim}
+\noindent Further details about RStudio projects is available from their website
+\begin{center}
+  \url{http://www.rstudio.com/ide/docs/using/projects}
+\end{center}
+
+
+\subsection{Course R package}
+
+Installing the the course R package\sidenote{A package is an \textit{add-on} or a \textit{module}. It provides with additional functions and data.} 
+is straightforward:
+
+<<eval=FALSE, tidy=FALSE>>=
+install.packages("nclRintroduction", 
+                 repos="http://R-Forge.R-project.org")
+@ 
+
+\noindent If this doesn't work, try
+
+<<eval=FALSE, tidy=FALSE>>=
+install.packages("nclRintroduction", 
+                 repos="http://R-Forge.R-project.org", 
+                 type="source")
+@ 
+
+
+\noindent This R package contains the copies of the practicals, solutions and data sets that we require. To load the package, use
+
+<<>>=
+library("nclRintroduction")
+@ 
+
+\newpage
+
+\section{The data set}
 
 We are going to investigate the IMDB data set described in chapter 1. Movies
 were selected for inclusion if they had a known length, had been rated by at
@@ -77,12 +162,12 @@ film has 24 associated variables. The first few rows are given in Table
 1.1 in the notes. This is \textbf{only a subset} of the data, the actual data set
 contains information on over 50,000 movies.
 
-\pagebreak
+
 
 \subsection{Retrieving the data}
 
-To access the data into R, we use the following 
-command:\marginnote{You can enter the url into your web browser and view the data directly.}
+To access the data into R, we use the following command:\marginnote{You can
+  enter the url into your web browser and view the data directly.}
 
 <<>>=
 library(nclRintroduction)
@@ -91,13 +176,13 @@ d = movies
 @ 
 
 \noindent We can inspect the column names using:
-  
-  <<results='hide'>>=
-  ## d is a data frame
-  colnames(d)
+
+<<results="hide">>=
+## d is a data frame
+colnames(d)
 @ 
 
-\noindent We easily change the column names, for example,
+\noindent We can change the column names, for example,
 
 <<>>=
 colnames(d)[17]
@@ -105,32 +190,41 @@ colnames(d)[17] = "MPAA"
 @ 
 
 \noindent We can select individual columns, using either their column name:
-  
-<<results='hide'>>=
+
+<<results="hide">>=
 d$Year
 @ 
 
 \noindent or their column number:
-  
-<<results='hide'>>=
+
+<<results="hide">>=
 d[,2]
 @ 
 
 \noindent When vectors or data frames are too large to manage, we use the function
 \cc{head} to take a peek at the data:
-  
+
 <<>>=
 head(d$Title, 5)
 @ 
 
 \begin{itemize}
 \item In the above function call, what does ``5'' specify? What happens if you
-omit it?
+  omit it?
+<<echo=echo, results=results>>=
+##5 specifies the number of rows to return
+## For example, using 2 gives
+head(d$Title, 2)
+@
+  
 \item Another useful function is \cc{tail}. What does this function do?
+<<echo=echo, results=results>>=
+## tail gives the *last* few values/rows
+@
 \end{itemize}
 Using the \cc{dim} function, how many columns and rows does \cc{d} have?
 
-\section{Scatter plots}
+\section{Scatter plots (chapter 5.1 of the notes)}
 
 Let's start with some simple scatter plots:
 
@@ -145,12 +239,11 @@ plot(d$Length, d$Rating)
 \caption{Scatter plot of movie length against rating.}\label{F1}
 \end{marginfigure}
 
-
 \noindent Now,
 \begin{itemize}
 \item When you call \cc{plot}, R guesses at suitable axis labels. Use the
-\cc{xlab} and \cc{ylab} arguments to specify better axis labels. For example, 
-
+  \cc{xlab} and \cc{ylab} arguments to specify better axis labels. For example, 
+  
 <<F2, fig.keep='none'>>=
 plot(d$Length, d$Rating, xlab="Length", ylab="Rating")
 @ 
@@ -164,29 +257,25 @@ plot(d$Length, d$Rating, xlab="Length", ylab="Rating")
 \end{marginfigure}
 
 \item Use the \cc{ylim} argument to specify a y-axis range from 1 to 10.
-<<fig.keep='none', tidy=FALSE>>=
+
+<<fig.keep='none', tidy=FALSE, echo=echo>>=
 plot(d$Length, d$Rating, 
      xlab="Length", ylab="Rating", 
      ylim=c(1, 10))
 @ 
-
 \item Use the \cc{col} argument to change the colour of the points.
-<<fig.keep='none', tidy=FALSE>>=
+<<fig.keep='none', tidy=FALSE, echo=echo>>=
 plot(d$Length, d$Rating, 
      xlab="Length", ylab="Rating", 
      ylim=c(1, 10), col=2)
-@ 
-\noindent  Or
-<<fig.keep='none', tidy=FALSE>>=
+##Or
 plot(d$Length, d$Rating, 
      xlab="Length", ylab="Rating", 
      ylim=c(1, 10), col="red")
 @ 
-\noindent Type \cc{colours()} to see the available named colours.
 
 \item Use the \cc{main} argument to give the plot a title.
-
-<<fig.keep='none', tidy=FALSE>>=
+<<fig.keep='none', tidy=FALSE, echo=echo>>=
 plot(d$Length, d$Rating, 
      xlab="Length", ylab="Rating", 
      ylim=c(1, 10), col=2, 
@@ -195,7 +284,7 @@ plot(d$Length, d$Rating,
 
 \item I tend to alter the default plot command using:\sidenote{An explantion of 
 \cc{op} and \cc{par} are given at the end of this practical.}
-
+  
 <<tidy=FALSE>>=
 op = par(mar=c(3,3,2,1), mgp=c(2,.7,0), 
          tck=-.01, las=1)
@@ -203,41 +292,54 @@ op = par(mar=c(3,3,2,1), mgp=c(2,.7,0),
 
 \noindent What do you think? Can you determine what \cc{mar}, \cc{mgp}, \cc{tck}
 and \cc{las} mean?
-\begin{itemize}
-\item \cc{mar}: A numerical vector of the form c(bottom, left, top, right) 
-which gives the number of lines of margin to be specified on the four 
-sides of the plot. The default is \cc{c(5, 4, 4, 2) + 0.1}.
-\item \cc{mgp}: The margin line for the axis title, axis labels and axis line. 
-The first number affects title,  whereas the second and third values affect 
-axis. The default is \cc{c(3, 1, 0)}.
-\item \cc{tck}: Reduces the tick length.
-\item \cc{las}: Changes the style the axis labels. \cc{las=1} rotates the 
-$y$-axis label by 90 degrees.
-\end{itemize}
-\end{itemize}
+<<tidy=FALSE, echo=echo>>=
+#  * mar: A numerical vector of the form c(bottom, left, top, right) 
+# which gives the number of lines of margin to be specified on the four 
+# sides of the plot. The default is c(5, 4, 4, 2) + 0.1
+# 
+#  * mgp: The margin line for the axis title, axis labels and axis line. 
+# The first number affects title,  whereas the second and third values affect 
+# axis. The default is c(3, 1, 0).
+# 
+#  * tck: Reduces the tick length.
+# 
+#  * las: Changes the style the axis labels. las=1 rotates the y-axis label by 90 degrees.
+@
 
+\end{itemize}
 To reset the plotting device, run the command
 <<>>=
 par(op)
 @
-\newpage
+
+
 \section{Summary Statistics}
 
 Use the commands \cc{mean}, \cc{median}, and \cc{sd} to calculate the summary
 statistics for the movie length.
 \begin{table}[h]
-\centering
-\begin{tabular}{@{}lll@{}}
-\toprule
-Statistics & Value & Command\\
-\midrule
-Mean & \Sexpr{mean(d$Length)}  & \cc{mean(d\$Length)} \\
-Median & \Sexpr{median(d$Length)} & \cc{median(d\$Length)}\\
-Std. dev & \Sexpr{sd(d$Length)} & \cc{median(d\$Length)}\\
-\bottomrule
-\end{tabular}
-\caption{Summary statistics for the movie data set.}
+  \centering
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    Statistics & Value \\
+    \midrule
+    Mean & \hspace*{6cm} \\
+    Median & \\
+    Std. dev & \\
+    \bottomrule
+  \end{tabular}
+  \caption{Summary statistics for the movie data set.}
 \end{table}
+
+<<echo=echo, results=results>>=
+##Mean
+mean(d$Length)
+##Mean
+median(d$Length)
+##Mean
+sd(d$Length)
+@
+
 
 \section{Histograms}
 
@@ -258,7 +360,7 @@ hist(d$Year)
 histogram isn't that great. So you can use different rules 
 
 <<F4, fig.keep='none'>>=
-  hist(d$Year, breaks="FD")
+hist(d$Year, breaks="FD")
 @ 
 
 \noindent The arguments that we encountered when looking at scatter plots can be
@@ -282,7 +384,7 @@ boxplot(d$Rating)
 
 \noindent All the usual arguments, such as \cc{xlab}, can be used here. Now
 lets, separate the movie data by whether it's a romantic movie:
-  
+
 <<fig.keep='none'>>=
 boxplot(d$Rating ~ d$Romance)
 @ 
@@ -290,9 +392,16 @@ boxplot(d$Rating ~ d$Romance)
 \noindent Try generating a similar boxplot, but for other variables. What
 happens when you condition on more than one variable?
 
+<<fig.keep='none', echo=echo>>=
+##Conditioning on other variables
+boxplot(d$Rating ~ d$Romance + d$Action)
+@
 
 
-<<F6, fig.keep='none'>>=
+
+
+<<F6, fig.keep='none', echo=echo>>=
+## Change axis labels
 ## Plot a boxplot but skip the labels
 boxplot(d$Rating ~ d$Romance, axes=FALSE, frame.plot=TRUE,
         ylim=c(0,10))
@@ -303,12 +412,8 @@ axis(2,at=seq(0,10,2.5))
 axis(1,at=1:2, labels=c("Non R", "Romantic") )
 @ 
 
-\begin{marginfigure}
-\centering
-<<ref.label='F6', dev='pdf', out.width='\\textwidth', echo=FALSE>>=
-@
-\caption{Boxplot of movie ratings split according to romance.}
-\end{marginfigure}
+
+
 
 \section*{Discussion of the \cc{par} function}
 
@@ -328,6 +433,23 @@ op
 <<>>=
 par(op)
 @
+
+
+
+
+
+
+
+
+\section*{Solutions}
+
+Solutions are contained within this package:
+<<eval=FALSE>>=
+library(nclRintroduction)
+vignette("solutions1", package="nclRintroduction")
+@
+
+
 
 
 \end{document}

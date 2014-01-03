@@ -1,0 +1,273 @@
+%\VignetteIndexEntry{solutions1}
+%!Snw weave = knitr
+%\VignetteEngine{knitr::knitr}
+<<echo=FALSE>>=
+results='show';echo=TRUE
+@
+\documentclass[a4paper,justified,openany]{tufte-handout}
+
+<<setup, include=FALSE, cache=FALSE>>=
+library(knitr)
+options(replace.assign=FALSE,width=50)
+
+opts_chunk$set(fig.path='figure/graphics-', 
+               cache.path='cache/graphics-', 
+               fig.align='center', 
+               dev='pdf', fig.width=5, fig.height=5, 
+               fig.show='hold', cache=FALSE, par=TRUE)
+knit_hooks$set(crop=hook_pdfcrop)
+
+knit_hooks$set(par=function(before, options, envir){
+  if (before && options$fig.show!='none') {
+    par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
+        mgp=c(2,.7,0),tcl=-.01, las=1)
+  }}, crop=hook_pdfcrop)
+@
+
+
+\usepackage{amsmath}
+
+% Set up the images/graphics package
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{../graphics/}}
+
+\title{Programming: practical 1 \Sexpr{ifelse(echo, "solutions", "")}} 
+\author[Dr Colin Gillespie]{Dr Colin S.
+Gillespie}
+\date{}  % if the \date{} command is left out, the current date will be used
+\usepackage{booktabs}
+\usepackage{units}
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+\newcommand{\cc}{\texttt}
+\graphicspath{{../graphics/}}
+\setcounter{secnumdepth}{2}
+\usepackage{microtype}
+\begin{document}
+
+\maketitle% this prints the handout title, author, and date
+
+
+\begin{abstract}
+  \noindent In the questions below, the important part is \textbf{understanding}
+  what's going on rather than just typing the R commands. If you are unsure of
+  what's going on, please ask.
+\end{abstract}
+
+
+\section{Practice questions}
+
+\begin{enumerate}
+\item Basic functions
+
+<<>>=
+v = 5
+Fun1 = function() {
+  v = 0
+  return(v)
+}
+Fun1()
+v
+@ 
+\begin{enumerate}
+\item Why does the final line return 5 and not 0.
+<<echo=echo, results=results>>=
+## Fun1 uses the local variable v
+@
+\item Delete line 3 in the above piece of code. Now change \cc{Fun1} to allow
+$v$ to be passed as an argument, i.e. we can write \cc{Fun1(5)}. Call
+this function to make sure it works.
+
+<<echo=echo, results=results>>=
+Fun1 = function(v) {
+  return(v)
+}
+Fun1(10)
+@
+
+
+\item Now make the argument in \cc{Fun1} have a default value of $0$.
+
+<<echo=echo, results=results>>=
+Fun1 = function(v=0) {
+  return(v)
+}
+@ 
+\end{enumerate}
+\item Default arguments:
+
+<<>>=
+Fun2 = function(x=10) {
+  return(x)
+}
+
+Fun3 = function(x) {
+  return(x)
+}
+@ 
+\begin{enumerate}
+\item Why does this work:
+<<eval=FALSE>>=
+Fun2()
+@
+\noindent but this raises an error
+<<eval=FALSE, echo=c(1,2*echo)>>=
+Fun3()
+## Fun1()} has a default argument
+@
+ 
+\item Change \cc{Fun2} so that it returns $\sqrt{x}$.
+
+<<echo=echo>>=
+Fun2 = function(x=10) {
+  return(sqrt(x))
+}
+@ 
+
+\end{enumerate}
+
+\item \cc{if} statements.
+
+<<>>=
+Fun4 = function(x) {
+  if(x==5) {
+    y = 0
+  } else {
+    y = 1
+  }
+  return(y)
+}
+@ 
+\begin{enumerate}
+\item Change \cc{Fun4} so that it:
+\begin{itemize}
+\item returns 1 if $x$ is positive;
+\item returns -1 if $x$ is negative;
+\item returns 0 if $x$ is zero.
+\end{itemize}
+<<echo=echo>>=
+Fun4 = function(x) {
+  rtn_value = 0
+  if(x > 0) {
+    rtn_value = 1 
+  } else if (x < 0) {
+    rtn_value = -1
+  }
+  return(rtn_value)
+}
+@   
+
+\end{enumerate}
+\newpage
+\item \cc{for} loops.
+
+<<>>=
+total = 0
+for(i in 1:5) {
+  total = total + i
+}
+total
+@ 
+
+The \cc{for} loop above calculates 
+\[
+\sum_{i=1}^5 i
+\]
+\begin{enumerate}
+\item What is the final value of \cc{total} in the above piece of code?
+<<echo=echo, results=results>>=
+total
+@
+\item Change the above \cc{loop} to calculate the following summations:
+\[
+\mbox{(i)} \sum_{i=1}^{20} (i+1)  
+\]
+<<echo=echo, results=results>>=
+total = 0
+for(i in 1:20) {
+  total = total + (i + 1)
+}
+total
+@
+\[
+\mbox{(ii)} \sum_{j=-10}^{15} j 
+\]
+<<echo=echo, results=results>>=
+total = 0
+for(j in -10:15) {
+  total = total + j
+}
+total
+@
+
+\end{enumerate}
+\item More \cc{for} loops:
+
+<<>>=
+a = 2
+total = 0
+for(blob in a:5) {
+  total = total + blob
+}
+@
+
+
+\begin{enumerate}
+\item Delete line 1. Now put the above code in a function called \cc{Fun5},
+where \cc{a} is passed as an argument, i.e. we can call
+\cc{Fun5(1)}
+
+<<echo=echo, results=results>>=
+Fun5 = function(a) {
+  total = 0
+  for(blob in a:5){
+    total = total + blob
+  }
+  return(total)
+}
+Fun5(1)
+@
+
+\item Alter the code so that the \cc{for} loop goes from \cc{a} to
+\cc{b}, rather than \cc{a} to 5. Allow \cc{b} to be passed as an
+argument, i.e. we can call \cc{Fun5(1,5)}.
+<<echo=echo, results=results>>=
+Fun5 = function(a, b) {
+  total = 0
+  for(blob in a:b){
+    total = total + blob
+  }
+  return(total)
+}
+Fun5(1, 5)
+@
+
+\item Change \cc{Fun5} so that it has default arguments of
+\cc{a=1} and \cc{b=10}.
+
+<<echo=echo, results=results>>=
+Fun5 = function(a=1, b=10) {
+  total = 0
+  for(blob in a:b) {
+    total = total + blob
+  }
+  return(total)
+}
+Fun5(5)
+@ 
+\end{enumerate}
+\end{enumerate}
+
+
+
+\section*{Solutions}
+
+Solutions are contained within this package:
+<<eval=FALSE>>=
+library(nclRprogramming)
+vignette("solutions1", package="nclRprogramming")
+@
+
+
+\end{document}

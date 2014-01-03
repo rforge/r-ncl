@@ -1,10 +1,10 @@
-%\VignetteIndexEntry{solutions1}
+%\VignetteIndexEntry{practical1}
 %!Snw weave = knitr
 %\VignetteEngine{knitr::knitr}
+<<echo=FALSE>>=
+results = "hide"; echo = FALSE
+@
 \documentclass[a4paper,justified,openany]{tufte-handout}
-
-%\geometry{showframe}% for debugging purposes -- displays the margins
-
 
 <<setup, include=FALSE, cache=FALSE>>=
 library(knitr)
@@ -25,31 +25,20 @@ knit_hooks$set(par=function(before, options, envir){
 @
 \usepackage{amsmath}
 
-% Set up the images/graphics package
 \usepackage{graphicx}
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
-\graphicspath{{../graphics/}}
 
-\title{Efficient R: practical solutions} 
+\title{Efficient R: practical \Sexpr{ifelse(echo, "solutions", "")}}  
 \author[Dr Colin Gillespie]{Dr Colin Gillespie}
 \date{}  % if the \date{} command is left out, the current date will be used
-
-% The following package makes prettier tables.  We're all about the bling!
 \usepackage{booktabs}
-
-% The units package provides nice, non-stacked fractions and better spacing
-% for units.
 \usepackage{units}
-
-% The fancyvrb package lets us customize the formatting of verbatim
-% environments.  We use a slightly smaller font.
 \usepackage{fancyvrb}
+\usepackage{microtype}
+
 \fvset{fontsize=\normalsize}
 \newcommand{\cc}{\texttt}
-\graphicspath{{../graphics/}}
 \setcounter{secnumdepth}{2}
-
-\usepackage{microtype}
 \begin{document}
 
 \maketitle% this prints the handout title, author, and date
@@ -59,52 +48,40 @@ knit_hooks$set(par=function(before, options, envir){
 <<>>=
 library(rbenchmark)
 @
-
-\noindent and have installed the course R package. 
-
-<<eval=FALSE, tidy=FALSE>>=
-##Windows & Linux users
-install.packages("nclRefficient", 
-                 repos="http://R-Forge.R-project.org")
-##Apple users 
-install.packages("nclRefficient", 
-                 repos="http://R-Forge.R-project.org", 
-                 type="source")
-@ 
-
-\noindent To load the package, use
-
-<<>>=
-library(nclRefficient)
-@ 
-
-
 \noindent Each practical corresponds to a chapter in the notes.
-
 
 \section*{Practical 1}
 
-
 \begin{enumerate}
-\item Reproduce the timing results in chapter 1 using the \texttt{benchmark} function from the \texttt{rbenchmark} package.
-\item \textbf{Case study} In this example, we are going to investigate loading a large data frame. First, we'll generate a large matrix of random numbers and save it as a csv file:\sidenote{If setting \cc{N=1e6} is too large for your machine, reduce it at bit. For example, \cc{N=500,000}.}
+\item Reproduce the timing results in chapter 1 using the \texttt{benchmark}
+  function from the \texttt{rbenchmark} package.
+\item \textbf{Case study} In this example, we are going to investigate loading a
+  large data frame. First, we'll generate a large matrix of random numbers and
+  save it as a csv file:\sidenote{If setting \cc{N=1e6} is too large for your
+    machine, reduce it at bit. For example, \cc{N=50,000}.}
 <<practical1, cache=TRUE>>=
 N = 1e5
 m = as.data.frame(matrix(runif(N), ncol=1000))
 write.csv(m, file="example.csv", row.names=FALSE)
 @
-\noindent We can read the file the back in again using \texttt{read.csv}:
+\noindent We can read the file the back in again using \texttt{read.csv}
 <<cache=TRUE>>=
-system.time(read.csv("example.csv"))
+dd = read.csv("example.csv")
 @
 \noindent To get a baseline result, time the \cc{read.csv} function call above. 
-
+<<cache=TRUE, echo=echo, results=results, eval=echo>>=
+system.time(read.csv("example.csv"))
+@
 
 We will now look ways of speeding up this step.
 \begin{enumerate}
-\item Use the \texttt{nrows} argument to set the number of rows that will be read from your file.\sidenote{Hint, use \cc{nrow(m)} to determine how many rows are in your matrix.}
+\item Use the \texttt{nrows} argument to set the number of rows that will be
+  read from your file.\sidenote{Hint, use \cc{nrow(m)} to determine how many
+    rows are in your matrix.}
 \item Set \texttt{comment.char=""} to turn off interpretation of comments.
-\item Explicitly define the classes of each column using \texttt{colClasses} in \texttt{read.csv}, for example, if we have 1000 columns that all have data type numeric, then:
+\item Explicitly define the classes of each column using \texttt{colClasses} in
+  \texttt{read.csv}, for example, if we have 1000 columns that all have data
+  type numeric, then:
 <<cache=TRUE,results='hide', tidy=FALSE>>=
 read.csv(file="example.csv", 
          colClasses=rep("numeric", 1000))
@@ -116,12 +93,16 @@ load(file="example.RData")
 @
 \end{enumerate}
 Which of the above give the biggest speed-ups? Are there any downsides to using these techniques? Do your results depend on the number of columns or the number of rows?
-\begin{itemize}
-\item Using \cc{RData} files is the fastest - although you have to read the data in first. Set \cc{colClasses} also produces an good speed-up.
-\item Setting \cc{colClasses} R is no longer checking your data types. If your data is \textit{changing} - for example it's coming from the web or a database, this may be problem.
-\item The results do depend on the number of columns, as this code demonstrates
+<<echo=echo, results=results, eval=FALSE, tidy=TRUE>>=
+## 1. Using RData files is the fastest - 
+## although you have to read the data in first. 
+## Set colClasses also produces an good speed-up.
 
-<<eval=FALSE, tidy=FALSE>>=
+##2. Setting colClasses R is no longer checking your data types. 
+## If your data is changing - for example it's coming from the web 
+## or a database, this may be problem.
+
+##3. The results do depend on the number of columns, as this code demonstrates
 N = c(1, 10, 100, 1000, 1000, 10000)
 l = numeric(5)
 for(i in seq_along(N)){
@@ -132,12 +113,19 @@ for(i in seq_along(N)){
     read.csv("example.csv", colClasses=cc))[3]
 }
 l
-@
 
-Notice that when we have a large number of columns, we get a slow down in reading in data set (even though we have specified the column classes). The reason for this slow down is that we are creating a data frame and each column has to be initialised with a particular class. 
-\end{itemize}
+## Notice that when we have a large number of columns, 
+## we get a slow down in reading in data set (even though
+## we have specified the column classes). The reason for 
+## this slow down is that we are creating a data frame 
+## and each column has to be initialised with a particular class. 
+@
 \end{enumerate}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%Practical 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 \section*{Practical 2}
 
@@ -164,19 +152,17 @@ benchmark(replications=1000,
 @
 \noindent Can you explain the result? Try varying the number of replications.
 
-Two things are going on here
-\begin{enumerate}
-\item The very large difference when selecting columns and rows (in data frames) is because the data is stored in column major-order. Although the matrix is also stored in column major-order, because everything is the same type, we can efficiently select values.
-\item Matrices are also more memory efficient: 
+<<echo=echo, results=results>>=
+## Two things are going on here
+## 1. The very large difference when selecting columns and rows (in data frames) is because the data is stored in column major-order. Although the matrix is also stored in column major-order, because everything is the same type, we can efficiently select values.
 
-<<>>=
+##2. Matrices are also more memory efficient: 
 m = matrix(runif(1e4), ncol=1e4)
 d = data.frame(m)
 object.size(m)
 object.size(d)
 @
 
-\end{enumerate}
 \item When selecting columns in a data frame, there are a few different methods. For example, 
 <<results='hide'>>=
 d_df$c10
@@ -249,9 +235,13 @@ for(i in 1:n){
 }
 @
 \noindent Using the \texttt{benchmark} function, time these three examples.
-
-
 \end{enumerate}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Practical 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 \section*{Practical 3: parallel programming}
 
@@ -278,7 +268,6 @@ Solutions are contained within this package:
 library(nclRefficient)
 vignette("solutions1", package="nclRefficient")
 @
-
 
 
 \end{document}

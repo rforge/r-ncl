@@ -1,6 +1,10 @@
-%\VignetteIndexEntry{solutions1}
+%\VignetteIndexEntry{practical1}
 %!Snw weave = knitr
 %\VignetteEngine{knitr::knitr}
+<<echo=FALSE>>=
+results = "hide"; echo = FALSE
+@
+
 \documentclass[a4paper,justified,openany]{tufte-handout}
 
 <<setup, include=FALSE, cache=FALSE>>=
@@ -28,7 +32,8 @@ knit_hooks$set(par=function(before, options, envir){
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \graphicspath{{graphics/}}
 
-\title{Practical 1 solutions} 
+\title{Statistical modelling: practical 1 \Sexpr{ifelse(echo, "solutions", "")}}
+
 \author[Dr Colin Gillespie]{Dr Colin S.
   Gillespie}
 \date{}  % if the \date{} command is left out, the current date will be used
@@ -54,14 +59,40 @@ knit_hooks$set(par=function(before, options, envir){
 
 \maketitle% this prints the handout title, author, and date
 
-% \begin{abstract}
-%   \noindent This practical aims at introducing you to the R interface. By the
-%   end of this practical you should be able to load in data, calculate some
-%   summary statistics and construct some basic plots.
+\begin{abstract}
+  \noindent I've starred, $^*$, some of the questions. This indicates that we didn't
+  directly cover the material in the lecture. If you are particular interested
+  in this statistical area, try the question. Otherwise, just move on.
+\end{abstract}
+<<echo=FALSE>>=
+x = c(78.64,79.01, 79.57, 79.52, 80.71, 79.95, 78.50,
+  79.10, 81.98, 80.09, 80.29, 80.22)
+y = c(81.92, 81.12, 82.47, 82.86, 82.89, 82.45,
+     82.51, 81.11, 83.07, 82.77, 82.38, 83.14)
+dd = data.frame(x, y)
+@ 
 
-%   If you have brought your own data, then I would recommend that you quickly
-%   work through this practical first, then try to load in your own data.
-% \end{abstract}
+
+\section*{Course R package}
+
+First we'll install the course R package. 
+
+<<eval=FALSE, tidy=FALSE>>=
+##Windows & Linux users
+install.packages("nclRmodelling", 
+                 repos="http://R-Forge.R-project.org")
+##Apple users 
+install.packages("nclRmodelling", 
+                 repos="http://R-Forge.R-project.org", 
+                 type="source")
+@ 
+
+\noindent To load the package, use
+
+<<>>=
+library("nclRmodelling")
+@ 
+
 <<echo=FALSE>>=
 x = c(78.64,79.01, 79.57, 79.52, 80.71, 79.95, 78.50,
   79.10, 81.98, 80.09, 80.29, 80.22)
@@ -91,7 +122,7 @@ dd = data.frame(x, y)
     available for download so you would have to think about how to enter the
     data.}
 
-<<>>=
+<<echo=echo, results=results>>=
 ##Data for question 1 & 2
 ## Easier using Excel and export as CSV
 x = c(78.64,79.01, 79.57, 79.52, 80.71, 79.95, 78.50,
@@ -102,7 +133,7 @@ dd = data.frame(x, y)
 @
 
 \item Construct a boxplot and a histogram of the data.
-<<fig.keep='none'>>=
+<<fig.keep='none', echo=echo>>=
 ##Graphics not shown
 boxplot(dd$x)
 hist(dd$x)
@@ -110,7 +141,7 @@ hist(dd$x)
 
 \item Construct a q-q plot of the data.
 
-<<F1, fig.keep='none'>>=
+<<F1, fig.keep='none', echo=echo>>=
 qqnorm(dd$x)
 qqline(dd$x)
 @
@@ -119,12 +150,12 @@ qqline(dd$x)
 \centering
 <<ref.label='F1', dev='pdf', out.width='\\textwidth', echo=FALSE>>=
 @
-\caption{q-q plot.}
+\caption{q-q plot from question 1c.}
 \end{marginfigure}
 
 \item What is the mean and standard deviation of this data.
 
-<<>>=
+<<echo=echo, results=results>>=
 ##Mean & Sd
 mean(dd$x)
 sd(dd$x)
@@ -135,25 +166,25 @@ sd(dd$x)
   H_0: \mu =79 \quad \text{and} \quad H_1: \mu \ne  79\;.
 \]
 
-<<>>=
+<<echo=echo, results=results>>=
 ##1-sample t-test
 t.test(dd$x, mu=79, conf.level=0.99)
 @
 
 \item Calculate a 95\% confidence interval for the population mean value.
-<<>>=
+<<echo=echo, results=results>>=
 ##95% CI
 t.test(dd$x, conf.level=0.95)$conf.int
 @
 
-\item Now carry out a \cc{wilcox.test}. Compare the $p$-values of this test to
+\item $^*$ Now carry out a \cc{wilcox.test}. Compare the $p$-values of this test to
   the one sample $t$-test.
 
-<<>>=
+<<echo=echo, results=results>>=
 wilcox.test(dd$x)$p.value
 @
 
-\item Use the \cc{str} function to explore the output of the \cc{wilcox.test} function.
+\item $^*$  Use the \cc{str} function to explore the output of the \cc{wilcox.test} function.
 \item Imagine that this was a proper statistical analysis. Save your data as a
   \cc{csv} file. Clean up your R script - commenting where necessary - and save
   it as a file. You should be able to open the file and reproduce your analysis.
@@ -182,27 +213,28 @@ d1 = data.frame(value = x)
 d2 = data.frame(value = y)
 @
 
-Suppose you have two separate data files. Here is some code that will help you combine them. First we read in the separate files:
-<<eval=FALSE>>=
+<<echo=echo, results=results, eval=FALSE>>=
+## Suppose you have two separate data files. Here is some code that will help ## you combine them. First we read in the separate files:
 d1 = read.csv("Method1.csv")
 d2 = read.csv("Method2.csv")
 @
-\noindent In order to combine the data frames, they must have the same column names:
-<<>>=
+
+<<echo=echo, results=results>>=
+## In order to combine the data frames, 
+## they must have the same column names:
 head(d1, 2)
 head(d2, 2)
 @
-\noindent We combine data frames using \cc{rbind}\sidenote{\cc{rbind} - row bind} 
-<<>>=
+<<echo=echo, results=results>>=
+## We combine data frames using rbind (row bind)
 d = rbind(d1, d2)
 @
-\noindent Finally we create a new column to indicate the Method\sidenote{\cc{rep} is the replicate function. See \cc{?rep}.}
-<<>>=
+<<echo=echo, results=results>>=
+## Finally we create a new column to indicate the Method
+## rep is the replicate function. See ?rep
 d$Method = rep(1:2, each=12)
 head(d, 2)
 @
-
-
 
 
 \item Exploratory data analysis.
@@ -215,27 +247,27 @@ head(d, 2)
   \end{itemize}
 \item Carry out a two sample $t$-test. Assume that the variances are unequal.
 
-<<>>=
+<<echo=echo, results=results>>=
 t.test(value ~ Method, data=d, var.equal=FALSE)
 @
 
   Does this your answer compare to your intuition?
 \item Use the \cc{var.test} function to test for unequal
   variances.\sidenote{This function isn't in the notes. Look at the help file.}
-<<>>=
+<<echo=echo, results=results>>=
 var.test(value ~ Method, data=d)
 @
 \noindent Since the $p =0.2585$, this does not provide enough evidence to reject $H_0$ and so we don't have any reason to believe that the variances are unequal.
 
   Does this correspond to your intuition?
-\item Carry out a two sample $t$-test, assuming equal variances.
+\item $^*$  Carry out a two sample $t$-test, assuming equal variances.
 
-<<>>=
+<<echo=echo, results=results>>=
 t.test(value ~ Method, data=d, var.equal=TRUE)
 @
 
-\item Now carry out a \cc{wilcox.test}.
-\item When carrying out the Wilcoxon test, we assume a common distribution. This
+\item  $^*$ Now carry out a \cc{wilcox.test}.
+\item  $^*$ When carrying out the Wilcoxon test, we assume a common distribution. This
   assumption can be tested using the \textit{Kolmogorov-Smirnov} test:
   \cc{ks.test}.\sidenote{Again this function isn't in the notes. Look at the
     help file.} Is the assumption of a common distribution valid?
@@ -247,7 +279,6 @@ t.test(value ~ Method, data=d, var.equal=TRUE)
 
 \begin{table*}[h]
   \resizebox{\textwidth}{!}{%
-
   \centering
   \begin{tabular}{@{}llll llll llll@{}}
     \toprule
@@ -264,7 +295,7 @@ t.test(value ~ Method, data=d, var.equal=TRUE)
 \item Carry out a $\chi^2$ testgoodness of fit on the zodiac data. Are business
   executives distributed uniformly across zodiac signs?
   
-<<>>=
+<<echo=echo, results=results>>=
 x = c(348, 353, 359, 357, 350, 355, 359, 367, 345, 362, 343, 367)
 m = chisq.test(x)
 ##Since p > 0.05 we can't accept the alternative hypothesis. 
@@ -274,7 +305,7 @@ m = chisq.test(x)
 
   
 \item What are the expected values for each zodiac sign?
-<<>>=
+<<echo=echo, results=results>>=
 ##expected values
 (expected = m[["expected"]])
 @
@@ -285,13 +316,13 @@ m = chisq.test(x)
 \frac{\text{observed} - \text{expected}}{\sqrt{\text{expected}}}
 \]
 Which residuals are large?
-<<>>=
+<<echo=echo, results=results>>=
 ##Residuals
 m[["residuals"]]
 @
 
 \end{enumerate}
-\item Own data question
+\item If you have brought your own data, feel free to try these techniques this data.
 \item \newthought{The} University of Texas Southwestern Medical Center examined
   whether the risk of contracting Hepatitis C was related to tattoo
   use.\marginnote{Haley, R. and Fischer, P.R. 2001} The data from the study is
@@ -299,7 +330,6 @@ m[["residuals"]]
 
 \begin{table}[h]
   \centering
-
   \caption{Counts of patients by their Hepatitis C status, and whether they had a
     tattoo from a parlour, from elsewhere or had now tattoo at all.}
 \begin{tabular}{@{}llll@{}}
@@ -317,7 +347,7 @@ m[["residuals"]]
 \begin{enumerate}
 \item Carry out a $\chi^2$ test to determine if the Hepatitis is related to
   tattoo status.
-<<warning=FALSE>>=
+<<warning=FALSE,echo=echo, results=results>>=
 h = c(17, 8, 22)
 nh = c(35, 53, 491)
 dd = data.frame(h, nh)
@@ -327,14 +357,14 @@ m = chisq.test(dd)
   cells have expected values of at least five, otherwise the distributional
   assumptions may be invalid. What are the expected values of each cell. Which
   cells have an expected value less than five?
-<<>>=
+<<echo=echo, results=results>>=
 m[["expected"]]
 @
 
 \item Since some of the cells have expected values slightly less than five, we
   should ensure that these aren't driving the test statistic. Look at the test
   residuals. Which residuals are large? What should you do now?
-<<>>=
+<<echo=echo, results=results>>=
 ##Some of the expected values are less then 5
 ##So consider combining cells.
 @

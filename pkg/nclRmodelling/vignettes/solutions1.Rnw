@@ -1,6 +1,10 @@
-%\VignetteIndexEntry{practical1}
+%\VignetteIndexEntry{solutions1}
 %!Snw weave = knitr
 %\VignetteEngine{knitr::knitr}
+<<echo=FALSE>>=
+results='show';echo=TRUE
+@
+
 \documentclass[a4paper,justified,openany]{tufte-handout}
 
 <<setup, include=FALSE, cache=FALSE>>=
@@ -21,8 +25,6 @@ knit_hooks$set(par=function(before, options, envir){
 }}, crop=hook_pdfcrop)
 @
 
-%\geometry{showframe}% for debugging purposes -- displays the margins
-
 \usepackage{amsmath}
 
 % Set up the images/graphics package
@@ -30,7 +32,8 @@ knit_hooks$set(par=function(before, options, envir){
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \graphicspath{{graphics/}}
 
-\title{Statistical modelling: practical 1} 
+\title{Statistical modelling: practical 1 \Sexpr{ifelse(echo, "solutions", "")}}
+
 \author[Dr Colin Gillespie]{Dr Colin S.
   Gillespie}
 \date{}  % if the \date{} command is left out, the current date will be used
@@ -55,7 +58,6 @@ knit_hooks$set(par=function(before, options, envir){
 \begin{document}
 
 \maketitle% this prints the handout title, author, and date
-
 
 \begin{abstract}
   \noindent I've starred, $^*$, some of the questions. This indicates that we didn't
@@ -88,10 +90,18 @@ install.packages("nclRmodelling",
 \noindent To load the package, use
 
 <<>>=
-library(nclRmodelling)
+library("nclRmodelling")
 @ 
 
-\section*{Questions}
+<<echo=FALSE>>=
+x = c(78.64,79.01, 79.57, 79.52, 80.71, 79.95, 78.50,
+  79.10, 81.98, 80.09, 80.29, 80.22)
+y = c(81.92, 81.12, 82.47, 82.86, 82.89, 82.45,
+     82.51, 81.11, 83.07, 82.77, 82.38, 83.14)
+dd = data.frame(x, y)
+## var(y)
+## var.test(x, y)
+@ 
 
 \begin{enumerate}
 \item \newthought{Consider the} following data set:
@@ -99,7 +109,7 @@ library(nclRmodelling)
   \centering
   \begin{tabular}{@{}llllll@{}}
     \toprule
-    \multicolumn{6}{@{}l}{Method A}\\
+    \multicolumn{6}{l}{Method A}\\
     \midrule
     78.64 & 79.01 & 79.57 & 79.52 & 80.71 & 79.95\\
     78.50 & 79.10 & 81.98 & 80.09 & 80.29 & 80.22\\
@@ -108,23 +118,78 @@ library(nclRmodelling)
 \end{table}
 
 \begin{enumerate}
-\item Input the data into R.\sidenote{I would suggest entering the data into
-    Excel as a single column. Then export it as a \texttt{csv} file.}
+\item Input the data into R.\sidenote{I intentionally didn't make the data
+    available for download so you would have to think about how to enter the
+    data.}
+
+<<echo=echo, results=results>>=
+##Data for question 1 & 2
+## Easier using Excel and export as CSV
+x = c(78.64,79.01, 79.57, 79.52, 80.71, 79.95, 78.50,
+  79.10, 81.98, 80.09, 80.29, 80.22)
+y = c(81.92, 81.12, 82.47, 82.86, 82.89, 82.45,
+     82.51, 81.11, 83.07, 82.77, 82.38, 83.14)
+dd = data.frame(x, y)
+@
+
 \item Construct a boxplot and a histogram of the data.
+<<fig.keep='none', echo=echo>>=
+##Graphics not shown
+boxplot(dd$x)
+hist(dd$x)
+@
+
 \item Construct a q-q plot of the data.
+
+<<F1, fig.keep='none', echo=echo>>=
+qqnorm(dd$x)
+qqline(dd$x)
+@
+
+\begin{marginfigure}
+\centering
+<<ref.label='F1', dev='pdf', out.width='\\textwidth', echo=FALSE>>=
+@
+\caption{q-q plot from question 1c.}
+\end{marginfigure}
+
 \item What is the mean and standard deviation of this data.
+
+<<echo=echo, results=results>>=
+##Mean & Sd
+mean(dd$x)
+sd(dd$x)
+@
+
 \item Carry out a one sample $t$-test at the 99\% level, where
-  \[
+\[
   H_0: \mu =79 \quad \text{and} \quad H_1: \mu \ne  79\;.
 \]
+
+<<echo=echo, results=results>>=
+##1-sample t-test
+t.test(dd$x, mu=79, conf.level=0.99)
+@
+
 \item Calculate a 95\% confidence interval for the population mean value.
+<<echo=echo, results=results>>=
+##95% CI
+t.test(dd$x, conf.level=0.95)$conf.int
+@
+
 \item $^*$ Now carry out a \cc{wilcox.test}. Compare the $p$-values of this test to
   the one sample $t$-test.
-\item $^*$ Use the \cc{str} function to explore the output of the \cc{wilcox.test} function.
+
+<<echo=echo, results=results>>=
+wilcox.test(dd$x)$p.value
+@
+
+\item $^*$  Use the \cc{str} function to explore the output of the \cc{wilcox.test} function.
 \item Imagine that this was a proper statistical analysis. Save your data as a
   \cc{csv} file. Clean up your R script - commenting where necessary - and save
   it as a file. You should be able to open the file and reproduce your analysis.
 \end{enumerate}
+
 
 \item \newthought{Another experiment} was carried out and the following data
   were collected
@@ -133,7 +198,7 @@ library(nclRmodelling)
   \centering
   \begin{tabular}{@{}llllll@{}}
     \toprule
-    \multicolumn{6}{@{}l}{Method B}\\
+    \multicolumn{6}{l}{Method B}\\
     \midrule
      81.92 & 81.12 & 82.47 & 82.86 & 82.89 & 82.45 \\
      82.51 & 81.11 & 83.07 & 82.77 & 82.38 & 83.14 \\
@@ -141,26 +206,68 @@ library(nclRmodelling)
   \end{tabular}
 \end{table}
 \begin{enumerate}
-\item Input the data into R. Combine the two data sets into a single data
-  frame.\sidenote{I would suggest entering the data into Excel. Have two
-    columns. Column 1 is the data and column 2 indicates the method. Export the
-    data as a \texttt{csv} file.}
+\item Input the data into R. Combine the two data sets into a single data frame.
+
+<<echo=FALSE>>=
+d1 = data.frame(value = x)
+d2 = data.frame(value = y)
+@
+
+<<echo=echo, results=results, eval=FALSE>>=
+## Suppose you have two separate data files. Here is some code that will help ## you combine them. First we read in the separate files:
+d1 = read.csv("Method1.csv")
+d2 = read.csv("Method2.csv")
+@
+
+<<echo=echo, results=results>>=
+## In order to combine the data frames, 
+## they must have the same column names:
+head(d1, 2)
+head(d2, 2)
+@
+<<echo=echo, results=results>>=
+## We combine data frames using rbind (row bind)
+d = rbind(d1, d2)
+@
+<<echo=echo, results=results>>=
+## Finally we create a new column to indicate the Method
+## rep is the replicate function. See ?rep
+d$Method = rep(1:2, each=12)
+head(d, 2)
+@
+
+
 \item Exploratory data analysis.
   \begin{itemize}
   \item Construct boxplots, histograms and q-q plots for both data sets. Work
     out the means and standard deviations. Before carrying out any statistical
     test, what do you think your conclusions will be? Do you think the variances
-    are roughly equal? Do you think the data conforms to the normal
+    are roughly equal? Do you think the data is conforms to the normal
     distribution.
   \end{itemize}
 \item Carry out a two sample $t$-test. Assume that the variances are unequal.
+
+<<echo=echo, results=results>>=
+t.test(value ~ Method, data=d, var.equal=FALSE)
+@
+
   Does this your answer compare to your intuition?
 \item Use the \cc{var.test} function to test for unequal
   variances.\sidenote{This function isn't in the notes. Look at the help file.}
+<<echo=echo, results=results>>=
+var.test(value ~ Method, data=d)
+@
+\noindent Since the $p =0.2585$, this does not provide enough evidence to reject $H_0$ and so we don't have any reason to believe that the variances are unequal.
+
   Does this correspond to your intuition?
-\item $^*$ Carry out a two sample $t$-test, assuming equal variances.
-\item $^*$ Now carry out a \cc{wilcox.test}.
-\item $^*$ When carrying out the Wilcoxon test, we assume a common distribution. This
+\item $^*$  Carry out a two sample $t$-test, assuming equal variances.
+
+<<echo=echo, results=results>>=
+t.test(value ~ Method, data=d, var.equal=TRUE)
+@
+
+\item  $^*$ Now carry out a \cc{wilcox.test}.
+\item  $^*$ When carrying out the Wilcoxon test, we assume a common distribution. This
   assumption can be tested using the \textit{Kolmogorov-Smirnov} test:
   \cc{ks.test}.\sidenote{Again this function isn't in the notes. Look at the
     help file.} Is the assumption of a common distribution valid?
@@ -172,7 +279,6 @@ library(nclRmodelling)
 
 \begin{table*}[h]
   \resizebox{\textwidth}{!}{%
-
   \centering
   \begin{tabular}{@{}llll llll llll@{}}
     \toprule
@@ -186,25 +292,37 @@ library(nclRmodelling)
   \label{tab:1}
 \end{table*}
 \begin{enumerate}
-\item Carry out a $\chi^2$ goodness of fit test on the zodiac data. Are business
-  executives distributed uniformly across zodiac signs?\sidenote{Use the
-    \cc{chisq.test} function}
+\item Carry out a $\chi^2$ testgoodness of fit on the zodiac data. Are business
+  executives distributed uniformly across zodiac signs?
+  
+<<echo=echo, results=results>>=
+x = c(348, 353, 359, 357, 350, 355, 359, 367, 345, 362, 343, 367)
+m = chisq.test(x)
+##Since p > 0.05 we can't accept the alternative hypothesis. 
+##However, the question is worded as though we can "prove" the Null
+##hypotheis, which we obviously can't do.
+@
+
+  
 \item What are the expected values for each zodiac sign?
+<<echo=echo, results=results>>=
+##expected values
+(expected = m[["expected"]])
+@
+
 \item The formula for calculating the residuals\sidenote{These residuals are
     called Pearson residuals.} is given by
   \[
 \frac{\text{observed} - \text{expected}}{\sqrt{\text{expected}}}
 \]
 Which residuals are large?
-\end{enumerate}
+<<echo=echo, results=results>>=
+##Residuals
+m[["residuals"]]
+@
 
-<<echo=FALSE>>=
-x = c(348, 353, 359, 357, 350, 355, 359, 367, 345, 362, 343, 367)
-m = chisq.test(x)
-@ 
-%Page616 Intro Stats
-\item \newthought{If you brought} your own data along, feel free to begin
-  an initial analysis. We'll give advice on data entry, manipulation, etc.
+\end{enumerate}
+\item If you have brought your own data, feel free to try these techniques this data.
 \item \newthought{The} University of Texas Southwestern Medical Center examined
   whether the risk of contracting Hepatitis C was related to tattoo
   use.\marginnote{Haley, R. and Fischer, P.R. 2001} The data from the study is
@@ -212,7 +330,6 @@ m = chisq.test(x)
 
 \begin{table}[h]
   \centering
-
   \caption{Counts of patients by their Hepatitis C status, and whether they had a
     tattoo from a parlour, from elsewhere or had now tattoo at all.}
 \begin{tabular}{@{}llll@{}}
@@ -229,60 +346,32 @@ m = chisq.test(x)
 \end{table}
 \begin{enumerate}
 \item Carry out a $\chi^2$ test to determine if the Hepatitis is related to
-  tattoo status.\sidenote{Use the \cc{chisq.test} function. How should you enter
-  the data?}
-\item When carrying out $\chi^2$ tests, we should make sure that individual
-  cells have expected values of at least five, otherwise the distributional
-  assumptions may be invalid. What are the expected values of each cell. Which
-  cells have an expected value less than five?
-\item Since some of the cells have expected values slightly less than five, we
-  should ensure that these aren't driving the test statistic. Look at the test
-  residuals. Which residuals are large? What should you do now?
-\end{enumerate}
-
-
-<<echo=FALSE, warning=FALSE>>=
+  tattoo status.
+<<warning=FALSE,echo=echo, results=results>>=
 h = c(17, 8, 22)
 nh = c(35, 53, 491)
 dd = data.frame(h, nh)
 m = chisq.test(dd)
-#m$expected
-#image(m$residuals)
-@ 
+@
+\item When carrying out $\chi^2$ tests, we should make sure that individual
+  cells have expected values of at least five, otherwise the distributional
+  assumptions may be invalid. What are the expected values of each cell. Which
+  cells have an expected value less than five?
+<<echo=echo, results=results>>=
+m[["expected"]]
+@
 
-%Page 627
+\item Since some of the cells have expected values slightly less than five, we
+  should ensure that these aren't driving the test statistic. Look at the test
+  residuals. Which residuals are large? What should you do now?
+<<echo=echo, results=results>>=
+##Some of the expected values are less then 5
+##So consider combining cells.
+@
 
-% \item \newthought{The mathematical} constant $\pi$ is often approximated as
-%   3.141. The value of $\pi$ is irrational, that is, the decimal goes on forever
-%   without repeating any pattern. The following table tabulates the first one
-%   million digits of $\pi$.
-% \begin{table*}[h]
-%    \resizebox{\textwidth}{!}{%
-%   \centering
-%   \begin{tabular}{@{}l lllll lllll@{}}
-%     \toprule
-%     Digit & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
-%     \midrule
-%     Count & 99959 & 99758 & 100026 & 100229 & 100230 & 100359 & 99548 & 99800 &
-%     99985 & 100106 \\
-%     \bottomrule
-%   \end{tabular}}
-%   \caption{The first one million digits of $\pi$.}
-%   \label{tab:3}
-% \end{table*}
-
-% \noindent Test the hypothesis that the digits 0 to 9 are uniformly distributed
-% in the first million digits of $\pi$.
 \end{enumerate}
 
 
-\section*{Solutions}
-
-Solutions are contained within this package:
-<<eval=FALSE>>=
-library(nclRmodelling)
-vignette("solutions1", package="nclRmodelling")
-@
-
+\end{enumerate}
 
 \end{document}

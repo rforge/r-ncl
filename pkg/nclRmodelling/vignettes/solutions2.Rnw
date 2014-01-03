@@ -1,10 +1,10 @@
 %\VignetteIndexEntry{solutions2}
 %!Snw weave = knitr
 %\VignetteEngine{knitr::knitr}
-
+<<echo=FALSE>>=
+results='show';echo=TRUE
+@
 \documentclass[a4paper,justified,openany]{tufte-handout}
-
-
 <<setup, include=FALSE, cache=FALSE>>=
 library(knitr)
 options(replace.assign=FALSE,width=50)
@@ -29,9 +29,9 @@ knit_hooks$set(par=function(before, options, envir){
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \graphicspath{{graphics/}}
 
-\title{Practical 2 solutions} 
-\author[Dr Colin Gillespie]{Dr Colin S.
-  Gillespie}
+\title{Statistical modelling: practical 2 \Sexpr{ifelse(echo, "solutions", "")}}
+
+\author[Dr Colin Gillespie]{Dr Colin Gillespie}
 \date{}  % if the \date{} command is left out, the current date will be used
 
 % The following package makes prettier tables.  We're all about the bling!
@@ -55,12 +55,7 @@ knit_hooks$set(par=function(before, options, envir){
 \maketitle% this prints the handout title, author, and date
 
 % \begin{abstract}
-%   \noindent This practical aims at introducing you to the R interface. By the
-%   end of this practical you should be able to load in data, calculate some
-%   summary statistics and construct some basic plots.
 
-%   If you have brought your own data, then I would recommend that you quickly
-%   work through this practical first, then try to load in your own data.
 % \end{abstract}
 \section{Simple linear regression}
 
@@ -70,7 +65,7 @@ knit_hooks$set(par=function(before, options, envir){
 \begin{enumerate}
 \item Perform a linear regression of $y$ on $x$. Should temperature be included
   in the model?
-<<>>=
+<<echo=echo, results=results>>=
 x = c(4,4,7,8,12,15,16,17,14,11,7,5)
 y = c(73, 57, 81, 94, 110, 124, 134, 139, 124, 103, 81, 80)
 m = lm(y~x)
@@ -84,13 +79,13 @@ summary(m)
     population correlation coefficient.} Compare this $p$-value to the $p$-value
   for testing if $\beta_1 =0$.
 
-<<>>=
+<<echo=echo, results=results>>=
 ##The p-value for the correlation is also 9.9e-09
 cor.test(x, y)
 @  
 \item Construct a graph of the data. Add a dashed red line indicating the line
   of best fit.
-<<F1, fig.keep='none', echo=1:2>>=
+<<F1, fig.keep='none', echo=(1:2)*echo>>=
 plot(x, y, xlab="Temp", ylab="Sales")
 abline(m, col=2, lty=2)
 text(5, 130, "r=0.983")
@@ -100,37 +95,28 @@ text(5, 130, "r=0.983")
 \centering
 <<ref.label='F1', dev='pdf', out.width='\\textwidth', echo=FALSE>>=
 @
-\caption{Scatterplot with the earnings data. Also shows the line of best fit.}
+\caption{Scatterplot with the earnings data. Also shows the line of best fit (question 1c).}
 \end{marginfigure}
 
 \item Using the \cc{text} function, add the text \textit{r = 0.983} to your plot.
-<<eval=FALSE>>=
+<<eval=FALSE, echo=echo, results=results>>=
 text(5, 130, "r=0.983")
 @
 
 \item Plot the standardised residuals against the fitted values. Does the graph
   look random?
-<<F2, fig.keep='none', echo=2>>=
-par(mfrow=c(1, 2))
+<<F2, fig.keep='none', echo=echo>>=
+##Model diagnosics look good
 plot(fitted.values(m), rstandard(m))
-qqnorm(rstandard(m))
 @
 
 \item Construct a q-q plot of the standardised residuals.
 
-<<fig.keep='none'>>=
+<<fig.keep='none',echo=echo, results=results>>=
 qqnorm(rstandard(m))
 ##Model diagnosics look good
 @
-
 \end{enumerate}
-\begin{figure}[h]
-\centering
-<<ref.label='F2', dev='pdf', out.width='\\textwidth', echo=FALSE, fig.width=10>>=
-@
-\caption{Model diagnostics.}
-\end{figure}
-
 \begin{table}[b]
   \resizebox{1.05\textwidth}{!}{
 \centering
@@ -219,7 +205,7 @@ IQ = \beta_0 + \beta_1 AgeBegin + \beta_2 AgeEnd + \beta_3 TotalYears + \epsilon
 \]
 Explain what is wrong with this model? Suggest a possible remedy. 
 
-<<>>=
+<<echo=echo, results=results>>=
 (m = lm(IQ ~ AgeBegin + AgeEnd + TotalYears, data=drphil))
 #The problem is TotalYears = AgeEnd - AgeBegin
 #Solution: remove TotalYears
@@ -227,6 +213,11 @@ Explain what is wrong with this model? Suggest a possible remedy.
 
 \end{enumerate}
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{One way ANOVA tables}
 
 \begin{enumerate}
@@ -248,7 +239,7 @@ Explain what is wrong with this model? Suggest a possible remedy.
   \end{table}
 \begin{enumerate}
 \item Construct a one-way ANOVA table. Are there differences between treatment groups?
-<<>>=
+<<echo=echo, results=results>>=
 x1 = c(109, 114, 108, 123, 115, 108, 114)
 x2 = c(113, 114, 113, 108, 119, 112, 110)
 x3 = c(103, 94, 114, 107, 107, 113, 107)
@@ -260,7 +251,7 @@ summary(m)
 @
 \item Check the standardised residuals of your model.
 
-<<F3, fig.keep='none'>>=
+<<F3, fig.keep='none', echo=echo, results=results>>=
 plot(fitted.values(m), rstandard(m))
 ## Residual plot looks OK
 @
@@ -273,7 +264,7 @@ plot(fitted.values(m), rstandard(m))
 \end{marginfigure}
 
 \item Perform a multiple comparison test to determine where the difference lies.
-<<>>=
+<<, echo=echo, results=results>>=
 TukeyHSD(m)
 @
 
@@ -298,7 +289,7 @@ hep_s = hep[,2:8]
 \newthought{Using the heptathlon} data set, carry out a clustering analysis. Try
 different distance methods and clustering functions.
 
-<<>>=
+<<fig.keep="none", echo=echo, results=results>>=
 plot(hclust(dist(hep_s)), labels=hep[,1])
 @ 
 
@@ -306,7 +297,7 @@ plot(hclust(dist(hep_s)), labels=hep[,1])
 
 \begin{enumerate}
 \item Calculate the correlation matrix of the \cc{hep} data set.
-<<>>=
+<<echo=echo, results=results>>=
 ##Round to 2dp
 signif(cor(hep_s), 2)
 @
@@ -316,7 +307,7 @@ athletes names.}
   \begin{itemize}
   \item Keep \cc{score} in your PCA analysis. What happens and why? Do you think
     you should remove \cc{score}?
-<<>>=
+<<echo=echo, results=results>>=
 ##Remove:
 ##1st column: athletes name
 ##Last column: It's a combination of the other columns
@@ -327,19 +318,118 @@ prcomp(dd)
 @
 
   \item Do you think you need to scale the data?
-<<>>=
+<<echo=echo, results=results>>=
 ##Yes!. run800m dominates the loading since
 ##the scales differ
 @
 
   \item Construct a biplot of the data.
-<<>>=
+<<echo=echo, results=results, fig.keep="none">>=
 prcomp(dd, scale=TRUE)
 biplot(prcomp(dd, scale=TRUE))
 @
 
   \end{itemize}
 \end{enumerate}
+
+
+\section{Survival analysis}
+
+This final section, is meant to give you a taste at other statistical techniques
+available. R has many packages\sidenote{A package is just an ``add-on'' that
+  provides new functionality.} available. To install a package, we use the command:
+
+<<eval=FALSE>>=
+install.packages("survival")
+@ 
+
+\noindent Once the package is installed, we load it using \cc{library} function:
+
+<<message=FALSE>>=
+library(survival)
+@ 
+
+\noindent The data set we will use is the \cc{lung} data set\sidenote{Survival in patients
+  with advanced lung cancer from the North Central Cancer Treatment Group.
+  Performance scores rate how well the patient can perform usual daily
+  activities.} - this comes with the \cc{survival} package. To load this data
+set, we use the command
+
+<<>>=
+data(lung)
+@ 
+
+\noindent We the use the \cc{dim} function to extract the number of rows and
+columns:
+
+<<>>=
+dim(lung)
+@ 
+
+\noindent This creates a data frame with the following columns
+\begin{itemize}
+\item inst:       Institution code
+\item time:       Survival time in days
+\item status:     censoring status 1=censored, 2=dead
+\item age:        Age in years
+\item sex:        Male=1 Female=2
+\item ph.ecog:    ECOG performance score (0=good 5=dead)
+\item ph.karno:   Karnofsky performance score (bad=0-good=100) rated by physician
+\item pat.karno:  Karnofsky performance score as rated by patient
+\item meal.cal:   Calories consumed at meals
+\item wt.loss:    Weight loss in last six months
+\end{itemize}      
+To begin, we create a \cc{Surv} object:\sidenote{Look at \cc{?Surv} for
+  further details.}
+
+<<results="hide">>=
+Surv(lung$time, lung$status)
+@ 
+
+\noindent We can fit a Kaplein-Meier curve using the \cc{surfit} function:
+
+<<results="hide">>=
+survfit(Surv(lung$time, lung$status)~1)
+@ 
+
+\noindent and also plot survival curve
+
+<<fig.keep="none">>=
+plot(survfit(Surv(lung$time, lung$status)~1))
+@ 
+
+\noindent To fit the model using an additional covariate, we just alter the
+formula:
+
+<<fig.keep="none">>=
+plot(survfit(Surv(lung$time, lung$status)~lung$sex))
+@ 
+
+\noindent \textbf{Task:} Load the \cc{heart} data set:\sidenote{Look at the help
+  page: \cc{?heart}}
+
+<<>>=
+data(heart)
+@ 
+
+\noindent and make the a \cc{Surv} object
+
+<<results="hide">>=
+Surv(heart$start, heart$stop, heart$event) 
+@ 
+
+\noindent Why are three arguments in the above function? Construct a
+Kaplein-Meier plot. Look at the \cc{coxph} function. Try fitting a cox
+proportional hazard function.
+
+
+\section{Solutions}
+
+Solutions are contained within this package:
+<<eval=FALSE>>=
+library(nclRmodelling)
+vignette("solutions2", package="nclRmodelling")
+@
 
 
 \end{document}

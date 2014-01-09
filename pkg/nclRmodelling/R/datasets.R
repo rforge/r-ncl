@@ -59,10 +59,13 @@ NULL
 #' data(hep)
 NULL
 
-#' Ratfeed data set
-#' 
-#' The ratfeed data set
 #' @name ratfeed
+#' @aliases ratfeed2 ratfeed3
+#' @title Ratfeed data set
+#' 
+#' @description The \code{ratfeed} data set. An example of the factorial ANOVA design.  
+#' The \code{ratfeed2} and \code{ratfeed3} datasets are similar to the original data, 
+#' but are used to illustrate variable encoding.
 #' @docType data
 #' @usage data(ratfeed)
 #' @return A data frame
@@ -70,3 +73,6 @@ NULL
 #' @examples
 #' data(ratfeed)
 NULL
+
+
+

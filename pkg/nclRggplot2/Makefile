@@ -1,0 +1,82 @@
+## $* = filename without extension
+## $@ = the output file
+## $< = the input file
+
+.SUFFIXES: .tex .pdf .Rnw .R
+
+PKG = nclRggplot2
+DIR = vignettes
+
+PRACS = practical1 practical2 practical3
+SOLS =  solutions2 solutions3
+ALL =  $(PRACS) $(SOLS) 
+
+SOLSPDF = $(SOLS:=.pdf)
+PRACSPDF = $(PRACS:=.pdf)
+ALLPDF = $(ALL:=.pdf)
+
+PRACSRNW =  $(PRACS:=.Rnw)
+SOLSRNW =  $(SOLS:=.Rnw)
+.PHONY: force sols all clean commit cleaner
+
+force: 
+	make -C $(DIR) -f ../Makefile all
+
+all: $(PRACSPDF)
+	$(MAKE) -f ../Makefile solutions*.Rnw
+	$(MAKE) -f ../Makefile sols
+
+solutions%.Rnw: $(PRACSPDF)
+	## Copy practical file to solutions
+	$(foreach var, \
+		$(PRACSRNW), \
+		cp $(var) $(subst practical, solutions, $(var);))
+
+	## Updated to show results
+	$(foreach var, \
+		$(SOLSRNW), \
+		sed -i "5s/.*/results='show';echo=TRUE/" $(var);)
+
+sols: $(SOLSPDF)
+	cp $(ALLPDF) ../../../www/$(PKG)/
+
+commit: 
+	make clean
+	make force
+	svn commit ../$(PKG) ../../www/$(PKG)/
+
+view: 
+	make force
+	acroread ../../www/$(PKG)/*.pdf
+
+build:
+	make cleaner
+	cd ../ && R CMD build $(PKG)
+
+check:
+	make build
+	cd ../ && R CMD check --as-cran $(PKG)_*.tar.gz
+
+install: 
+	make build
+	cd ../ && R CMD INSTALL $(PKG)_*.tar.gz
+
+.Rnw.pdf:
+	sed -i "1s/.*/%\\\VignetteIndexEntry{$*}/" $*.Rnw
+	Rscript  -e "require(knitr); knit('$*.Rnw', output='$*.tex')"
+	pdflatex $*.tex
+	pdflatex $*.tex
+
+clean:
+	cd $(DIR) && rm -fvr knitr_figure knitr_cache && \
+	rm -fv $(ALLPDF)  *.tex *.synctex.gz \
+		*.aux *.dvi *.log *.toc *.bak *~ *.blg *.bbl *.lot *.lof \
+		 *.nav *.snm *.out *.pyc \#*\# _region_* _tmp.* *.vrb \
+		Rplots.pdf example.RData d.csv.gz mygraph.* \
+		knitr.sty .Rhistory ex.data
+
+cleaner:
+	make clean
+	cd $(DIR) && rm -fvr auto/
+	cd ../ && rm -fvr $(PKG).Rcheck $(PKG)_*.tar.gz
+

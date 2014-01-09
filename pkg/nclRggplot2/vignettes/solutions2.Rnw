@@ -1,6 +1,9 @@
-%\VignetteIndexEntry{practical2}
+%\VignetteIndexEntry{solutions2}
 %!Snw weave = knitr
 %\VignetteEngine{knitr::knitr}
+<<echo=FALSE>>=
+results='show';echo=TRUE
+@
 \documentclass[a4paper,justified,openany]{tufte-handout}
 
 <<setup, include=FALSE, cache=FALSE>>=
@@ -20,9 +23,6 @@ knit_hooks$set(par=function(before, options, envir){
             mgp=c(2,.7,0),tcl=-.01, las=1)
 }}, crop=hook_pdfcrop)
 @
-<<echo=FALSE>>=
-#knit_theme$set("bw.css")
-@
 
 %\geometry{showframe}% for debugging purposes -- displays the margins
 \usepackage{amsmath}
@@ -32,7 +32,7 @@ knit_hooks$set(par=function(before, options, envir){
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \graphicspath{{graphics/}}
 
-\title{ggplot2: practical 2} 
+\title{Advanced graphics: practical 2 \Sexpr{ifelse(echo, "solutions", "")}}  
 \author[Dr Colin Gillespie]{Dr Colin S.
   Gillespie}
 \date{}  % if the \date{} command is left out, the current date will be used
@@ -47,11 +47,10 @@ knit_hooks$set(par=function(before, options, envir){
 % The fancyvrb package lets us customize the formatting of verbatim
 % environments.  We use a slightly smaller font.
 \usepackage{fancyvrb}
-%\fvset{fontsize=\normalsize}
+\fvset{fontsize=\normalsize}
 \newcommand{\cc}{\texttt}
 \graphicspath{{../graphics/}}
 \setcounter{secnumdepth}{2}
-\usepackage{microtype}
 
 \begin{document}
 \maketitle% this prints the handout title, author, and date
@@ -68,8 +67,8 @@ knit_hooks$set(par=function(before, options, envir){
 
 To begin, load the library:
 
-<<>>=
-library(ggplot2) 
+<<message=FALSE>>=
+library("ggplot2") 
 @ 
 
 \noindent and the \cc{mpg} data set
@@ -87,9 +86,9 @@ data(mpg)
 # mpg$drv = factor(mpg$drv, 
 #    levels = c("Front", "Rear", "4wd"))
 
-g = ggplot(data=mpg, aes(x=displ, y=hwy)) + 
+g = ggplot(data=mpg, aes(x=displ, y=hwy)) 
+g1 = g + geom_point() + stat_smooth(linetype=2) + 
   xlab("Displacement") + ylab("Highway mpg")
-g1 = g + geom_point() + stat_smooth(linetype=2)
 g2 = g1 + geom_point(data=subset(mpg, manufacturer=="audi"), 
    aes(x=displ, y=hwy), 
   colour="red", size=4, alpha=0.4)
@@ -116,13 +115,19 @@ free to experiment.
 \item Figure \ref{F1}: Create a scatter plot of engine displacement,
   \cc{displ}, against highway mpg, \cc{hwy}. To get started:
   
-<<fig.keep='none'>>=
+<<fig.keep='none', tidy=FALSE>>=
 ggplot(data=mpg, aes(x=displ, y=hwy)) +  
   geom_point() + xlab("Displacement")
 @  
 
 Now add a dashed loess line and change the $y$-axis label. 
-Hint: try \cc{stat\_smooth} and \cc{ylab(`New label')}.
+Hint: try \cc{stat\_smooth} and \cc{xlab(`New label')}.
+
+<<echo=9*echo>>=
+<<F1>>
+@
+
+
 \begin{marginfigure}
   \centering
 <<dev='png', out.width='\\textwidth', echo=FALSE, message=FALSE>>=
@@ -131,11 +136,14 @@ g2
 \caption{Graphics for section 1.}\label{F2}
 \end{marginfigure}
 \item Figure \ref{F2}: highlight the Audi cars with a slightly larger red
-  circle. Hint: Create a new data frame that only contains Audi cars and use an additional \cc{geom\_point} layer.
+  circle. 
+<<echo=10*echo>>=
+<<F1>>
+@
 \item Figure \ref{F3}: Using \cc{stat\_smooth}, add a loess line conditional
-  on the drive. Hint: to move the legend to the top use 
-<<eval=FALSE, tidy=FALSE>>=
- + theme(legend.position = "top")
+  on the drive. 
+<<echo=11*echo>>=
+<<F1>>
 @
 \begin{marginfigure}
   \centering
@@ -150,10 +158,6 @@ g3
 
 \clearpage
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Section 3
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Over plotting}\label{Over}
 
 Scatter plots are very useful. However, when we have a large data set, points
@@ -164,8 +168,8 @@ the best solution is often problem specific.
 To begin with we will create an example data frame:
 
 <<overplotting, cache=TRUE, tidy=FALSE, echo=1:7>>=
-##If your computer is slow when plotting
-##reduce the value of n
+## If your computer is slow when plotting
+## reduce the value of n
 n = 20000
 x1 = signif(matrix(rnorm(n), ncol=2), 2)
 x2 = signif(matrix(
@@ -210,7 +214,6 @@ do?
   plot to find out! Try varying the parameters \cc{bins} and \cc{binwidth}.
 \end{itemize}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Section 4
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -226,7 +229,7 @@ data(diamonds)
 
 \noindent and look at the help file:
 
-<<tidy=FALSE>>=
+<<tidy=FALSE, eval=FALSE>>=
 ?diamonds
 @
 
@@ -255,6 +258,7 @@ i1
 \item Try \cc{geom\_density}. Set \cc{fill=cut} and change the \cc{alpha} value.
 \item Try \cc{geom\_boxplot}.
 \end{enumerate}
+
 
 
 \section*{Solutions}

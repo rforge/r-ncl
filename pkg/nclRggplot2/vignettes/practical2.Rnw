@@ -1,6 +1,9 @@
 %\VignetteIndexEntry{practical2}
 %!Snw weave = knitr
 %\VignetteEngine{knitr::knitr}
+<<echo=FALSE>>=
+results = "hide"; echo = FALSE
+@
 \documentclass[a4paper,justified,openany]{tufte-handout}
 
 <<setup, include=FALSE, cache=FALSE>>=
@@ -20,10 +23,6 @@ knit_hooks$set(par=function(before, options, envir){
             mgp=c(2,.7,0),tcl=-.01, las=1)
 }}, crop=hook_pdfcrop)
 @
-<<echo=FALSE>>=
-#knit_theme$set("bw.css")
-@
-
 
 %\geometry{showframe}% for debugging purposes -- displays the margins
 \usepackage{amsmath}
@@ -33,7 +32,7 @@ knit_hooks$set(par=function(before, options, envir){
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \graphicspath{{graphics/}}
 
-\title{ggplot2 Solution 2} 
+\title{Advanced graphics: practical 2 \Sexpr{ifelse(echo, "solutions", "")}}  
 \author[Dr Colin Gillespie]{Dr Colin S.
   Gillespie}
 \date{}  % if the \date{} command is left out, the current date will be used
@@ -53,23 +52,8 @@ knit_hooks$set(par=function(before, options, envir){
 \graphicspath{{../graphics/}}
 \setcounter{secnumdepth}{2}
 
-% \renewcommand{\hlcomment}[1]{\textcolor[rgb]{0.5,0.5,0.5}{#1}}%
-% \renewenvironment{Hchunk}%
-% {%
-%   \vspace{0.5em}\noindent\begin{lrbox}{\highlightbox}%
-%    \begin{minipage}[b]{\textwidth}%
-%     }%
-%     {%
-%     \end{minipage}%
-%   \end{lrbox}%
-%   \fcolorbox{highlightBorder}{highlightBg}{\usebox{\highlightbox}}%
-%   \vspace{0.5em}}%
-
-
-
 \begin{document}
 \maketitle% this prints the handout title, author, and date
-
 
 \begin{abstract}
   \noindent This practical aims to guide you through some of the key ideas in
@@ -83,8 +67,8 @@ knit_hooks$set(par=function(before, options, envir){
 
 To begin, load the library:
 
-<<>>=
-library(ggplot2) 
+<<message=FALSE>>=
+library("ggplot2") 
 @ 
 
 \noindent and the \cc{mpg} data set
@@ -131,7 +115,7 @@ free to experiment.
 \item Figure \ref{F1}: Create a scatter plot of engine displacement,
   \cc{displ}, against highway mpg, \cc{hwy}. To get started:
   
-<<fig.keep='none'>>=
+<<fig.keep='none', tidy=FALSE>>=
 ggplot(data=mpg, aes(x=displ, y=hwy)) +  
   geom_point() + xlab("Displacement")
 @  
@@ -139,7 +123,7 @@ ggplot(data=mpg, aes(x=displ, y=hwy)) +
 Now add a dashed loess line and change the $y$-axis label. 
 Hint: try \cc{stat\_smooth} and \cc{xlab(`New label')}.
 
-<<echo=9>>=
+<<echo=9*echo>>=
 <<F1>>
 @
 
@@ -153,12 +137,12 @@ g2
 \end{marginfigure}
 \item Figure \ref{F2}: highlight the Audi cars with a slightly larger red
   circle. 
-<<echo=10>>=
+<<echo=10*echo>>=
 <<F1>>
 @
 \item Figure \ref{F3}: Using \cc{stat\_smooth}, add a loess line conditional
   on the drive. 
-<<echo=11>>=
+<<echo=11*echo>>=
 <<F1>>
 @
 \begin{marginfigure}
@@ -184,8 +168,8 @@ the best solution is often problem specific.
 To begin with we will create an example data frame:
 
 <<overplotting, cache=TRUE, tidy=FALSE, echo=1:7>>=
-##If your computer is slow when plotting
-##reduce the value of n
+## If your computer is slow when plotting
+## reduce the value of n
 n = 20000
 x1 = signif(matrix(rnorm(n), ncol=2), 2)
 x2 = signif(matrix(
@@ -245,7 +229,7 @@ data(diamonds)
 
 \noindent and look at the help file:
 
-<<tidy=FALSE>>=
+<<tidy=FALSE, eval=FALSE>>=
 ?diamonds
 @
 
@@ -276,4 +260,12 @@ i1
 \end{enumerate}
 
 
+
+\section*{Solutions}
+
+Solutions are contained within this package:
+<<eval=FALSE>>=
+library(nclRggplot2)
+vignette("solutions2", package="nclRggplot2")
+@
 \end{document}

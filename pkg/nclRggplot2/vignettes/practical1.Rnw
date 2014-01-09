@@ -1,6 +1,9 @@
 %\VignetteIndexEntry{practical1}
 %!Snw weave = knitr
 %\VignetteEngine{knitr::knitr}
+<<echo=FALSE>>=
+results = "hide"; echo = FALSE
+@
 \documentclass[a4paper,justified,openany]{tufte-handout}
 
 <<setup, include=FALSE, cache=FALSE>>=
@@ -20,11 +23,7 @@ knit_hooks$set(par=function(before, options, envir){
             mgp=c(2,.7,0),tcl=-.01, las=1)
 }}, crop=hook_pdfcrop)
 @
-<<echo=FALSE>>=
-#knit_theme$set("bw.css")
-@
 
-%\geometry{showframe}% for debugging purposes -- displays the margins
 \usepackage[utf8x]{inputenc}
 
 \usepackage{amsmath}
@@ -34,7 +33,8 @@ knit_hooks$set(par=function(before, options, envir){
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \graphicspath{{graphics/}}
 
-\title{ggplot2: practical 1} 
+\title{Advanced graphics: practical 1 \Sexpr{ifelse(echo, "solutions", "")}}  
+
 \author[Dr Colin Gillespie]{Dr Colin S.
   Gillespie}
 \date{}  % if the \date{} command is left out, the current date will be used
@@ -59,8 +59,9 @@ knit_hooks$set(par=function(before, options, envir){
 
 
 \maketitle% this prints the handout title, author, and date
+\bigskip
 
-First install the \cc{ggplot2} package
+\noindent First install the \cc{ggplot2} package
 
 <<eval=FALSE>>=
 install.packages("ggplot2")
@@ -80,7 +81,7 @@ install.packages("nclRggplot2",
 
 \noindent To load the package, use
 
-<<>>=
+<<message=FALSE>>=
 library(nclRggplot2)
 @ 
 

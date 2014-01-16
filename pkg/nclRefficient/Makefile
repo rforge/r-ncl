@@ -43,14 +43,14 @@ sols: $(SOLSPDF)
 commit: 
 	make clean
 	make force
-	svn commit ../ ../../www/$(PKG)/
+	svn commit ../$(PKG) ../../www/$(PKG)/
 
 view: 
 	make force
 	acroread ../../www/$(PKG)/*.pdf
 
 build:
-	make clean
+	make cleaner
 	cd ../ && R CMD build $(PKG)
 
 check:

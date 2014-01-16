@@ -41,9 +41,9 @@ solutions%.Rnw: $(PRACSPDF)
 
 sols: $(SOLSPDF)
 	cp $(ALLPDF) ../../../www/$(PKG)/
+	scp $(ALLPDF) linux.mas.ncl.ac.uk:~/public_html/Rcourse/$(PKG)/
 
 commit: 
-	make clean
 	make force
 	svn commit ../ ../../www/$(PKG)/
 

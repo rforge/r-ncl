@@ -90,40 +90,40 @@ Other \cc{Rstudio} commands are:
       Enter}} will send that line to the R console.
 \item If you highlight a few lines of R code, pressing \mbox{\cc{Ctrl + Enter}}
   will send that code to the R console.
-\item Pressing \mbox{\cc{Ctrl + Shift + R}} sends the entire file to R console.
+\item Pressing \mbox{\cc{Ctrl + Shift + S}} sends the entire file to R console.
 \end{itemize}
 It's probably worth creating a directory to store any R files that you create.
 
-
-\subsection{Rstudio projects}
-
-RStudio projects are a really neat way of keeping track of your work. You can 
-create an RStudio project:
-\begin{itemize}
-\item In a brand new directory
-\item In an existing directory where you already have R code and data
-\item By cloning a version control (Git or Subversion) repository
-\end{itemize}
-\noindent First create a directory of where you want to store todays code. For example,
-\begin{verbatim}
-  C:/My Documents/nclcourse/introduction
-\end{verbatim}
-\noindent Next, create an RStudio project, by
-\begin{verbatim}
-  File -> New Project -> New Directory
-\end{verbatim}
-\noindent Then selecting the directory you have just created. Whenever you start RStudio, you can easily switch to this project, via
-\begin{verbatim}
-  File -> Recent Projects
-\end{verbatim}
-\noindent or
-\begin{verbatim}
-  File -> Open Projects
-\end{verbatim}
-\noindent Further details about RStudio projects is available from their website
-\begin{center}
-  \url{http://www.rstudio.com/ide/docs/using/projects}
-\end{center}
+% 
+% \subsection{Rstudio projects}
+% 
+% RStudio projects are a really neat way of keeping track of your work. You can 
+% create an RStudio project:
+% \begin{itemize}
+% \item In a brand new directory
+% \item In an existing directory where you already have R code and data
+% \item By cloning a version control (Git or Subversion) repository
+% \end{itemize}
+% \noindent First create a directory of where you want to store todays code. For example,
+% \begin{verbatim}
+%   C:/My Documents/nclcourse/introduction
+% \end{verbatim}
+% \noindent Next, create an RStudio project, by
+% \begin{verbatim}
+%   File -> New Project -> New Directory
+% \end{verbatim}
+% \noindent Then selecting the directory you have just created. Whenever you start RStudio, you can easily switch to this project, via
+% \begin{verbatim}
+%   File -> Recent Projects
+% \end{verbatim}
+% \noindent or
+% \begin{verbatim}
+%   File -> Open Projects
+% \end{verbatim}
+% \noindent Further details about RStudio projects is available from their website
+% \begin{center}
+%   \url{http://www.rstudio.com/ide/docs/using/projects}
+% \end{center}
 
 
 \subsection{Course R package}

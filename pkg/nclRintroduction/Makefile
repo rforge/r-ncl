@@ -39,18 +39,18 @@ solutions%.Rnw: $(PRACSPDF)
 
 sols: $(SOLSPDF)
 	cp $(ALLPDF) ../../../www/$(PKG)/
+	scp $(ALLPDF) linux.mas.ncl.ac.uk:~/public_html/Rcourse/$(PKG)/
 
 commit: 
-	make clean
 	make force
-	svn commit ../ ../../www/$(PKG)/
+	svn commit ../$(PKG) ../../www/$(PKG)/
 
 view: 
 	make force
 	acroread ../../www/$(PKG)/*.pdf
 
 build:
-	make clean
+	make cleaner
 	cd ../ && R CMD build $(PKG)
 
 check:

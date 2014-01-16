@@ -242,7 +242,7 @@ head(d, 2)
   \item Construct boxplots, histograms and q-q plots for both data sets. Work
     out the means and standard deviations. Before carrying out any statistical
     test, what do you think your conclusions will be? Do you think the variances
-    are roughly equal? Do you think the data is conforms to the normal
+    are roughly equal? Do you think the data conforms to a normal
     distribution.
   \end{itemize}
 \item Carry out a two sample $t$-test. Assume that the variances are unequal.
@@ -251,7 +251,7 @@ head(d, 2)
 t.test(value ~ Method, data=d, var.equal=FALSE)
 @
 
-  Does this your answer compare to your intuition?
+  Hope does this answer compare to your intuition?
 \item Use the \cc{var.test} function to test for unequal
   variances.\sidenote{This function isn't in the notes. Look at the help file.}
 <<echo=echo, results=results>>=
@@ -292,7 +292,7 @@ t.test(value ~ Method, data=d, var.equal=TRUE)
   \label{tab:1}
 \end{table*}
 \begin{enumerate}
-\item Carry out a $\chi^2$ testgoodness of fit on the zodiac data. Are business
+\item Carry out a $\chi^2$ goodness of fit test on the zodiac data. Are business
   executives distributed uniformly across zodiac signs?
   
 <<echo=echo, results=results>>=
@@ -322,7 +322,7 @@ m[["residuals"]]
 @
 
 \end{enumerate}
-\item If you have brought your own data, feel free to try these techniques this data.
+\item If you have brought your own data, feel free to try these techniques on this data.
 \item \newthought{The} University of Texas Southwestern Medical Center examined
   whether the risk of contracting Hepatitis C was related to tattoo
   use.\marginnote{Haley, R. and Fischer, P.R. 2001} The data from the study is
@@ -330,8 +330,8 @@ m[["residuals"]]
 
 \begin{table}[h]
   \centering
-  \caption{Counts of patients by their Hepatitis C status, and whether they had a
-    tattoo from a parlour, from elsewhere or had now tattoo at all.}
+  \caption{Counts of patients by their Hepatitis C status and whether they had a
+    tattoo from a parlour, from elsewhere or had no tattoo at all.}
 \begin{tabular}{@{}llll@{}}
   \toprule
   & Hepatitis C & No Hepatitis C & Total \\
@@ -370,8 +370,15 @@ m[["expected"]]
 @
 
 \end{enumerate}
-
-
 \end{enumerate}
+
+\section*{Solutions}
+
+Solutions are contained within this package:
+<<eval=FALSE>>=
+library("nclRmodelling")
+vignette("solutions1", package="nclRmodelling")
+@
+
 
 \end{document}

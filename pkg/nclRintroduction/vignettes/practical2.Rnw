@@ -4,8 +4,8 @@
 <<echo=FALSE>>=
 results = "hide"; echo = FALSE
 @
-
 \documentclass[a4paper,justified,openany]{tufte-handout}
+
 <<setup, include=FALSE, cache=FALSE>>=
 library(knitr)
 options(replace.assign=FALSE,width=50)
@@ -129,7 +129,7 @@ length(x1[x1 > (mean(x1) + 2*sd(x1))])
 sum(x1 > (mean(x1) + 2*sd(x1)))
 @
 
-\item \textbf{Tricky:} What is the 50$^{{\tiny \text{th}}}$ smallest value in
+\item What is the 50$^{{\tiny \text{th}}}$ smallest value in
 \cc{x1}?
 <<echo=echo, results=results>>=
 sort(x1)[50]
@@ -227,8 +227,7 @@ Run the following R code
 x2 = GetCharacterVector()
 @ 
 
-\noindent In the following questions, the function \cc{table} is quite useful,
-especially when combined with \cc{sum}.
+\noindent In the following questions, the function \cc{table} is quite useful.
 \begin{enumerate}
 \item How many times does ``A'' appear in \cc{x2}?
 <<echo=echo, results=results>>=
@@ -236,10 +235,10 @@ length(x2[x2=="A"])
 ##Or
 sum(x2=="A")
 @
-\item Which letter appears the most? If more than one letter appears, just give
+\item Which letter appears the least? If more than one letter appears, just give
 the first letter (if the letters were sorted in alphabetical order).
 <<echo=echo, results=results>>=
-sort(table(x2), decreasing=TRUE)[1]
+sort(table(x2))[1]
 @
 
 \item \textbf{Very tricky:} How many pairs of letters are there in
@@ -253,5 +252,16 @@ sum(x2_a == x2_b)
 @
 
 \end{enumerate}
+
+
+
+\section*{Solutions}
+
+Solutions are contained within this package:
+<<eval=FALSE>>=
+library(nclRintroduction)
+vignette("solutions2", package="nclRintroduction")
+@
+
 
 \end{document}

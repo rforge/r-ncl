@@ -75,8 +75,8 @@ summary(m)
 @
 
 \item Calculate the sample correlation coefficient $r$. Perform a hypothesis
-  test, where $H_0: \rho =0$ and $H_1: \rho \ne 0$.\sidenote{Where $\rho$ is the
-    population correlation coefficient.} Compare this $p$-value to the $p$-value
+  test, where $H_0: \rho =0$ and $H_1: \rho \ne 0$.\sidenote{See section 2.5 in
+    your notes.} Compare this $p$-value to the $p$-value
   for testing if $\beta_1 =0$.
 
 <<echo=echo, results=results>>=

@@ -191,8 +191,8 @@ wilcox.test(dd$x)$p.value
 \end{enumerate}
 
 
-\item \newthought{Another experiment} was carried out and the following data
-  were collected
+\item \newthought{Another experiment} (with different people) was carried out
+  and the following data were collected
 
 \begin{table}
   \centering
@@ -251,7 +251,7 @@ head(d, 2)
 t.test(value ~ Method, data=d, var.equal=FALSE)
 @
 
-  Hope does this answer compare to your intuition?
+  How does this answer compare with your intuition?
 \item Use the \cc{var.test} function to test for unequal
   variances.\sidenote{This function isn't in the notes. Look at the help file.}
 <<echo=echo, results=results>>=

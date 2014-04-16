@@ -1,0 +1,185 @@
+%\VignetteIndexEntry{plotting}
+%!Snw weave = knitr
+%\VignetteEngine{knitr::knitr}
+\documentclass[twocolumn, DIV24,a4paper,BCOR0mm]{scrartcl}
+
+\usepackage{hyperref}
+\usepackage[T1]{fontenc}
+%\usepackage{microtype}
+%Space around sections
+\usepackage[compact]{titlesec}
+\titlespacing{\section}{0pt}{2ex}{1ex}
+\titlespacing{\subsection}{0pt}{1ex}{0ex}
+\titlespacing{\subsubsection}{0pt}{-0.5ex}{-0.5ex}
+
+%Paragraph spacing
+\setlength{\parskip}{0cm}
+\setlength{\parindent}{1em}
+
+\linespread{0.9}
+\usepackage{scrpage2}
+
+\pagestyle{scrheadings}  
+\setheadsepline{.4pt}
+\ihead[]{Plotting cheat sheet}
+\chead[]{}
+\ohead[]{}
+\ifoot[]{\textit{Dr Colin Gillespie - colin.gillespie@newcastle.ac.uk}}
+\cfoot[]{}
+\ofoot[]{}
+<<setup, include=FALSE, cache=FALSE>>=
+#options(replace.assign=TRUE,width=60)
+opts_chunk$set(fig.path='knitr_figure/graphics-', 
+               cache.path='knitr_cache/graphics-', 
+               fig.align='center', 
+               fig.height=3)
+
+knit_hooks$set(crop=hook_pdfcrop)
+
+@
+
+
+\begin{document}
+<<echo=FALSE>>=
+ev = FALSE
+@
+
+
+\subsubsection*{Plotting}
+
+<<eval=ev>>=
+##Basic plots
+plot(x,y); hist(x); barplot(table(x))
+boxplot(x); stem(x); pie(x)
+pairs(matrix) #Scatterplots
+coplot()# conditional plot
+stripplot()# strip plot
+qqplot() # quantile-quantile plot
+qqnorm(); qqline()# fit normal distribution
+##Standard plotting arguments
+xlab = "x-axis label" #See also ylab
+xlim = c(0, 10)#x axis range
+main = "Main title"
+sub = "sub title"
+@
+
+\subsubsection*{Graphical parameters}
+
+These are set globally with \texttt{par(...)}; many can be passed as parameters to plotting commands.
+\begin{itemize}
+\item \texttt{adj} controls text justification: 0 left-justified, 0.5 centred, 1 right-justified.
+\item \texttt{bg} specifies the background colour, e.g. \texttt{bg="red"} or \texttt{bg="blue"}. See \texttt{colors()} for a list of the 657 available colours. 
+\item \texttt{bty} controls the type of box drawn around the plot, allowed values are: \texttt{"o"}, \texttt{"l"}, \texttt{"7"}, \texttt{"c"}, \texttt{"u"} or \texttt{"]"} (the box looks like the corresponding character). If \texttt{bty="n"} the box is not drawn
+\item \texttt{cex} a value controlling the size of texts and symbols with respect to the default. Related options are: \texttt{cex.axis}, \texttt{cex.lab}, \texttt{cex.main} and \texttt{cex.sub}.
+\item \texttt{col} controls the color of symbols and lines. Use color names: "red", "blue" (see \texttt{colors()} or numbers.
+<<echo=FALSE,crop=TRUE, out.width='0.9\\linewidth',fig.pos="h">>=
+plot(0:1, 0:1,  type="n", axes=FALSE, cex=2, xlab="", ylab="", xlim=c(-0.2, 1.1))
+x = seq(0,1,length.out=8)
+epsilon = 0.05
+for(i in 1:8) 
+  polygon(c(x[i]+epsilon,  x[i]+epsilon, x[i]-epsilon, x[i]-epsilon), c(0.2,0.7,0.7,0.2), col=i)
+
+text(x, 0.8, 1:8)
+text(x, 0.05, palette(), cex=0.8)
+@
+
+
+ See also \texttt{rgb()}, \texttt{hsv()}, \texttt{gray()}, and \texttt{rainbow()}; as for \texttt{cex} there are: \texttt{col.axis}, \texttt{col.lab}, \texttt{col.main} and \texttt{col.sub}
+\item \texttt{font}: an integer which controls the style of text (1: normal, 2: italics, 3:bold, 4: bold italics); as for \texttt{cex} there are: \texttt{font.axis}, \texttt{font.lab}, \texttt{font.main} and \texttt{font.sub}
+\item \texttt{las}: an integer which controls the orientation of the axis labels (0: parallel to the axes, 1: horizontal, 2: perpendicular to the axes, 3: vertical)
+\item \texttt{lty} controls the type of lines. The value can be an integer or string 
+<<echo=FALSE,fig.pos="!h",crop=TRUE, out.width='0.95\\linewidth',>>=
+plot(0:1, 0:1, type="n", axes=FALSE, cex=2, xlab="", ylab="", ylim=c(-0.1, 1.1))
+y = seq(0,1,length.out=6)
+segments(0.25, y, 1, y, lty=6:1, lwd=3)
+labels = c('1: "solid"','2: "dashed"', '3: "dotted"', '4: "dotdash"', '5 "longdash"', '6: "twodash"')
+text(0.05, y, labels, cex=0.9)
+@
+
+Alternatively, a string of up to eight characters (between "0" and
+"9") which specifies alternatively the length, in points or pixels, of
+the drawn elements and the blanks, for example lty="44" will have
+the same effect than lty=2
+\item lwd a numeric which controls the width of lines, default 1
+mar a vector of 4 numeric values which control the space between the axes
+and the border of the graph of the form c(bottom, left, top,
+right), the default values are c(5.1, 4.1, 4.1, 2.1)
+\item mfcol a vector of the form c(nr,nc) which partitions the graphic window
+as a matrix of nr lines and nc columns, the plots are then drawn in
+columns
+\item mfrow id. but the plots are drawn by row
+\item pch controls the type of symbol, either an integer between 1 and 25, or any
+single character within ""
+<<echo=FALSE,crop=TRUE, out.width='0.95\\linewidth',fig.pos="h">>=
+x = rep(1:13, 2)[1:26]
+y = rep(1:2, each=13)[1:26]
+plot(x, y, pch=0:25, bty="n", axes=FALSE, ylim=c(0.5,2.5), xlim=c(1, 13.5),
+     xlab="", ylab="", cex=2)
+text(x+0.3, y + 0.3, 0:25, cex=0.9)
+@
+
+\item ps an integer which controls the size in points of texts and symbols
+\item pty a character which specifies the type of the plotting region, "s": square,
+"m": maximal
+\item tck a value which specifies the length of tick-marks on the axes as a fraction
+of the smallest of the width or height of the plot; if tck=1 a grid is
+drawn
+\item tcl a value which specifies the length of tick-marks on the axes as a fraction
+of the height of a line of text (by default tcl=-0.5)
+\item xaxt if xaxt="n" the x-axis is set but not drawn (useful in conjonction with
+axis(side=1, ...))
+\item yaxt if yaxt="n" the y-axis is set but not drawn (useful in conjonction with
+axis(side=2, ...))
+\end{itemize}
+\newpage
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

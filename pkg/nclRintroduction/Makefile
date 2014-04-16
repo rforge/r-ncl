@@ -8,8 +8,8 @@ PKG = nclRintroduction
 DIR = vignettes
 
 PRACS = practical1 practical2
-SOLS = solutions1 solutions2
-ALL =  $(PRACS)  $(SOLS) 
+SOLS = plotting solutions1 solutions2
+ALL =  $(PRACS)  $(SOLS)
 
 SOLSPDF = $(SOLS:=.pdf)
 PRACSPDF = $(PRACS:=.pdf)
@@ -17,6 +17,7 @@ ALLPDF = $(ALL:=.pdf)
 
 PRACSRNW =  $(PRACS:=.Rnw)
 SOLSRNW =  $(SOLS:=.Rnw)
+
 .PHONY: force sols all clean commit cleaner
 
 force: 

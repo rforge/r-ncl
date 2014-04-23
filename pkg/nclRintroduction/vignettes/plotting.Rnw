@@ -28,6 +28,7 @@
 \cfoot[]{}
 \ofoot[]{}
 <<setup, include=FALSE, cache=FALSE>>=
+library("knitr")
 #options(replace.assign=TRUE,width=60)
 opts_chunk$set(fig.path='knitr_figure/graphics-', 
                cache.path='knitr_cache/graphics-', 
@@ -35,7 +36,6 @@ opts_chunk$set(fig.path='knitr_figure/graphics-',
                fig.height=3)
 
 knit_hooks$set(crop=hook_pdfcrop)
-
 @
 
 

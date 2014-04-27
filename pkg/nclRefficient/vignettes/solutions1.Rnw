@@ -44,9 +44,13 @@ knit_hooks$set(par=function(before, options, envir){
 \maketitle% this prints the handout title, author, and date
 \bigskip
 
-\noindent Before starting the questions, make sure you can load the \texttt{rbenchmark} package
+\noindent Before starting the questions, make sure you install the \texttt{rbenchmark} package
+<<eval=FALSE>>=
+install.packages("rbenchmark")
+@ 
+\noindent To the load the package use
 <<>>=
-library(rbenchmark)
+library("rbenchmark")
 @
 \noindent Each practical corresponds to a chapter in the notes.
 
@@ -193,7 +197,7 @@ n = 1
 @
 \item Consider the following piece of code:
 <<tidy=FALSE>>=
-a = c()
+a = NULL
 for(i in 1:n)
   a = c(a, 2 * pi * sin(i))
 @
@@ -265,7 +269,7 @@ detectCores()
 
 Solutions are contained within this package:
 <<eval=FALSE>>=
-library(nclRefficient)
+library("nclRefficient")
 vignette("solutions1", package="nclRefficient")
 @
 

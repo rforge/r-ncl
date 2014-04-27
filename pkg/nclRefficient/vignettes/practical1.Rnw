@@ -45,7 +45,7 @@ knit_hooks$set(par=function(before, options, envir){
 \bigskip
 
 \noindent Before starting the questions, make sure you install the \texttt{rbenchmark} package
-<<>>=
+<<eval=FALSE>>=
 install.packages("rbenchmark")
 @ 
 \noindent To the load the package use

@@ -47,7 +47,7 @@ ev = FALSE
 
 \subsubsection*{Plotting}
 
-<<eval=ev>>=
+<<eval=FALSE>>=
 ##Basic plots
 plot(x,y); hist(x); barplot(table(x))
 boxplot(x); stem(x); pie(x)

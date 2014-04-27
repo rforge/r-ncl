@@ -32,11 +32,7 @@ solutions%.Rnw: $(PRACSPDF)
 	$(foreach var, \
 		$(PRACSRNW), \
 		cp $(var) $(subst practical, solutions, $(var);))
-
-	## Updated to show results
-	$(foreach var, \
-		$(SOLSRNW), \
-		sed -i "5s/.*/results='show';echo=TRUE/" $(var);)
+	sed -i "5s/.*/results='show';echo=TRUE/" $<;
 
 sols: $(SOLSPDF)
 	cp $(ALLPDF) ../../../www/$(PKG)/

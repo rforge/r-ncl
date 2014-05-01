@@ -1,0 +1,17 @@
+{
+    "contents" : "#' A function for dividing\n#' \n#' A very useful function, that is excellent at dividing numbers\n#' @param x a number\n#' @param y another number\n#' @export\ndivide = function(x, y) x/y",
+    "created" : 1398941572268.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3018760196",
+    "id" : "F37CA78C",
+    "lastKnownWriteTime" : 1398941765,
+    "path" : "/data/ncsg3/r-ncl/pkg/nclRpackage/nclRpackage/R/divide.R",
+    "project_path" : "R/divide.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

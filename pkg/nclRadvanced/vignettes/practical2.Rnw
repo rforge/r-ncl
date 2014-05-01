@@ -96,6 +96,8 @@ sd.cohort = function(x, ...) {
 } 
 @
 \end{itemize}
+\item Create a method for \cc{summary}.
+\item Create a method for \cc{barplot}.
 \end{enumerate}
 
 
@@ -133,6 +135,9 @@ setMethod("sd", signature=c("Cohort"),
       }
 )
 @
+\item Create a method for \cc{summary}.
+\item Create a method for \cc{barplot}.
+
 \end{enumerate}
 
 \section{Reference classes}

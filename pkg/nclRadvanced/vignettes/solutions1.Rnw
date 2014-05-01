@@ -112,25 +112,53 @@ rnorm(n=5, mean=4, sd=4)
 
 \section{The \cc{...} argument}
 
-A common argument\sidenote{Especially when dealing with S3 objects and functions.} is \texttt{...}. We can explore what happens using the \cc{eval} and \cc{substitute} functions.
+A common argument\sidenote{Especially when dealing with S3 objects and functions.} is \texttt{...}. We can explore what happens using the \cc{print\_dots} function in the \cc{nclRadvanced} package
 
 <<tidy=FALSE>>=
+library("nclRadvanced")
 arg_explore2 = function(arg1 = 5, ...) 
-    eval(substitute(alist(...)))
+  print_dots(...)
 @
 
 \begin{itemize}
-\item What do \cc{alist}, \cc{substitute} and \cc{eval} do?\sidenote{Hint: the easiest way to figure this out is to alter the \cc{arg\_explore2} function, i.e. remove \cc{eval}, then remove \cc{substitute}, etc.}
-<<echo=echo, tidy=FALSE>>=
-## SOLUTION
-#1. eval - just evalulats an R expression
-#2. substritute - returns the unevaluated expression
-#3. alist - Used to parse the arguments
-#Look at ?alist, ?eval and ?substitute
-#Also, run the examples - example(eval)
+\item Repeat the examples used in \cc{arg\_explore}, but include the \cc{...} argument.
+\end{itemize}
+
+\section{Functions as first class objects}
+
+Suppose we have a function that performs a statistical analysis
+
+<<>>=
+## Use regression as an example
+stat_ana = function(x, y) {
+  lm(y ~ x)
+}
 @
 
-\item Repeat the examples used in \cc{arg\_explore}, but include the \cc{...} argument.
+However, we want the object of normalising the data using different transformations. In particular, we want the ability to pass arbaritary transformation to the \cc{stat\_ana} function.
+\begin{itemize}
+\item Add an argument \cc{trans} to the \cc{stat\_ana} function. This argument should have a default value of \cc{NULL}.
+<<echo=echo, tidy=FALSE, results='hide', fig.keep='none'>>=
+## SOLUTION
+stat_ana = function(x, y, trans=NULL) {
+  lm(y ~ x)
+}
+@
+\item Using \cc{is.function} to test whether a function has been passed to \cc{trans}, transform the vectors \cc{x} and \cc{y} when appropriate. For example, 
+<<eval=FALSE>>=
+stat_ana(x, y, trans=log) 
+@
+\noindent would take log's of \cc{x} and \cc{y}.
+<<echo=echo, tidy=FALSE, results='hide', fig.keep='none'>>=
+## SOLUTION
+stat_ana = function(x, y, trans=NULL) {
+  if(is.function(trans)) {
+    x = trans(x)
+    y = trans(y)
+  }
+  lm(y ~ x)
+}
+@
 \end{itemize}
 
 \section{Variable scope}

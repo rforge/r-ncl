@@ -135,7 +135,9 @@ stat_ana = function(x, y) {
 }
 @
 
-However, we want the object of normalising the data using different transformations. In particular, we want the ability to pass arbaritary transformation to the \cc{stat\_ana} function.
+\noindent However, we want to alter the input data set using different
+transformations\sidenote{For example, the $\log$ transformation.}. In
+particular, we want the ability to pass arbaritary transformation functions to \cc{stat\_ana}.
 \begin{itemize}
 \item Add an argument \cc{trans} to the \cc{stat\_ana} function. This argument should have a default value of \cc{NULL}.
 <<echo=echo, tidy=FALSE, results='hide', fig.keep='none'>>=
@@ -144,7 +146,9 @@ stat_ana = function(x, y, trans=NULL) {
   lm(y ~ x)
 }
 @
-\item Using \cc{is.function} to test whether a function has been passed to \cc{trans}, transform the vectors \cc{x} and \cc{y} when appropriate. For example, 
+\item Using \cc{is.function} to test whether a function has been passed to
+  \cc{trans}, transform the vectors \cc{x} and \cc{y} when appropriate. For
+  example,
 <<eval=FALSE>>=
 stat_ana(x, y, trans=log) 
 @
@@ -155,6 +159,23 @@ stat_ana = function(x, y, trans=NULL) {
   if(is.function(trans)) {
     x = trans(x)
     y = trans(y)
+  }
+  lm(y ~ x)
+}
+@
+\item Allow the \cc{trans} argument to take character arguments in additional to
+  function arguments. For example, if we used \cc{trans = 'normalise'}, then we
+  would normalise the data\sidenote{Subtract the mean and divide by the standard
+    deviation.}.
+<<echo=echo, tidy=FALSE, results='hide', fig.keep='none'>>=
+## SOLUTION
+stat_ana = function(x, y, trans=NULL) {
+  if(is.function(trans)) {
+    x = trans(x)
+    y = trans(y)
+  } else if (trans == "normalise") {
+    x = scale(x)
+    y = scale(y)
   }
   lm(y ~ x)
 }

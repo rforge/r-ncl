@@ -1,6 +1,6 @@
 Package: nclRpackage
 Type: Package
-Title: What the package does (short line)
+Title: A package for the Newcastle University R courses.
 Version: 0.1
 Date: 2014-05-01
 uthors@R: person("Colin", "Gillespie",

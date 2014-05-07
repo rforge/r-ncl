@@ -131,7 +131,6 @@ hist.cohort = function(x, ...) {
   hist(x$details[,2], main="Height")
   par(op)
 }
-hist(cc)
 @
 \item Create a \cc{[} method for the \cc{cohort} class. This method should return a \cc{cohort} object, but with the relevant rows sub setted. For example, if \c{cc} was a cohort object, 
 <<eval=FALSE>>=
@@ -151,7 +150,7 @@ args('[.data.frame')
 }
 @
 
-\item Create a verb"[<-" method for the \cc{cohort} class. This method should allow us to replace values in the \cc{details} data frame, i.e.
+\item Create a \cc{[<-} method for the \cc{cohort} class. This method should allow us to replace values in the \cc{details} data frame, i.e.
 <<eval=FALSE>>=
 cc[1,1] = 10
 @
@@ -256,7 +255,7 @@ setMethod("[", signature=c("Cohort"),
 )
 @
 
-\item Create a verb"[<-" method for the \cc{cohort} class. This method should allow us to replace values in the \cc{details} data frame.
+\item Create a \cc{<-} method for the \cc{cohort} class. This method should allow us to replace values in the \cc{details} data frame.
 
 <<echo=echo, results=results>>=
 isGeneric("[<-")
@@ -276,6 +275,7 @@ coh_s4[1,]= 5
 \section{Reference classes}
 
 <<P2, echo=FALSE>>=
+## Solutions ##
 randu = setRefClass("randu", 
                     fields = list(calls = "numeric", 
                                   seed="numeric", 
@@ -315,7 +315,7 @@ r$get_num_calls()
 
 \end{itemize}
 
-<<P2, echo=echo>>
+<<P2, echo=echo>>=
 @
 
 

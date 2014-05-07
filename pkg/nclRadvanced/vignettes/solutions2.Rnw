@@ -70,7 +70,29 @@ cc = create_cohort(w, h, centre)
 cat("Successfully loaded .Rprofile at", date(), "\n")
 @
 \noindent Restart R. Does the welcome message appear. 
-\item Try adding my suggestions to your \cc{.Rprofile}
+
+An easy way of creating the file is to use the R function \cc{file.create}, so:
+<<eval=FALSE>>=
+file.exists("~/.Rprofile")
+file.create("~/.Rprofile")
+@
+
+\item Try adding my suggestions to your \cc{.Rprofile}, e.g.
+<<eval=FALSE, tidy=FALSE>>=
+options(prompt="R> ", 
+        digits=4, 
+        show.signif.stars=FALSE)
+@ 
+
+\item Set the CRAN mirror:
+  
+<<eval=FALSE, tidy=FALSE>>=
+r = getOption("repos")    
+r["CRAN"] = "http://cran.rstudio.com/"
+options(repos = r)
+rm(r)
+@
+
 \end{enumerate}
 
 \section{S3 objects}\label{S3}

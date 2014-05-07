@@ -1,6 +1,7 @@
 #' Print the ... argument
 #' 
 #' A simple function that explores what happens when use ...
+#' @param ... The ... argument from the function to be analysed
 #' @export
 print_dots = function(...) {
     dots_list = eval(substitute(alist(...)))

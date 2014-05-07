@@ -24,6 +24,15 @@ knit_hooks$set(par=function(before, options, envir){
     par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
         mgp=c(2,.7,0),tcl=-.01, las=1)
   }}, crop=hook_pdfcrop)
+create_cohort = function(weight, height, centre) {
+  dd = data.frame(weight=weight, height=height)
+  coh = list(details = dd, centre=centre)
+  class(coh) = "cohort"
+  return(coh)
+}
+
+w = runif(3); h = runif(3); centre= "NCL"
+cc = create_cohort(w, h, centre)
 @
 
 \usepackage{amsmath}
@@ -53,6 +62,17 @@ knit_hooks$set(par=function(before, options, envir){
 
 \maketitle% this prints the handout title, author, and date
 
+\section{Rprofile}
+
+\begin{enumerate}
+\item Create an \cc{.Rprofile} file. Put in the line
+<<message=FALSE>>=
+cat("Successfully loaded .Rprofile at", date(), "\n")
+@
+\noindent Restart R. Does the welcome message appear. 
+\item Try adding my suggestions to your \cc{.Rprofile}
+\end{enumerate}
+
 \section{S3 objects}\label{S3}
 
 \begin{enumerate}
@@ -63,11 +83,11 @@ knit_hooks$set(par=function(before, options, envir){
 methods("mean")
 @
 
-\item Examine the source code of \cc{mean.default}. 
+\item Examine the source code of \cc{mean}. 
 <<echo=echo, results="hide">>=
-body("mean.default")
+body("mean")
 @
-\item What are the arguments of \cc{mean.default}?
+\item What are the arguments of \cc{mean}?
 <<echo=echo, results=results>>=
 args("mean")
 @
@@ -87,7 +107,7 @@ mean.cohort = function(x, ...) {
 \item Create an function call \cc{sd.cohort} that returns a vector containing the weight and height standard deviation.\sidenote{Ensure that you can pass in the standard \cc{sd} arguments, i.e. \cc{na.rm}.}
 \item Create a default \cc{sd} function. Look at \cc{cor.default} in the notes for a hint.
 <<echo=echo, results=results>>=
-sd = function(x, ...) UseMehod("sd")
+sd = function(x, ...) UseMethod("sd")
 sd.default = function(x, ...) stats::sd(x, ...)
 sd.cohort = function(x, ...) {
   s1 = sd(x$details[ ,1], ...)
@@ -96,9 +116,79 @@ sd.cohort = function(x, ...) {
 } 
 @
 \end{itemize}
-\item Create a method for \cc{summary}.
-\item Create a method for \cc{barplot}.
+\item Create a \cc{hist} method for the \cc{cohort} class. When the \cc{hist} function is called on a \cc{cohort}, it should produce a single plot showing two histograms - one for height and another for weight.
+<<echo=echo, results=results>>=
+## hist is already a generic
+body(hist)
+
+## Match the args
+args(hist)
+
+## Function
+hist.cohort = function(x, ...) {
+  op = par(mfrow=c(1, 2))
+  hist(x$details[,1], main="Weight")
+  hist(x$details[,2], main="Height")
+  par(op)
+}
+hist(cc)
+@
+\item Create a \cc{[} method for the \cc{cohort} class. This method should return a \cc{cohort} object, but with the relevant rows sub setted. For example, if \c{cc} was a cohort object, 
+<<eval=FALSE>>=
+cc[1:3,]
+@
+\noindent would return the first three rows of the data frame.
+<<echo=echo, results=results>>=
+## Lots of methods available. 
+methods('[')
+
+## Examine [.data.frame
+args('[.data.frame')
+
+'[.cohort' = function(x, ...){
+  x$details = x$details[...]
+  x
+}
+@
+
+\item Create a verb"[<-" method for the \cc{cohort} class. This method should allow us to replace values in the \cc{details} data frame, i.e.
+<<eval=FALSE>>=
+cc[1,1] = 10
+@
+
+<<echo=echo, results=results>>=
+## Lots of methods available. 
+methods('[<-')
+
+## Examine [.data.frame
+args('[<-.data.frame')
+
+'[<-.cohort' = function(x, i, j, value){
+  x$details[i, j] = value
+  x
+}
+cc[1:3, ] = 55
+@
+
+
+
 \end{enumerate}
+
+<<echo=FALSE>>=
+setClass("Cohort",
+         representation(
+           details = "data.frame",
+           centre = "character"
+         )
+)
+coh_s4 = new("Cohort",
+             details = data.frame(weight=w, height=h),
+             centre = "NCL"
+)
+
+@
+
+
 
 
 \section{S4 objects}\label{S4}
@@ -119,7 +209,7 @@ setMethod("mean", signature=c("Cohort"),
             m1 = mean(x@details[ ,1], ...)
             m2 = mean(x@details[ ,2], ...)
             return(c(m1, m2))
-      }
+          }
 )
 @
 \end{itemize}
@@ -132,11 +222,54 @@ setMethod("sd", signature=c("Cohort"),
             m1 = sd(x@details[ ,1], na.rm=na.rm)
             m2 = sd(x@details[ ,2], na.rm=na.rm)
             return(c(m1, m2))
-      }
+          }
 )
 @
-\item Create a method for \cc{summary}.
-\item Create a method for \cc{barplot}.
+\item Create a \cc{hist} method for the \cc{cohort} class. When the \cc{hist} function is called on a \cc{cohort}, it should produce a single plot showing two histograms - one for height and another for weight.
+<<echo=echo, results=results, message=FALSE>>=
+isGeneric("hist")
+setGeneric("hist")
+setMethod("hist", signature=c("Cohort"), 
+          definition=function(x) {
+            op = par(mfrow=c(1, 2))
+            hist(x@details[,1], main="Weight")
+            hist(x@details[,2], main="Height")
+            par(op)
+          }
+)
+@
+
+\item Create a \cc{[} method for the \cc{cohort} class. This method should return a \cc{cohort} object, but with the relevant rows sub setted. For example, if \c{cc} was a cohort object, 
+<<eval=FALSE>>=
+cc[1:3,]
+@
+\noindent would return the first three rows of the data frame.
+<<echo=echo, results=results>>=
+isGeneric("[")
+getGeneric('[')
+## Can you determine what drop does?
+setMethod("[", signature=c("Cohort"), 
+          definition=function(x, i, j, ..., drop = TRUE) {
+            x@details = x@details[i, j, ..., drop=drop]
+            x
+          }
+)
+@
+
+\item Create a verb"[<-" method for the \cc{cohort} class. This method should allow us to replace values in the \cc{details} data frame.
+
+<<echo=echo, results=results>>=
+isGeneric("[<-")
+setGeneric('[<-')
+
+setMethod("[<-", signature=c("Cohort"), 
+          definition=function(x, i, j, value) {
+            x@details[i, j] = value
+            x
+          }
+)
+coh_s4[1,]= 5
+@
 
 \end{enumerate}
 
@@ -144,7 +277,9 @@ setMethod("sd", signature=c("Cohort"),
 
 <<P2, echo=FALSE>>=
 randu = setRefClass("randu", 
-    fields = list(calls = "numeric", seed="numeric", state="numeric"))
+                    fields = list(calls = "numeric", 
+                                  seed="numeric", 
+                                  state="numeric"))
 randu$methods(get_state = function() state)
 randu$methods(set_state = function(initial) state <<- initial)
 randu$methods(get_seed = function() seed)
@@ -179,6 +314,10 @@ r$get_num_calls()
 @
 
 \end{itemize}
+
+<<P2, echo=echo>>
+@
+
 
 
 \section*{Solutions}

@@ -12,7 +12,5 @@ VignetteBuilder: knitr
 License: GPL-3 | GPL-2
 Depends:
     R (>= 3.0),
-Suggests: knitr
-Collate:
-    'nclRadvanced-package.R'
-    'get_args.R'
+Suggests:
+    knitr

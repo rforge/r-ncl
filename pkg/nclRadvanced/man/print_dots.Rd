@@ -10,6 +10,6 @@ print_dots(...)
   analysed}
 }
 \description{
-A simple function that explores what happens when use ...
+A really simple function that explores what happens when use ...
 }
 

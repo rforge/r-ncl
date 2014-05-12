@@ -67,7 +67,7 @@ library("nclRcourses")
 
 Run the following R code
 
-<<echo=echo, results=results>>=
+<<>>=
 x1 = GetNumericVector()
 @ 
   

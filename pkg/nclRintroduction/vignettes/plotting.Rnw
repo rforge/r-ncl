@@ -1,6 +1,9 @@
 %\VignetteIndexEntry{plotting}
 %!Snw weave = knitr
 %\VignetteEngine{knitr::knitr}
+<<eval=FALSE, echo=FALSE>>=
+results='show';echo=TRUE
+@ 
 \documentclass[twocolumn, DIV24,a4paper,BCOR0mm]{scrartcl}
 
 \usepackage{hyperref}

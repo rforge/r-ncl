@@ -7,12 +7,14 @@
 PKG = nclRintroduction
 DIR = vignettes
 
-PRACS = practical1 practical2
-SOLS = plotting solutions1 solutions2
-ALL =  $(PRACS)  $(SOLS)
+PRACS = practical1 practical2 
+SOLS = solutions1 solutions2
+OTHER = plotting
+ALL =  $(PRACS)  $(SOLS) $(OTHER)
 
 SOLSPDF = $(SOLS:=.pdf)
 PRACSPDF = $(PRACS:=.pdf)
+OTHERPDF = $(OTHER:=.pdf)
 ALLPDF = $(ALL:=.pdf)
 
 PRACSRNW =  $(PRACS:=.Rnw)
@@ -23,16 +25,21 @@ SOLSRNW =  $(SOLS:=.Rnw)
 force: 
 	make -C $(DIR) -f ../Makefile all
 
-all: $(PRACSPDF)
+all: $(PRACSPDF) $(OTHERPDF)
 	$(MAKE) -f ../Makefile solutions*.Rnw
 	$(MAKE) -f ../Makefile sols
 
-solutions%.Rnw: $(PRACSPDF)
+solutions%.Rnw: $(PRACSPDF) $(OTHERPDF)
 	## Copy practical file to solutions
 	$(foreach var, \
 		$(PRACSRNW), \
 		cp $(var) $(subst practical, solutions, $(var);))
-	sed -i "5s/.*/results='show';echo=TRUE/" $<;
+
+	## Updated to show results
+	$(foreach var, \
+		$(SOLSRNW), \
+		sed -i "5s/.*/results='show';echo=TRUE/" $(var);)
+
 
 sols: $(SOLSPDF)
 	cp $(ALLPDF) ../../../www/$(PKG)/

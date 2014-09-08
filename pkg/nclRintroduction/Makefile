@@ -29,7 +29,7 @@ all: $(PRACSPDF) $(OTHERPDF)
 	$(MAKE) -f ../Makefile solutions*.Rnw
 	$(MAKE) -f ../Makefile sols
 
-solutions%.Rnw: $(PRACSPDF) $(OTHERPDF)
+solutions%.Rnw: $(PRACSPDF)
 	## Copy practical file to solutions
 	$(foreach var, \
 		$(PRACSRNW), \
@@ -39,7 +39,6 @@ solutions%.Rnw: $(PRACSPDF) $(OTHERPDF)
 	$(foreach var, \
 		$(SOLSRNW), \
 		sed -i "5s/.*/results='show';echo=TRUE/" $(var);)
-
 
 sols: $(SOLSPDF)
 	cp $(ALLPDF) ../../../www/$(PKG)/
@@ -70,6 +69,8 @@ install:
 	Rscript  -e "require(knitr); knit('$*.Rnw', output='$*.tex')"
 	pdflatex $*.tex
 	pdflatex $*.tex
+
+
 
 clean:
 	cd $(DIR) && rm -fvr knitr_figure && \

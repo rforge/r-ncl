@@ -62,45 +62,6 @@ cc = create_cohort(w, h, centre)
 
 \maketitle% this prints the handout title, author, and date
 
-\section{Rprofile}
-
-\begin{enumerate}
-\item Create an \cc{.Rprofile} file. Add the line
-<<message=FALSE>>=
-cat("Successfully loaded .Rprofile at", date(), "\n")
-@
-\noindent to the file and restart R. Does the welcome message appear?
-
-An easy way of creating the file is to use the R function \cc{file.create}, so
-<<eval=FALSE>>=
-file.exists("~/.Rprofile")
-file.create("~/.Rprofile")
-@
-
-\item Try adding my suggestions to your \cc{.Rprofile}, e.g.
-<<eval=FALSE, tidy=FALSE>>=
-options(prompt="R> ", digits=4, 
-        show.signif.stars=FALSE)
-@ 
-
-\noindent and setting the CRAN mirror:
-  
-<<eval=FALSE, tidy=FALSE>>=
-r = getOption("repos")    
-r["CRAN"] = "http://cran.rstudio.com/"
-options(repos = r)
-rm(r)
-@
-
-\item I've put a few other functions functions that I use online
-\begin{center}
-\url{http://goo.gl/nf82zX}
-\end{center}
-feel free to use them. Also take a look at this stackoverflow question
-\begin{center}
-\url{http://goo.gl/TLFLQR}
-\end{center}
-\end{enumerate}
 
 \section{S3 objects}\label{S3}
 

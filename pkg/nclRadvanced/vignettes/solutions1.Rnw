@@ -58,6 +58,47 @@ knit_hooks$set(par=function(before, options, envir){
 
 \maketitle% this prints the handout title, author, and date
 
+\section{Rprofile and Renviron}
+
+\begin{enumerate}
+\item Create an \cc{.Rprofile} file. Add the line
+<<message=FALSE>>=
+if(interactive()) {
+   suppressWarnings(require(colorout, quietly=TRUE))
+   message("Successfully loaded .Rprofile at ", date(), "\n")
+}
+@
+\noindent to the file and restart R. Does the welcome message appear?
+
+An easy way of creating the file is to use the R function \cc{file.create}, so
+<<eval=FALSE>>=
+file.exists("~/.Rprofile")
+file.create("~/.Rprofile")
+@
+
+\item Try adding my suggestions to your \cc{.Rprofile}, e.g.
+<<eval=FALSE, tidy=FALSE>>=
+options(prompt="R> ", digits=4, 
+        show.signif.stars=FALSE)
+@ 
+
+\noindent and setting the CRAN mirror:
+  
+<<eval=FALSE, tidy=FALSE>>=
+r = getOption("repos")    
+r["CRAN"] = "http://cran.rstudio.com/"
+options(repos = r)
+rm(r)
+@
+
+\item Try adding a few functions to your \cc{.Rprofile}. Use the hidden environment trick. Also take a look at this stackoverflow question 
+\begin{center}
+\url{http://goo.gl/TLFLQR}
+\end{center}
+for ideas.
+\item Create an \cc{.Renviron} file and add the path to your packages.
+
+\end{enumerate}
 
 
 \section{Argument matching}
@@ -137,7 +178,7 @@ stat_ana = function(x, y) {
 
 \noindent However, we want to alter the input data set using different
 transformations\sidenote{For example, the $\log$ transformation.}. In
-particular, we want the ability to pass arbaritary transformation functions to \cc{stat\_ana}.
+particular, we want the ability to pass arbitrary transformation functions to \cc{stat\_ana}.
 \begin{itemize}
 \item Add an argument \cc{trans} to the \cc{stat\_ana} function. This argument should have a default value of \cc{NULL}.
 <<echo=echo, tidy=FALSE, results='hide', fig.keep='none'>>=

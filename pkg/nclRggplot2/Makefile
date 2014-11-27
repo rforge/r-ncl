@@ -17,6 +17,7 @@ ALLPDF = $(ALL:=.pdf)
 
 PRACSRNW =  $(PRACS:=.Rnw)
 SOLSRNW =  $(SOLS:=.Rnw)
+
 .PHONY: force sols all clean commit cleaner
 
 force: 

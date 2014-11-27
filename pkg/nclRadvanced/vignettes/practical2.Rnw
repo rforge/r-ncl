@@ -145,7 +145,24 @@ sd.cohort = function(x, ...) {
 } 
 @
 \end{itemize}
-\item Create a \cc{hist} method for the \cc{cohort} class. When the \cc{hist} function is called on a \cc{cohort}, it should produce a single plot showing two histograms - one for height and another for weight.
+\item Create a \cc{summary} method for the \cc{cohort} class. When the \cc{summary} function is called on a \cc{cohort} object it should call the base \cc{summary} on the \cc{details} 
+element.
+\begin{itemize}
+\item Use the \cc{body} function to check if the function is already a generic function.
+\item Use the \cc{args} function to determine the arguments.
+\item Create a \cc{summary.cohort} function
+\end{itemize}
+<<echo=echo, results=results>>=
+## summary is already a generic
+body(summary)
+
+## Match the args
+args(summary)
+
+## Function
+summary.cohort = function(object, ...) summary(object$details, ...)
+@
+\item Create a \cc{hist} method for the \cc{cohort} class. When the \cc{hist} function is called on a \cc{cohort} object, it should produce a single plot showing two histograms - one for height and another for weight.
 <<echo=echo, results=results>>=
 ## hist is already a generic
 body(hist)
@@ -253,15 +270,31 @@ setMethod("sd", signature=c("Cohort"),
           }
 )
 @
+\item Create a \cc{summary} method for the \cc{cohort} class
+\begin{itemize}
+\item Use \cc{isGeneric} to determine if an S4 generic exists.
+\item Use \cc{setGeneric} to set the generic method (if necessary).
+\item Create an S4 summary method.
+\end{itemize}
+<<echo=echo, results=results, message=FALSE>>=
+isGeneric("summary")
+setGeneric("summary")
+setMethod("summary", signature=c("Cohort"), 
+                    definition=function(object, ...) {
+            summary(object@details)
+          }
+)
+@
+
 \item Create a \cc{hist} method for the \cc{cohort} class. When the \cc{hist} function is called on a \cc{cohort}, it should produce a single plot showing two histograms - one for height and another for weight.
 <<echo=echo, results=results, message=FALSE>>=
 isGeneric("hist")
 setGeneric("hist")
 setMethod("hist", signature=c("Cohort"), 
-          definition=function(x) {
+          definition=function(x, ...) {
             op = par(mfrow=c(1, 2))
-            hist(x@details[,1], main="Weight")
-            hist(x@details[,2], main="Height")
+            hist(x@details[,1], main="Weight", ...)
+            hist(x@details[,2], main="Height", ...)
             par(op)
           }
 )

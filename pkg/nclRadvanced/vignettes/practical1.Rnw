@@ -109,20 +109,20 @@ plot(x=1:10, y=11:20, type="l")
 rnorm(n=5, mean=4, sd=4)
 @
 
-
-\section{The \cc{...} argument}
-
-A common argument\sidenote{Especially when dealing with S3 objects and functions.} is \texttt{...}. We can explore what happens using the \cc{print\_dots} function in the \cc{nclRadvanced} package
-
-<<tidy=FALSE>>=
-library("nclRadvanced")
-arg_explore2 = function(arg1 = 5, ...) 
-  print_dots(...)
-@
-
-\begin{itemize}
-\item Repeat the examples used in \cc{arg\_explore}, but include the \cc{...} argument.
-\end{itemize}
+% 
+% \section{The \cc{...} argument}
+% 
+% A common argument\sidenote{Especially when dealing with S3 objects and functions.} is \texttt{...}. We can explore what happens using the \cc{print\_dots} function in the \cc{nclRadvanced} package
+% 
+% <<tidy=FALSE>>=
+% library("nclRadvanced")
+% arg_explore2 = function(arg1 = 5, ...) 
+%   print_dots(...)
+% @
+% 
+% \begin{itemize}
+% \item Repeat the examples used in \cc{arg\_explore}, but include the \cc{...} argument.
+% \end{itemize}
 
 \section{Functions as first class objects}
 

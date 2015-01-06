@@ -23,9 +23,9 @@ knit_hooks$set(par=function(before, options, envir){
             mgp=c(2,.7,0),tcl=-.01, las=1)
 }}, crop=hook_pdfcrop)
 @
-
-
 \usepackage{amsmath}
+
+
 
 % Set up the images/graphics package
 \usepackage{graphicx}
@@ -33,8 +33,8 @@ knit_hooks$set(par=function(before, options, envir){
 \graphicspath{{graphics/}}
 
 \title{Introduction to R: practical 1 \Sexpr{ifelse(echo, "solutions", "")}}  
-\author[Dr Colin Gillespie]{Dr Colin Gillespie}
-%\date{}  % if the \date{} command is left out, the current date will be used
+%\author[Dr Colin Gillespie]{Dr Colin Gillespie}
+\date{}  % if the \date{} command is left out, the current date will be used
 
 \usepackage{booktabs}
 

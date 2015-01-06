@@ -25,7 +25,7 @@ knit_hooks$set(par=function(before, options, envir){
 \usepackage{amsmath,graphicx}
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \title{Programming: Practical 2b solutions} 
-\author[Dr Colin Gillespie]{Dr Colin Gillespie}
+%\author[Dr Colin Gillespie]{Dr Colin Gillespie}
 \date{}  % if the \date{} command is left out, the current date will be used
 
 % The following package makes prettier tables.  We're all about the bling!

@@ -31,8 +31,8 @@ knit_hooks$set(par=function(before, options, envir){
 \graphicspath{{graphics/}}
 
 \title{Introduction to R: practical 2 \Sexpr{ifelse(echo, "solutions", "")}}
-\author[Dr Colin Gillespie]{Dr Colin S.
-Gillespie}
+%\author[Dr Colin Gillespie]{Dr Colin S.
+%Gillespie}
 \date{}  % if the \date{} command is left out, the current date will be used
 
 % The following package makes prettier tables.  We're all about the bling!

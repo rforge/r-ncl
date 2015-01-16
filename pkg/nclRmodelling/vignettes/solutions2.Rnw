@@ -17,10 +17,13 @@ opts_chunk$set(fig.path='knitr_figure/graphics-',
 knit_hooks$set(crop=hook_pdfcrop)
 
 knit_hooks$set(par=function(before, options, envir){
-    if (before && options$fig.show!='none') {
-        par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
-            mgp=c(2,.7,0),tcl=-.01, las=1)
-}}, crop=hook_pdfcrop)
+  if (before && options$fig.show!='none') {
+    par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
+        mgp=c(2,.7,0),tcl=-.01, las=1)
+  }}, crop=hook_pdfcrop)
+kn = knit_theme$get("greyscale0")
+knit_theme$set(kn)
+
 @
 \usepackage{amsmath}
 
@@ -61,10 +64,10 @@ knit_hooks$set(par=function(before, options, envir){
 
 \begin{enumerate}
 \item \newthought{Consider the} data in table \ref{T1} for ice cream sales at Luigi
-  Minchella's ice cream parlour.
+Minchella's ice cream parlour.
 \begin{enumerate}
 \item Perform a linear regression of $y$ on $x$. Should temperature be included
-  in the model?
+in the model?
 <<echo=echo, results=results>>=
 x = c(4,4,7,8,12,15,16,17,14,11,7,5)
 y = c(73, 57, 81, 94, 110, 124, 134, 139, 124, 103, 81, 80)
@@ -75,16 +78,16 @@ summary(m)
 @
 
 \item Calculate the sample correlation coefficient $r$. Perform a hypothesis
-  test, where $H_0: \rho =0$ and $H_1: \rho \ne 0$.\sidenote{See section 2.5 in
-    your notes.} Compare this $p$-value to the $p$-value
-  for testing if $\beta_1 =0$.
+test, where $H_0: \rho =0$ and $H_1: \rho \ne 0$.\sidenote{See section 2.5 in
+your notes.} Compare this $p$-value to the $p$-value
+for testing if $\beta_1 =0$.
 
 <<echo=echo, results=results>>=
 ##The p-value for the correlation is also 9.9e-09
 cor.test(x, y)
 @  
 \item Construct a graph of the data. Add a dashed red line indicating the line
-  of best fit.
+of best fit.
 <<F1, fig.keep='none', echo=(1:2)*echo>>=
 plot(x, y, xlab="Temp", ylab="Sales")
 abline(m, col=2, lty=2)
@@ -103,7 +106,7 @@ text(5, 130, "r=0.983")
 @
 
 \item Plot the standardised residuals against the fitted values. Does the graph
-  look random?
+look random?
 <<F2, fig.keep='none', echo=echo>>=
 ##Model diagnosics look good
 plot(fitted.values(m), rstandard(m))
@@ -116,12 +119,25 @@ qqnorm(rstandard(m))
 ##Model diagnosics look good
 @
 \end{enumerate}
-\begin{table}[b]
-  \resizebox{1.05\textwidth}{!}{
+
+\item \newthought{In a study} of the effect of temperature $x$ on yield $y$ of a chemical
+process, the data in table \ref{T2} was obtained.
+\begin{enumerate}
+\item Perform a linear regression of $y$ on $x$.
+\item Calculate the sample correlation coefficient $r$.
+\item Plot the data and add the line of best fit to your plot.
+\item Plot the Studentized residuals against the fitted values.
+\item Construct a q-q plot of the Studentized residuals.
+\end{enumerate}
+\end{enumerate}
+
+
+\begin{table}[h]
+\resizebox{1.05\textwidth}{!}{
 \centering
 \begin{tabular}{@{}l llllll llllll@{}}
 \toprule
-Month	&Jan	&Feb	&Mar	&Apr	&May	&Jun	&Jul	&Aug	&Sep
+Month  &Jan	&Feb	&Mar	&Apr	&May	&Jun	&Jul	&Aug	&Sep
 &Oct	&Nov	&Dec \\ 
 \midrule
 $x$, $^\textrm{o}$C&4&4	&7	&8	&12	&15	&16	&17	&14	&11	&7	&5	\\
@@ -130,62 +146,52 @@ $y$, $\pounds$000's&73&57&81	&94	&110	&124	&134	&139	&124
 \bottomrule
 \end{tabular}}
 \caption{Monthly sales data from Luigi Minchella's ice
-  cream parlour.}\label{T1}
+cream parlour.}\label{T1}
 \end{table}
+\begin{table}[b]
+\centering
+\begin{tabular}{@{}l llllll llllll@{}}
+\toprule
+$x$  & 25 & 26 & 27 & 28 & 29 & 30 & 31 & 32 & 33 & 34 & 35 & 36 \\
+\midrule
+$y$  & 10 & 16 & 13 & 17 & 20 & 18 & 19 & 23 & 25 & 22 & 29 & 26 \\ 
+\bottomrule
+\end{tabular}
+\caption{Twelve measurements from a study of temperature on yield.}\label{T2}
+\end{table}
+
+
 \clearpage
 
-
-\item \newthought{In a study} of the effect of temperature $x$ on yield $y$ of a chemical
-  process, the data in table \ref{T2} was obtained.
-\begin{enumerate}
-\item Perform a linear regression of $y$ on $x$.
-\item Calculate the sample correlation coefficient $r$.
-\item Plot the data and add the line of best fit to your plot.
-\item Plot the Studentized residuals against the fitted values.
-\item Construct a q-q plot of the Studentized residuals.
-\end{enumerate}
-\begin{table}[h]
-  \centering
-  \begin{tabular}{@{}l llllll llllll@{}}
-    \toprule
-    $x$  & 25 & 26 & 27 & 28 & 29 & 30 & 31 & 32 & 33 & 34 & 35 & 36 \\
-    \midrule
-    $y$  & 10 & 16 & 13 & 17 & 20 & 18 & 19 & 23 & 25 & 22 & 29 & 26 \\ 
-    \bottomrule
-  \end{tabular}
-  \caption{Twelve measurements from a study of temperature on yield.}\label{T2}
-\end{table}
-\end{enumerate}
 \section{Multiple linear regression}
 \begin{enumerate}
 
 
- 
-\item \newthought{The data} (below) are from 101 consecutive patients attending a combined
-  thyroid-eye clinic. The patients have an endocrine disorder, Graves'
-  Ophthalmopathy, which affects various aspects of their eyesight. The
-  ophthalmologist measures various aspects of their eyesight and constructs an
-  overall index of how the disease affects their eyesight. This is the
-  Ophthalmic Index (OI) given in the dataset. The age of the patient and their
-  sex are also recorded. In practice, and as this is a chronic condition which
-  can be ameliorated but not cured, the OI would be monitored at successive
-  clinic visits to check on the patient's progress. However, these data are
-  obtained at presentation. We are interested in how OI changes with age and
-  gender. The data can be obtained from
 
+\item \newthought{The data}
 <<>>=
 library("nclRmodelling")
 data(graves)
 @ 
-
+are from 101 consecutive patients attending a combined
+thyroid-eye clinic. The patients have an endocrine disorder, Graves'
+Ophthalmopathy, which affects various aspects of their eyesight. The
+ophthalmologist measures various aspects of their eyesight and constructs an
+overall index of how the disease affects their eyesight. This is the
+Ophthalmic Index (OI) given in the dataset. The age of the patient and their
+sex are also recorded. In practice, and as this is a chronic condition which
+can be ameliorated but not cured, the OI would be monitored at successive
+clinic visits to check on the patient's progress. However, these data are
+obtained at presentation. We are interested in how OI changes with age and
+gender. The data can be obtained from
 \begin{enumerate}
 \item Fit the multivariate regression model predicting OI from age and gender.
 \item Examine the Studentized residual plots. Is there anything that would
-  suggest you have a problem with your model? What do you do?
+suggest you have a problem with your model? What do you do?
 \end{enumerate}
 \item \newthought{Dr Phil} comes to see you with his data. He believes that IQ can be
-  predicted by the number of years education. Dr Phil does not differentiate
-  between primary, secondary and tertiary education. He has four variables:
+predicted by the number of years education. Dr Phil does not differentiate
+between primary, secondary and tertiary education. He has four variables:
 \begin{itemize}
 \item \cc{IQ} - the estimated IQ of the person (the response variable);
 \item \cc{AgeBegin} - the age of the person when they commenced education;
@@ -221,21 +227,21 @@ Explain what is wrong with this model? Suggest a possible remedy.
 
 \begin{enumerate}
 \item \newthought{A pilot study} was developed to investigate whether music
-  influenced exam scores. Three groups of students listened to 10 minutes of
-  Mozart, silence or heavy metal before an IQ test. The results of the IQ test
-  are as follows
-  
-  \begin{table}[h]
-    \centering
-    \begin{tabular}{@{}l lllllll@{}}
-      \toprule
-      Mozart &  109 & 114 &  108 &  123 &  115 &  108 & 114\\
-      Silence & 113 & 114 &  113 &  108 &  119 &  112 & 110 \\
-      Heavy Metal & 103  & 94   &114 &  107 &  107 &  113 & 107\\
-      \bottomrule
-    \end{tabular}
-    \caption{Results from the study on how music affects examination performance.}
-  \end{table}
+influenced exam scores. Three groups of students listened to 10 minutes of
+Mozart, silence or heavy metal before an IQ test. The results of the IQ test
+are as follows
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}l lllllll@{}}
+\toprule
+Mozart &  109 & 114 &  108 &  123 &  115 &  108 & 114\\
+Silence & 113 & 114 &  113 &  108 &  119 &  112 & 110 \\
+Heavy Metal & 103  & 94   &114 &  107 &  107 &  113 & 107\\
+\bottomrule
+\end{tabular}
+\caption{Results from the study on how music affects examination performance.}
+\end{table}
 \begin{enumerate}
 \item Construct a one-way ANOVA table. Are there differences between treatment groups?
 <<echo=echo, results=results>>=
@@ -303,9 +309,9 @@ signif(cor(hep_s), 2)
 
 \item Carry out a PCA on this data set.\sidenote{Remember to remove the
 athletes names.}
-  \begin{itemize}
-  \item Keep \cc{score} in your PCA analysis. What happens and why? Do you think
-    you should remove \cc{score}?
+\begin{itemize}
+\item Keep \cc{score} in your PCA analysis. What happens and why? Do you think
+you should remove \cc{score}?
 <<echo=echo, results=results>>=
 ##Remove:
 ##1st column: athletes name
@@ -316,19 +322,19 @@ dd = hep[ ,2:8]
 prcomp(dd)
 @
 
-  \item Do you think you need to scale the data?
+\item Do you think you need to scale the data?
 <<echo=echo, results=results>>=
 ##Yes!. run800m dominates the loading since
 ##the scales differ
 @
 
-  \item Construct a biplot of the data.
+\item Construct a biplot of the data.
 <<echo=echo, results=results, fig.keep="none">>=
 prcomp(dd, scale=TRUE)
 biplot(prcomp(dd, scale=TRUE))
 @
 
-  \end{itemize}
+\end{itemize}
 \end{enumerate}
 
 
@@ -336,7 +342,7 @@ biplot(prcomp(dd, scale=TRUE))
 
 This final section, is meant to give you a taste at other statistical techniques
 available. R has many packages\sidenote{A package is just an ``add-on'' that
-  provides new functionality.} available. To install a package, we use the command
+provides new functionality.} available. To install a package, we use the command
 
 <<eval=FALSE>>=
 install.packages("survival")
@@ -349,9 +355,9 @@ library(survival)
 @ 
 
 \noindent The data set we will use is the \cc{lung} data set\sidenote{Survival in patients
-  with advanced lung cancer from the North Central Cancer Treatment Group.
-  Performance scores rate how well the patient can perform usual daily
-  activities.} - this comes with the \cc{survival} package. To load this data
+with advanced lung cancer from the North Central Cancer Treatment Group.
+Performance scores rate how well the patient can perform usual daily
+activities.} - this comes with the \cc{survival} package. To load this data
 set, we use the command
 
 <<>>=
@@ -379,7 +385,7 @@ dim(lung)
 \item \cc{wt.loss}:    Weight loss in last six months
 \end{itemize}      
 To begin, we create a \cc{Surv} object:\sidenote{Look at \cc{?Surv} for
-  further details.}
+further details.}
 
 <<results="hide">>=
 Surv(lung$time, lung$status)
@@ -405,7 +411,7 @@ plot(survfit(Surv(lung$time, lung$status)~lung$sex))
 @ 
 
 \noindent \textbf{Task:} Load the \cc{heart} data set:\sidenote{Look at the help
-  page: \cc{?heart}}
+page: \cc{?heart}}
 
 <<>>=
 data(heart)

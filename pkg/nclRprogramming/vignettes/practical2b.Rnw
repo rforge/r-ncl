@@ -20,6 +20,8 @@ knit_hooks$set(par=function(before, options, envir){
         par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
             mgp=c(2,.7,0),tcl=-.01, las=1)
 }}, crop=hook_pdfcrop)
+kn = knit_theme$get("greyscale0")
+knit_theme$set(kn)
 @
 
 \usepackage{amsmath}

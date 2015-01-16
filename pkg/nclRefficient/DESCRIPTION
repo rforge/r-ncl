@@ -1,18 +1,15 @@
 Package: nclRefficient
 Type: Package
 Title: nclRefficient
-Version: 0.1.3
-Date: 2015-01-13
-Authors@R: person("Gillespie", "Colin",
+Version: 0.4.0
+Date: 2015-01-16
+Authors@R: person("Colin", "Gillespie", 
      email="csgillespie@gmail.com", role = c("aut",
      "cre"))
-Author: Colin Gillespie
-Maintainer: Colin Gillespie <csgillespie@gmail.com>
 Description: A package for the Newcastle University
      R courses.
 URL: http://www.ncl.ac.uk/maths/rcourse/
 License: GPL-3
 Depends: R (>= 3.0.0)
 Suggests: knitr, rbenchmark
-Collate: 'nclRefficient-package.R'
 VignetteBuilder: knitr

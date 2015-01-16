@@ -56,6 +56,7 @@ build:
 	cd ../ && R CMD build $(PKG)
 
 check:
+	make force
 	make build
 	cd ../ && R CMD check --as-cran $(PKG)_*.tar.gz
 

@@ -51,6 +51,7 @@ view:
 	acroread ../../www/$(PKG)/*.pdf
 
 build:
+	make force
 	make cleaner
 	cd ../ && R CMD build $(PKG)
 

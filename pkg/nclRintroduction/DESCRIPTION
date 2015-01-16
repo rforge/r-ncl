@@ -1,11 +1,10 @@
 Package: nclRintroduction
 Type: Package
 Title: A nclRintroduction
-Version: 0.12.4
+Version: 0.4.0
 Date: 2015-01-16
 Authors@R: person("Colin", "Gillespie",
       email="csgillespie@gmail.com", role = c("aut", "cre"))
-Maintainer: Colin Gillespie <csgillespie@gmail.com>
 Description: A package for the Newcastle University R
       courses.
 URL: http://www.ncl.ac.uk/maths/rcourse/

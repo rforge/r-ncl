@@ -14,7 +14,7 @@
 #'@references Credit: This data set was constructed from the 
 #' information at \url{http://www.wineinstitute.org/files/2012_World_Consumption_by_Country_cCalifornia_Wine_Institute.pdf}
 #' @aliases wine_cons
-#'@keywords datasets
+#' @keywords datasets
 #' @examples
 #' data(wine_cons)
 NULL

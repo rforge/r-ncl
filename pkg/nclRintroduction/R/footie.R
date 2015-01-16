@@ -17,7 +17,7 @@
 #' \item{FTR.}{Full time result; a factor with levels A, D, H representing an away win, draw or home win.}
 #' \item{HY.}{Number of home team yellow cards.}
 #' \item{AY.}{Number of away team yellow cards.}}
-#'@keywords datasets
+#' @keywords datasets
 #' @examples
 #' data(footie)
 NULL

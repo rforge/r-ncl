@@ -2,7 +2,6 @@
 #' 
 #' Percentage of world wine production by the
 #' seven largest producers in 2012. 
-#'
 #' @name wine_prod
 #' @docType data
 #' @usage data(wine_prod)

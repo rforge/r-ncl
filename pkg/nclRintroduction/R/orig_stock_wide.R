@@ -15,7 +15,7 @@
 #' \item{UK.}{Mean stock price in the UK.}
 #' \item{Germany.}{Mean stock price in Germany.}}
 #' @aliases orig_stock_wide
-#'@keywords datasets
+#' @keywords datasets
 #' @examples
 #' data(orig_stock_wide)
 NULL

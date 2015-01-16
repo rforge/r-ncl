@@ -14,7 +14,7 @@
 #' \item{Country.}{Country; a factor with levels Germany, UK, USA.}
 #' \item{StockPrice.}{Mean stock price.}}
 #' @aliases orig_stock_long
-#'@keywords datasets
+#' @keywords datasets
 #' @examples
 #' data(orig_stock_long)
 NULL

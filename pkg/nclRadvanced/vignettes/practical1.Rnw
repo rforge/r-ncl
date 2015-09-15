@@ -308,7 +308,7 @@ f(10)
 
 \section{Function closures}
 
-Following the examples in the notes, where we created a function closure for the normal and uniform distributions. Create a similar closure for
+Consider the examples in the notes where we created functions that return function closures for the normal and uniform distributions. Create a similar function for
 \begin{itemize}
 \item the Poisson distribution,\sidenote{Hint: see \cc{rpois} and \cc{dpois}.}
 <<echo=echo>>=
